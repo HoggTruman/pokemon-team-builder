@@ -11,7 +11,7 @@ namespace api.Models
         [ForeignKey("GenderId")]
         public int GenderId { get; set; }
 
-        public Pokemon? Pokemon { get; set; }
-        public Gender? Gender { get; set; }
+        public Pokemon Pokemon { get; set; } = default!;
+        public Gender Gender { get; set; } = default!;
     }
 }

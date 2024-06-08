@@ -14,9 +14,14 @@ public static class PokemonMappers
             Identifier = pokemonModel.Identifier,
             SpeciesId = pokemonModel.SpeciesId,
 
-            PkmnTypes = pokemonModel.PokemonPkmnTypes
+            PokemonPkmnTypes = pokemonModel.PokemonPkmnTypes
                 .OrderBy(x => x.Slot)
                 .Select(x => x.PkmnType.Identifier)
+                .ToList(),
+
+            PokemonGenders = pokemonModel.PokemonGenders
+                .Select(x => x.Gender.Identifier)
+                .Order()
                 .ToList(),
 
             PokemonAbilities = pokemonModel.PokemonAbilities

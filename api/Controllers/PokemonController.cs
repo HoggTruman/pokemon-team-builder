@@ -25,6 +25,7 @@ namespace api.Controllers
                 .Include(x => x.PkmnTypes)
                 .Include(x => x.BaseStats)
                 .Include(x => x.Abilities)
+                .Include(x => x.Genders)
                 .ToList()
                 .Select(x => x.ToPokemonDTO());
 
@@ -38,6 +39,7 @@ namespace api.Controllers
                 .Include(x => x.PkmnTypes)
                 .Include(x => x.BaseStats)
                 .Include(x => x.Abilities)
+                .Include(x => x.Genders)
                 .FirstOrDefault(x => x.Id == id);
 
             if (pokemon == null)

@@ -9,7 +9,10 @@ namespace api.DTOs.Pokemon
         public string? Identifier { get; set; }
         public int SpeciesId { get; set; }
 
-        public List<string> PkmnTypes { get; set; } = [];
+        [JsonPropertyName("types")]
+        public List<string> PokemonPkmnTypes { get; set; } = [];
+        [JsonPropertyName("genders")]
+        public List<string> PokemonGenders { get; set; } = [];
         [JsonPropertyName("abilities")]
         public List<PokemonAbilityDTO> PokemonAbilities { get; set; } = [];
 
