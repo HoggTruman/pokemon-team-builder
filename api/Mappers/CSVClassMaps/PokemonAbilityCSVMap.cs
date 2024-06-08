@@ -3,9 +3,9 @@ using CsvHelper.Configuration;
 
 namespace api.Mappers.CSVClassMaps
 {
-    public class PokemonAbilityMap : ClassMap<PokemonAbility>
+    public class PokemonAbilityCSVMap : ClassMap<PokemonAbility>
     {
-        public PokemonAbilityMap()
+        public PokemonAbilityCSVMap()
         {
             Map(m => m.PokemonId).Name("pokemon_id");
             Map(m => m.AbilityId).Name("ability_id");

@@ -3,9 +3,9 @@ using CsvHelper.Configuration;
 
 namespace api.Mappers.CSVClassMaps
 {
-    public class PkmnTypeMap : ClassMap<PkmnType>
+    public class GenderCSVMap : ClassMap<Gender>
     {
-        public PkmnTypeMap()
+        public GenderCSVMap()
         {
             Map(m => m.Id).Name("id");
             Map(m => m.Identifier).Name("identifier");

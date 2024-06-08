@@ -3,13 +3,12 @@ using CsvHelper.Configuration;
 
 namespace api.Mappers.CSVClassMaps
 {
-    public class PokemonMap : ClassMap<Pokemon>
+    public class AbilityCSVMap : ClassMap<Ability>
     {
-        public PokemonMap()
+        public AbilityCSVMap()
         {
             Map(m => m.Id).Name("id");
             Map(m => m.Identifier).Name("identifier");
-            Map(m => m.SpeciesId).Name("species_id");
         }
     }
 }

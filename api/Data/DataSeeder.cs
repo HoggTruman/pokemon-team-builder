@@ -40,7 +40,7 @@ public class DataSeeder
         using (var reader = new StreamReader(@"Data\SeedData\pokemon.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<PokemonMap>();
+            csv.Context.RegisterClassMap<PokemonCSVMap>();
             var records = csv.GetRecords<Pokemon>().ToArray();
             _modelBuilder.Entity<Pokemon>().HasData(records);
         }
@@ -54,7 +54,7 @@ public class DataSeeder
         using (var reader = new StreamReader(@"Data\SeedData\types.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<PkmnTypeMap>();
+            csv.Context.RegisterClassMap<PkmnTypeCSVMap>();
             var records = csv.GetRecords<PkmnType>().ToArray();
             _modelBuilder.Entity<PkmnType>().HasData(records);
         }
@@ -68,7 +68,7 @@ public class DataSeeder
         using (var reader = new StreamReader(@"Data\SeedData\pokemon_types.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<PokemonPkmnTypeMap>();
+            csv.Context.RegisterClassMap<PokemonPkmnTypeCSVMap>();
             var records = csv.GetRecords<PokemonPkmnType>().ToArray();
             _modelBuilder.Entity<PokemonPkmnType>().HasData(records);
         }
@@ -137,7 +137,7 @@ public class DataSeeder
         using (var reader = new StreamReader(@"Data\SeedData\abilities.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<AbilityMap>();
+            csv.Context.RegisterClassMap<AbilityCSVMap>();
 
             csv.Read();
             csv.ReadHeader();
@@ -185,7 +185,7 @@ public class DataSeeder
         using (var reader = new StreamReader(@"Data\SeedData\pokemon_abilities.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<PokemonAbilityMap>();
+            csv.Context.RegisterClassMap<PokemonAbilityCSVMap>();
 
             var records = new List<PokemonAbility>();
 
@@ -214,7 +214,7 @@ public class DataSeeder
         using (var reader = new StreamReader(@"Data\SeedData\genders.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<GenderMap>();
+            csv.Context.RegisterClassMap<GenderCSVMap>();
             var records = csv.GetRecords<Gender>().ToArray();
             _modelBuilder.Entity<Gender>().HasData(records);
         }
