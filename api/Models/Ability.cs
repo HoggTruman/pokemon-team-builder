@@ -12,6 +12,5 @@ namespace api.Models
         public string FlavorText { get; set; } = "";
 
         public List<Pokemon> Pokemon { get; } = [];
-        //public List<PokemonAbility> PokemonAbilities { get; set; } ////////////////////////////////// cAusing PROBLEMS
     }
 }

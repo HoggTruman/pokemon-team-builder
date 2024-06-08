@@ -12,6 +12,6 @@ public class PokemonAbility
     
     public int Slot { get; set; }
 
-    public Pokemon? Pokemon { get; set; }
-    public Ability? Ability { get; set; }
+    public Pokemon Pokemon { get; set; } = default!;
+    public Ability Ability { get; set; } = default!;
 }

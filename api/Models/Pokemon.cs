@@ -22,7 +22,7 @@ namespace api.Models
         public List<Ability> Abilities { get; } = [];
         public List<PokemonAbility> PokemonAbilities { get; } = [];
 
-        public BaseStats? BaseStats { get; set; }
+        public BaseStats BaseStats { get; set; } = default!;
 
     }
 }

@@ -10,7 +10,7 @@ namespace api.Models
         
         public int Slot { get; set; }
 
-        public Pokemon? Pokemon { get; set; } 
-        public PkmnType? PkmnType { get; set; }
+        public Pokemon Pokemon { get; set; } = default!;
+        public PkmnType PkmnType { get; set; } = default!;
     }
 }
