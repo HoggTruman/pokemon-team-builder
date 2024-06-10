@@ -30,6 +30,9 @@ public class DataSeeder
         SeedPokemonAbility();
         SeedGender();
         SeedPokemonGender();
+        SeedMove();
+        SeedMoveEffect();
+        SeedDamageClass();   
     }  
 
 
@@ -294,4 +297,45 @@ public class DataSeeder
         }
     }
     
+
+
+
+    private void SeedDamageClass()
+    {
+        using (var reader = new StreamReader(@"Data\SeedData\move_damage_classes.csv"))
+        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        {
+            csv.Context.RegisterClassMap<DamageClassCSVMap>();
+            var records = csv.GetRecords<DamageClass>().ToArray();
+            _modelBuilder.Entity<DamageClass>().HasData(records);
+        }
+    }
+
+
+
+
+    private void SeedMove()
+    {
+        using (var reader = new StreamReader(@"Data\SeedData\moves.csv"))
+        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        {
+            csv.Context.RegisterClassMap<MoveCSVMap>();
+            var records = csv.GetRecords<Move>().ToArray();
+            _modelBuilder.Entity<Move>().HasData(records);
+        }
+    }
+
+
+
+
+    private void SeedMoveEffect()
+    {
+        using (var reader = new StreamReader(@"Data\SeedData\move_effect_prose.csv"))
+        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        {
+            csv.Context.RegisterClassMap<MoveEffectCSVMap>();
+            var records = csv.GetRecords<MoveEffect>().ToArray();
+            _modelBuilder.Entity<MoveEffect>().HasData(records);
+        }        
+    }
 }

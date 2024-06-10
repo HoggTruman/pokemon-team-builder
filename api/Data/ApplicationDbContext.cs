@@ -15,6 +15,9 @@ namespace api.Data
         public DbSet<Pokemon> Pokemon { get; set; }
         public DbSet<PkmnType> PkmnType { get; set; }
         public DbSet<BaseStats> BaseStats { get; set; }
+        public DbSet<Move> Move { get; set; }
+        public DbSet<MoveEffect> MoveEffect { get; set; }
+        public DbSet<DamageClass> DamageClass { get; set; }
 
         public DbSet<PokemonPkmnType> PokemonPkmnType { get; set; }
         public DbSet<PokemonAbility> PokemonAbility { get; set; }
@@ -65,6 +68,9 @@ namespace api.Data
                 .HasMany(e => e.Pokemon)
                 .WithMany(e => e.Genders)
                 .UsingEntity<PokemonGender>();
+
+
+
 
             /* 
             -------------------------------------------------------------------------
