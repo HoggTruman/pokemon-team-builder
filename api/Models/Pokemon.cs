@@ -24,5 +24,8 @@ namespace api.Models
 
         public BaseStats BaseStats { get; set; } = default!;
 
+        public List<Move> Moves { get; } = [];
+
+
     }
 }

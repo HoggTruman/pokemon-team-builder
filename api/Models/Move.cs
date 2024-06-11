@@ -28,5 +28,7 @@ namespace api.Models
         public PkmnType PkmnType { get; set; } = default!;
         public DamageClass DamageClass { get; set; } = default!;
         public MoveEffect? MoveEffect { get; set; }
+
+        public List<Pokemon> Pokemon { get; set; } = default!;
     }
 }
