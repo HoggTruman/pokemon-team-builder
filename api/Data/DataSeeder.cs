@@ -33,6 +33,7 @@ public class DataSeeder
         SeedMove();
         SeedMoveEffect();
         SeedDamageClass();   
+        SeedPokemonMove();
     }  
 
 
@@ -337,5 +338,28 @@ public class DataSeeder
             var records = csv.GetRecords<MoveEffect>().ToArray();
             _modelBuilder.Entity<MoveEffect>().HasData(records);
         }        
+    }
+
+
+
+    
+    private void SeedPokemonMove()
+    {
+        // Takes a while to seed this data as it is quite large
+        using (var reader = new StreamReader(@"Data\SeedData\pokemon_moves.csv"))
+        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        {
+            csv.Context.RegisterClassMap<PokemonMoveCSVMap>();
+
+            csv.Read();
+            csv.ReadHeader();
+            
+
+            while (csv.Read())
+            {
+                var record = csv.GetRecord<PokemonMove>();
+                _modelBuilder.Entity<PokemonMove>().HasData(record);
+            }
+        }    
     }
 }

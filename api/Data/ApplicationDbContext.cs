@@ -18,9 +18,12 @@ namespace api.Data
         public DbSet<Move> Move { get; set; }
         public DbSet<MoveEffect> MoveEffect { get; set; }
         public DbSet<DamageClass> DamageClass { get; set; }
+        public DbSet<Gender> Gender { get; set; }
 
         public DbSet<PokemonPkmnType> PokemonPkmnType { get; set; }
         public DbSet<PokemonAbility> PokemonAbility { get; set; }
+        public DbSet<PokemonMove> PokemonMove { get; set; }
+        public DbSet<PokemonGender> PokemonGender { get; set; }
 
 
 
@@ -41,11 +44,6 @@ namespace api.Data
                 .WithMany(e => e.Pokemon)
                 .UsingEntity<PokemonPkmnType>();
 
-            modelBuilder.Entity<PkmnType>()
-                .HasMany(e => e.Pokemon)
-                .WithMany(e => e.PkmnTypes)
-                .UsingEntity<PokemonPkmnType>();
-
 
             // Register Pokemon-Ability many-to-many relationship
             modelBuilder.Entity<Pokemon>()
@@ -53,10 +51,6 @@ namespace api.Data
                 .WithMany(e => e.Pokemon)
                 .UsingEntity<PokemonAbility>();
 
-            modelBuilder.Entity<Ability>()
-                .HasMany(e => e.Pokemon)
-                .WithMany(e => e.Abilities)
-                .UsingEntity<PokemonAbility>();
 
             // Register Pokemon-Gender many-to-many relationship
             modelBuilder.Entity<Pokemon>()
@@ -64,23 +58,14 @@ namespace api.Data
                 .WithMany(e => e.Pokemon)
                 .UsingEntity<PokemonGender>();
 
-            modelBuilder.Entity<Gender>()
-                .HasMany(e => e.Pokemon)
-                .WithMany(e => e.Genders)
-                .UsingEntity<PokemonGender>();
+
+            // Register Pokemon-Move many-to-many relationship
+            modelBuilder.Entity<Pokemon>()
+                .HasMany(e => e.Moves)
+                .WithMany(e => e.Pokemon)
+                .UsingEntity<PokemonMove>();
 
 
-
-
-            /* 
-            -------------------------------------------------------------------------
-                                     SEED DATABASE
-            -------------------------------------------------------------------------
-            */
-
-            DataSeeder dataSeeder = new DataSeeder(modelBuilder);
-            dataSeeder.SeedAll();
-            
         }
     }
 }
