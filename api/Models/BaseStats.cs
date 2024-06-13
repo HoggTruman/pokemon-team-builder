@@ -13,6 +13,7 @@ namespace api.Models
     public class BaseStats
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PokemonId { get; set; }
 
         public int HP { get; set; }

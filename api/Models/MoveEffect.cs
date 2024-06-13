@@ -7,6 +7,7 @@ namespace api.Models
     public class MoveEffect
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Description { get; set; } = "";
 
