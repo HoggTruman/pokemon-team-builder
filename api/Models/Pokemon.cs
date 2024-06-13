@@ -7,6 +7,7 @@ namespace api.Models
     public class Pokemon
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public required string Identifier { get; set; }
         public int SpeciesId { get; set; }

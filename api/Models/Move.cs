@@ -7,6 +7,7 @@ namespace api.Models
     public class Move
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Identifier { get; set; } = "";
         public int? Power { get; set; }
@@ -29,6 +30,6 @@ namespace api.Models
         public DamageClass DamageClass { get; set; } = default!;
         public MoveEffect? MoveEffect { get; set; }
 
-        public List<Pokemon> Pokemon { get; set; } = default!;
+        public List<Pokemon> Pokemon { get; } = [];
     }
 }

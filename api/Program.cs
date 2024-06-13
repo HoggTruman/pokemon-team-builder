@@ -28,8 +28,18 @@ builder.Services.AddLogging(loggingBuilder => {
     loggingBuilder.AddDebug();
 });
 
+ builder.Services.AddScoped<DbInitializer>();
+
 
 var app = builder.Build();
+
+
+
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope()) {
+    var dbInitializer = scope.ServiceProvider.GetService<DbInitializer>()!;
+    dbInitializer.SeedAll();
+}
 
 
 

@@ -7,6 +7,7 @@ namespace api.Models
     public class Ability
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Identifier { get; set; } = "";
         public string FlavorText { get; set; } = "";
