@@ -35,7 +35,7 @@ namespace api.Data
             modelBuilder.Entity<Pokemon>()
                 .HasOne(e => e.BaseStats)
                 .WithOne(e => e.Pokemon)
-                .HasForeignKey<BaseStats>();
+                .HasForeignKey<BaseStats>(e => e.PokemonId);
 
 
             // Register Pokemon-PkmnType many-to-many relationship
