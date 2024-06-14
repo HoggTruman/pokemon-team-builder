@@ -7,9 +7,9 @@ namespace api.Mappers.CSVClassMaps
     {
         public PokemonPkmnTypeCSVMap()
         {
-            Map(m => m.PokemonId).Name("pokemon_id");
-            Map(m => m.PkmnTypeId).Name("type_id");
-            Map(m => m.Slot).Name("slot");
+            Map(m => m.PokemonId).Index(0).Name("pokemon_id");
+            Map(m => m.PkmnTypeId).Index(1).Name("type_id");
+            Map(m => m.Slot).Index(2).Name("slot");
         }
     }
 }
