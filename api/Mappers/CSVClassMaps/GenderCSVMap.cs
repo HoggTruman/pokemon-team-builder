@@ -7,8 +7,8 @@ namespace api.Mappers.CSVClassMaps
     {
         public GenderCSVMap()
         {
-            Map(m => m.Id).Name("id");
-            Map(m => m.Identifier).Name("identifier");
+            Map(m => m.Id).Index(0).Name("id");
+            Map(m => m.Identifier).Index(1).Name("identifier");
         }
     }
 }

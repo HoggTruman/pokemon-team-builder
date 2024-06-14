@@ -7,16 +7,16 @@ namespace api.Mappers.CSVClassMaps
     {
         public MoveCSVMap()
         {
-            Map(m => m.Id).Name("id");
-            Map(m => m.Identifier).Name("identifier");
-            Map(m => m.Power).Name("power");
-            Map(m => m.PP).Name("pp");
-            Map(m => m.Accuracy).Name("accuracy");
-            Map(m => m.Priority).Name("priority");
-            Map(m => m.PkmnTypeId).Name("type_id");
-            Map(m => m.DamageClassId).Name("damage_class_id");
-            Map(m => m.MoveEffectId).Name("effect_id");
-            Map(m => m.MoveEffectChance).Name("effect_chance");
+            Map(m => m.Id).Index(0).Name("id");
+            Map(m => m.Identifier).Index(1).Name("identifier");
+            Map(m => m.Power).Index(2).Name("power");
+            Map(m => m.PP).Index(3).Name("pp");
+            Map(m => m.Accuracy).Index(4).Name("accuracy");
+            Map(m => m.Priority).Index(5).Name("priority");
+            Map(m => m.PkmnTypeId).Index(6).Name("type_id");
+            Map(m => m.DamageClassId).Index(7).Name("damage_class_id");
+            Map(m => m.MoveEffectId).Index(8).Name("effect_id");
+            Map(m => m.MoveEffectChance).Index(9).Name("effect_chance");
         }
     }
 }

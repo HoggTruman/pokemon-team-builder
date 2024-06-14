@@ -29,6 +29,7 @@ builder.Services.AddLogging(loggingBuilder => {
 });
 
  builder.Services.AddScoped<DbInitializer>();
+ builder.Services.AddScoped<DbToCSV>();
 
 
 var app = builder.Build();
@@ -37,8 +38,19 @@ var app = builder.Build();
 
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 using (var scope = scopeFactory.CreateScope()) {
+    // Add Seed Data to DB
     var dbInitializer = scope.ServiceProvider.GetService<DbInitializer>()!;
     dbInitializer.SeedAll();
+    
+
+    // Development tool to write Database to csv files
+    // Writes DB data for each model to a corresponding csv file in /Data/WriteData
+    if (builder.Configuration["WRITE_TO_CSV"] == "TRUE")
+    {
+        var dbToCSV = scope.ServiceProvider.GetService<DbToCSV>()!;
+        dbToCSV.WriteAllToCSV();
+    }
+
 }
 
 

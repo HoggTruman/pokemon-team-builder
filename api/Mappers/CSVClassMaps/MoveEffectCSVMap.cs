@@ -7,8 +7,8 @@ namespace api.Mappers.CSVClassMaps
     {
         public MoveEffectCSVMap()
         {
-            Map(m => m.Id).Name("move_effect_id");
-            Map(m => m.Description).Name("short_effect");
+            Map(m => m.Id).Index(0).Name("move_effect_id");
+            Map(m => m.Description).Index(1).Name("short_effect");
         }
     }
 }

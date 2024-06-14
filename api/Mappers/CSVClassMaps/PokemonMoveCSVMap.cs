@@ -7,8 +7,8 @@ namespace api.Mappers.CSVClassMaps
     {
         public PokemonMoveCSVMap()
         {
-            Map(m => m.PokemonId).Name("pokemon_id");
-            Map(m => m.MoveId).Name("move_id");
+            Map(m => m.PokemonId).Index(0).Name("pokemon_id");
+            Map(m => m.MoveId).Index(1).Name("move_id");
         }
     }
 }
