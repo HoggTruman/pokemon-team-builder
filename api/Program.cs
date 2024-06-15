@@ -1,4 +1,6 @@
 using api.Data;
+using api.Interfaces;
+using api.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -28,8 +30,15 @@ builder.Services.AddLogging(loggingBuilder => {
     loggingBuilder.AddDebug();
 });
 
- builder.Services.AddScoped<DbInitializer>();
- builder.Services.AddScoped<DbToCSV>();
+
+// Add Repositories
+builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
+builder.Services.AddScoped<IMoveRepository, MoveRepository>();
+
+
+
+builder.Services.AddScoped<DbInitializer>();
+builder.Services.AddScoped<DbToCSV>();
 
 
 var app = builder.Build();
