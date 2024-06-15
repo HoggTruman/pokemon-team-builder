@@ -24,6 +24,6 @@ namespace api.Models
         public int Speed { get; set; }
 
 
-        public Pokemon? Pokemon { get; set; }
+        public Pokemon Pokemon { get; set; } = default!;
     }
 }
