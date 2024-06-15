@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using api.DTOs.PokemonAbility;
+using api.DTOs.BaseStats;
 
 namespace api.DTOs.Pokemon
 {
@@ -16,7 +17,7 @@ namespace api.DTOs.Pokemon
         [JsonPropertyName("abilities")]
         public List<PokemonAbilityDTO> PokemonAbilities { get; set; } = [];
 
-        public Dictionary<string, int> BaseStats { get; set; } = [];
+        public BaseStatsDTO BaseStats { get; set; } = new BaseStatsDTO();
 
     }
 }

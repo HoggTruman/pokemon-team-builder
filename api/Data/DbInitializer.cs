@@ -27,6 +27,7 @@ public class DbInitializer
             AddAbility(context);
             AddGender(context);
             AddMove(context);
+            // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
             AddMoveEffect(context);
             AddDamageClass(context);
 

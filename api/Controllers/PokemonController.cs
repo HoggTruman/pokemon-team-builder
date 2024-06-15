@@ -1,4 +1,5 @@
 using api.Data;
+using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,37 +11,26 @@ namespace api.Controllers
     [ApiController]
     public class PokemonController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPokemonRepository _repository;
 
-        public PokemonController(ApplicationDbContext context)
+        public PokemonController(IPokemonRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var pokemon = _context.Pokemon
-                .Include(x => x.PkmnTypes)
-                .Include(x => x.BaseStats)
-                .Include(x => x.Abilities)
-                .Include(x => x.Genders)
-                .ToList()
-                .Select(x => x.ToPokemonDTO());
+            var pokemon = _repository.GetAllPokemon().Select(x => x.ToPokemonDTO());
 
             return Ok(pokemon);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetById([FromRoute] int id)
         {
-            var pokemon = _context.Pokemon
-                .Include(x => x.PkmnTypes)
-                .Include(x => x.BaseStats)
-                .Include(x => x.Abilities)
-                .Include(x => x.Genders)
-                .FirstOrDefault(x => x.Id == id);
+            var pokemon = _repository.GetPokemonById(id);
 
             if (pokemon == null)
             {
