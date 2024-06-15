@@ -10,10 +10,8 @@ public static class PokemonAbilityMappers
     {
         return new PokemonAbilityDTO
         {
-            Id = pokemonAbilityModel.Ability.Id,
             Identifier = pokemonAbilityModel.Ability.Identifier,
-            FlavorText = pokemonAbilityModel.Ability.FlavorText,
-            Slot = pokemonAbilityModel.Slot                 
+            FlavorText = pokemonAbilityModel.Ability.FlavorText,              
         };
     }
 } 

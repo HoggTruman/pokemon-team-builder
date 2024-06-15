@@ -13,12 +13,10 @@ namespace api.Models
         public int SpeciesId { get; set; }
 
 
-        // Navigation Variables (are both navigations needed everywhere??)
         public List<PkmnType> PkmnTypes { get; } = [];
         public List<PokemonPkmnType> PokemonPkmnTypes { get; } = [];
 
         public List<Gender> Genders { get; } = [];
-        public List<PokemonGender> PokemonGenders { get; } = [];
 
         public List<Ability> Abilities { get; } = [];
         public List<PokemonAbility> PokemonAbilities { get; } = [];

@@ -19,8 +19,8 @@ public static class PokemonMappers
                 .Select(x => x.PkmnType.Identifier)
                 .ToList(),
 
-            PokemonGenders = pokemonModel.PokemonGenders
-                .Select(x => x.Gender.Identifier)
+            PokemonGenders = pokemonModel.Genders
+                .Select(x => x.Identifier)
                 .Order()
                 .ToList(),
 
@@ -29,17 +29,7 @@ public static class PokemonMappers
                 .Select(x => x.ToPokemonAbilityDTO())
                 .ToList(),
 
-            BaseStats = new Dictionary<string, int>()
-            {
-                { "HP", pokemonModel.BaseStats.HP },
-                { "Attack", pokemonModel.BaseStats.Attack },
-                { "Defense", pokemonModel.BaseStats.Defense },
-                { "SpecialAttack", pokemonModel.BaseStats.SpecialAttack },
-                { "SpecialDefense", pokemonModel.BaseStats.SpecialDefense },
-                { "Speed", pokemonModel.BaseStats.Speed }
-            }
-
-                            
+            BaseStats = pokemonModel.BaseStats.ToBaseStatsDTO() 
         };
     }
 } 
