@@ -30,6 +30,7 @@ public class DbInitializer
             // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
             AddMoveEffect(context);
             AddDamageClass(context);
+            AddItem(context);
 
             AddPokemonPkmnType(context);
             AddPokemonMove(context);
@@ -241,6 +242,77 @@ public class DbInitializer
     }
 
 
+    private void AddItem(ApplicationDbContext context)
+    {
+        if (!context.Item.Any())
+        {
+            const int HOLDABLE_FLAG_ID = 5;
+
+            var records = new List<Item>();
+
+            // Get Id for each holdable item and create an Item object using the Id
+            using (var reader = new StreamReader(@"Data\SeedData\item_flag_map.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
+                {
+                    if (csv.GetField<int>("item_flag_id") == HOLDABLE_FLAG_ID)
+                    {
+                        var record = new Item()
+                        {
+                            Id = csv.GetField<int>("item_id")
+                        };
+                        
+                        records.Add(record);
+                    }
+                }
+
+            }
+
+            // Add Identifier to each 
+            using (var reader = new StreamReader(@"Data\SeedData\items.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
+                {
+                    var record = records.FirstOrDefault(x => x.Id == csv.GetField<int>("id"));
+                    if (record != null)
+                    {
+                        record.Identifier = csv.GetField("identifier");
+                    }
+                }
+            }
+
+            // Add Effect to each 
+            using (var reader = new StreamReader(@"Data\SeedData\item_prose.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
+                {
+                    var record = records.FirstOrDefault(x => x.Id == csv.GetField<int>("item_id"));
+                    if (record != null)
+                    {
+                        record.Effect = csv.GetField("short_effect");
+                    }
+                }
+            }
+            context.Item.AddRange(records);
+        }
+    }
+
+
+
+
+
 
 
     private void AddPokemonPkmnType(ApplicationDbContext context)
@@ -376,6 +448,9 @@ public class DbInitializer
             }
         }
     }
+
+
+
     
 
 }
