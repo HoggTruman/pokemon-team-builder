@@ -27,6 +27,8 @@ public class DbToCSV
             WriteDamageClass(context);
             WriteMoveEffect(context);
             WriteGender(context);
+            WriteItem(context);
+
             WritePokemonPkmnType(context);
             WritePokemonMove(context);
             WritePokemonAbility(context);
@@ -51,6 +53,7 @@ public class DbToCSV
             var records = context.Pokemon.ToList();
             csv.Context.RegisterClassMap<PokemonCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -70,6 +73,7 @@ public class DbToCSV
             var records = context.PkmnType.ToList();
             csv.Context.RegisterClassMap<PkmnTypeCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -89,6 +93,7 @@ public class DbToCSV
             var records = context.BaseStats.ToList();
             csv.Context.RegisterClassMap<BaseStatsCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -108,6 +113,7 @@ public class DbToCSV
             var records = context.Ability.ToList();
             csv.Context.RegisterClassMap<AbilityCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -127,6 +133,7 @@ public class DbToCSV
             var records = context.Move.ToList();
             csv.Context.RegisterClassMap<MoveCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -146,6 +153,7 @@ public class DbToCSV
             var records = context.DamageClass.ToList();
             csv.Context.RegisterClassMap<DamageClassCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -165,6 +173,7 @@ public class DbToCSV
             var records = context.MoveEffect.ToList();
             csv.Context.RegisterClassMap<MoveEffectCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -184,8 +193,32 @@ public class DbToCSV
             var records = context.Gender.ToList();
             csv.Context.RegisterClassMap<GenderCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
+
+    private void WriteItem(ApplicationDbContext context)
+    {
+        const string path = @"Data\WriteData\item.csv";
+
+        if (File.Exists(path))
+        {
+            Console.WriteLine($"File already exists at {path}");
+            return;
+        }
+
+        using (var writer = new StreamWriter(path))
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        {
+            var records = context.Item.ToList();
+            csv.Context.RegisterClassMap<ItemCSVMap>();
+            csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
+        }
+    }
+
+
+
 
     private void WritePokemonPkmnType(ApplicationDbContext context)
     {
@@ -203,6 +236,7 @@ public class DbToCSV
             var records = context.PokemonPkmnType.ToList();
             csv.Context.RegisterClassMap<PokemonPkmnTypeCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -222,6 +256,7 @@ public class DbToCSV
             var records = context.PokemonMove.ToList();
             csv.Context.RegisterClassMap<PokemonMoveCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -241,6 +276,7 @@ public class DbToCSV
             var records = context.Ability.ToList();
             csv.Context.RegisterClassMap<AbilityCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
@@ -260,6 +296,7 @@ public class DbToCSV
             var records = context.PokemonGender.ToList();
             csv.Context.RegisterClassMap<PokemonGenderCSVMap>();
             csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
         }
     }
 
