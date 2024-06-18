@@ -19,6 +19,8 @@ namespace api.Data
         public DbSet<MoveEffect> MoveEffect { get; set; }
         public DbSet<DamageClass> DamageClass { get; set; }
         public DbSet<Gender> Gender { get; set; }
+        public DbSet<Item> Item { get; set; }
+        public DbSet<Nature> Nature { get; set; }
 
         public DbSet<PokemonPkmnType> PokemonPkmnType { get; set; }
         public DbSet<PokemonAbility> PokemonAbility { get; set; }

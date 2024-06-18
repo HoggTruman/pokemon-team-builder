@@ -30,6 +30,8 @@ public class DbInitializer
             // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
             AddMoveEffect(context);
             AddDamageClass(context);
+            AddItem(context);
+            AddNature(context);
 
             AddPokemonPkmnType(context);
             AddPokemonMove(context);
@@ -241,6 +243,165 @@ public class DbInitializer
     }
 
 
+    private void AddItem(ApplicationDbContext context)
+    {
+        if (!context.Item.Any())
+        {
+            int[] HOLDITEM_FLAG_IDS = [5, 6, 7]; // potentially 5 not needed
+
+            var records = new List<Item>();
+
+            // Create record for each holdable item with the "item_id"
+            using (var reader = new StreamReader(@"Data\SeedData\item_flag_map.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
+                {
+                    if (HOLDITEM_FLAG_IDS.Contains(csv.GetField<int>("item_flag_id")))
+                    {
+                        var record = records.FirstOrDefault(x => x.Id == csv.GetField<int>("item_id"));
+
+                        if (record == null)
+                        {
+                            record = new Item()
+                            {
+                                Id = csv.GetField<int>("item_id")
+                            };
+                            
+                            records.Add(record);
+                        }
+                    }
+                }
+
+            }
+
+            // Add Identifier to each 
+            using (var reader = new StreamReader(@"Data\SeedData\items.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
+                {
+                    var record = records.FirstOrDefault(x => x.Id == csv.GetField<int>("id"));
+                    if (record != null)
+                    {
+                        record.Identifier = csv.GetField("identifier");
+                    }
+                }
+            }
+
+            // Add Effect to each 
+            using (var reader = new StreamReader(@"Data\SeedData\item_prose.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
+                {
+                    var record = records.FirstOrDefault(x => x.Id == csv.GetField<int>("item_id"));
+                    if (record != null)
+                    {
+                        record.Effect = csv.GetField("short_effect");
+                    }
+                }
+            }
+            context.Item.AddRange(records);
+        }
+    }
+
+
+    private void AddNature(ApplicationDbContext context)
+    {
+        if (!context.Nature.Any())
+        {
+            using (var reader = new StreamReader(@"Data\SeedData\natures.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                const double INCREASED_MULTIPLIER = 1.1;
+                const double DECREASED_MULTIPLIER = 0.9;
+
+                var records = new List<Nature>();
+
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
+                {
+                    var record = new Nature()
+                    {
+                        Id = csv.GetField<int>("id"),
+                        Identifier = csv.GetField("identifier"),
+                        AttackMultiplier = 1,
+                        DefenseMultiplier = 1,
+                        SpecialAttackMultiplier = 1,
+                        SpecialDefenseMultiplier = 1,
+                        SpeedMultiplier = 1
+                    };
+
+                    if (csv.GetField("increased_stat_id") == csv.GetField("decreased_stat_id"))
+                    {
+                        continue;
+                    }
+                        
+
+                    switch (csv.GetField<int>("increased_stat_id"))
+                    {
+                        case 2:
+                            record.AttackMultiplier = INCREASED_MULTIPLIER;
+                            break;
+                        case 3:
+                            record.DefenseMultiplier = INCREASED_MULTIPLIER;
+                            break;
+                        case 4:
+                            record.SpecialAttackMultiplier = INCREASED_MULTIPLIER;
+                            break;
+                        case 5:
+                            record.SpecialDefenseMultiplier = INCREASED_MULTIPLIER;
+                            break;
+                        case 6:
+                            record.SpeedMultiplier = INCREASED_MULTIPLIER;
+                            break;                                                                        
+                    }
+
+
+                    switch (csv.GetField<int>("decreased_stat_id"))
+                    {
+                        case 2:
+                            record.AttackMultiplier = DECREASED_MULTIPLIER;
+                            break;
+                        case 3:
+                            record.DefenseMultiplier = DECREASED_MULTIPLIER;
+                            break;
+                        case 4:
+                            record.SpecialAttackMultiplier = DECREASED_MULTIPLIER;
+                            break;
+                        case 5:
+                            record.SpecialDefenseMultiplier = DECREASED_MULTIPLIER;
+                            break;
+                        case 6:
+                            record.SpeedMultiplier = DECREASED_MULTIPLIER;
+                            break;                                                                        
+                    }
+
+                    records.Add(record);
+                }
+
+                context.Nature.AddRange(records);
+            }   
+        }
+     
+    }
+
+
+
+
+
 
 
     private void AddPokemonPkmnType(ApplicationDbContext context)
@@ -376,6 +537,9 @@ public class DbInitializer
             }
         }
     }
+
+
+
     
 
 }
