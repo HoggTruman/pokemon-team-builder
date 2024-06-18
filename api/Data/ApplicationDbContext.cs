@@ -1,9 +1,11 @@
 using api.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Data 
 {
-     public class ApplicationDbContext: DbContext 
+     public class ApplicationDbContext: IdentityDbContext 
      {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -68,6 +70,23 @@ namespace api.Data
                 .UsingEntity<PokemonMove>();
 
 
+
+            // Add Identity Roles
+            List<IdentityRole> roles = new List<IdentityRole>()
+            {
+                new IdentityRole()
+                {
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                },
+                new IdentityRole()
+                {
+                    Name = "User",
+                    NormalizedName = "USER"
+                }
+            };
+
+            modelBuilder.Entity<IdentityRole>().HasData(roles);
         }
     }
 }
