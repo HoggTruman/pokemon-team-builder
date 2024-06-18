@@ -246,11 +246,11 @@ public class DbInitializer
     {
         if (!context.Item.Any())
         {
-            const int HOLDABLE_FLAG_ID = 5;
+            int[] HOLDITEM_FLAG_IDS = [5, 6, 7]; // potentially 5 not needed
 
             var records = new List<Item>();
 
-            // Get Id for each holdable item and create an Item object using the Id
+            // Create record for each holdable item with the "item_id"
             using (var reader = new StreamReader(@"Data\SeedData\item_flag_map.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
@@ -259,14 +259,19 @@ public class DbInitializer
 
                 while (csv.Read())
                 {
-                    if (csv.GetField<int>("item_flag_id") == HOLDABLE_FLAG_ID)
+                    if (HOLDITEM_FLAG_IDS.Contains(csv.GetField<int>("item_flag_id")))
                     {
-                        var record = new Item()
+                        var record = records.FirstOrDefault(x => x.Id == csv.GetField<int>("item_id"));
+
+                        if (record == null)
                         {
-                            Id = csv.GetField<int>("item_id")
-                        };
-                        
-                        records.Add(record);
+                            record = new Item()
+                            {
+                                Id = csv.GetField<int>("item_id")
+                            };
+                            
+                            records.Add(record);
+                        }
                     }
                 }
 
