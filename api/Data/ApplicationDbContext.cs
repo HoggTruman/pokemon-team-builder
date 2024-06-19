@@ -25,6 +25,9 @@ namespace api.Data
         public DbSet<Item> Item { get; set; }
         public DbSet<Nature> Nature { get; set; }
 
+        public DbSet<Team> Team { get; set; }
+        public DbSet<UserPokemon> UserPokemon { get; set; }
+
         public DbSet<PokemonPkmnType> PokemonPkmnType { get; set; }
         public DbSet<PokemonAbility> PokemonAbility { get; set; }
         public DbSet<PokemonMove> PokemonMove { get; set; }
