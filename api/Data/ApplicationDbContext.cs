@@ -1,9 +1,12 @@
 using api.Models;
+using api.Models.User;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Data 
 {
-     public class ApplicationDbContext: DbContext 
+     public class ApplicationDbContext: IdentityDbContext<AppUser>
      {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -21,6 +24,9 @@ namespace api.Data
         public DbSet<Gender> Gender { get; set; }
         public DbSet<Item> Item { get; set; }
         public DbSet<Nature> Nature { get; set; }
+
+        public DbSet<Team> Team { get; set; }
+        public DbSet<UserPokemon> UserPokemon { get; set; }
 
         public DbSet<PokemonPkmnType> PokemonPkmnType { get; set; }
         public DbSet<PokemonAbility> PokemonAbility { get; set; }
@@ -68,6 +74,23 @@ namespace api.Data
                 .UsingEntity<PokemonMove>();
 
 
+
+            // Add Identity Roles
+            List<IdentityRole> roles = new List<IdentityRole>()
+            {
+                new IdentityRole()
+                {
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                },
+                new IdentityRole()
+                {
+                    Name = "User",
+                    NormalizedName = "USER"
+                }
+            };
+
+            modelBuilder.Entity<IdentityRole>().HasData(roles);
         }
     }
 }
