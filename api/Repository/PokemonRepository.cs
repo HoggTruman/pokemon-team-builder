@@ -1,10 +1,10 @@
 using api.Data;
 using api.Models;
-using api.Mappers;
+using api.Interfaces.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Interfaces;
+namespace api.Repository;
 
 public class PokemonRepository : IPokemonRepository
 {

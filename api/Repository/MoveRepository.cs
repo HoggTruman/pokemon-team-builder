@@ -1,10 +1,10 @@
 using api.Data;
 using api.Models;
-using api.Mappers;
+using api.Interfaces.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Interfaces;
+namespace api.Repository;
 
 public class MoveRepository : IMoveRepository
 {
@@ -45,19 +45,6 @@ public class MoveRepository : IMoveRepository
         }
 
         var moves = pokemon.Moves;
-            // .Include(x => x.PkmnType)
-            // .Include(x => x.DamageClass)
-            // .Include(x => x.MoveEffect))
-            // .ToList();
-
-        // var moves = _context.Move
-        //     .Include(x => x.PkmnType)
-        //     .Include(x => x.DamageClass)
-        //     .Include(x => x.MoveEffect)    
-        //     .Include(x => x.Pokemon)
-        //     .Where(x => x.Pokemon.Any(x => x.Id == id))
-        //     .ToList();
-
 
         return moves;
     }

@@ -1,5 +1,7 @@
 using api.Data;
 using api.Interfaces;
+using api.Interfaces.Repository;
+using api.Repository;
 using api.Models.User;
 using api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
