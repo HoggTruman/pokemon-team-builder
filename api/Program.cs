@@ -58,6 +58,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.EnableSensitiveDataLogging();
 });
 
+
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     // Password settings.
     options.Password.RequireDigit = true;
@@ -78,6 +79,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     options.User.RequireUniqueEmail = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -100,6 +102,7 @@ builder.Services.AddAuthentication(options => {
     };
 });
 
+
 builder.Services.AddLogging(loggingBuilder => {
     loggingBuilder.AddConsole()
         .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
@@ -110,6 +113,9 @@ builder.Services.AddLogging(loggingBuilder => {
 // Add Repositories
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<IMoveRepository, MoveRepository>();
+builder.Services.AddScoped<INatureRepository, NatureRepository>();
+
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 
