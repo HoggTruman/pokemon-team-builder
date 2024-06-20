@@ -4,6 +4,6 @@ namespace api.Interfaces.Repository;
 
 public interface IMoveRepository
 {
-    public List<Move> GetAll();
-    public List<Move>? GetMovesByPokemonId(int id);
+    List<Move> GetAll();
+    List<Move>? GetMovesByPokemonId(int id);
 }
