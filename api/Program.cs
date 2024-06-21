@@ -1,5 +1,7 @@
 using api.Data;
 using api.Interfaces;
+using api.Interfaces.Repository;
+using api.Repository;
 using api.Models.User;
 using api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,6 +58,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.EnableSensitiveDataLogging();
 });
 
+
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     // Password settings.
     options.Password.RequireDigit = true;
@@ -76,6 +79,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     options.User.RequireUniqueEmail = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -98,6 +102,7 @@ builder.Services.AddAuthentication(options => {
     };
 });
 
+
 builder.Services.AddLogging(loggingBuilder => {
     loggingBuilder.AddConsole()
         .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
@@ -108,6 +113,10 @@ builder.Services.AddLogging(loggingBuilder => {
 // Add Repositories
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<IMoveRepository, MoveRepository>();
+builder.Services.AddScoped<INatureRepository, NatureRepository>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 
@@ -121,36 +130,44 @@ var app = builder.Build();
 
 
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
-using (var scope = scopeFactory.CreateScope()) {
-    // Add Seed Data to DB
-    var dbInitializer = scope.ServiceProvider.GetService<DbInitializer>()!;
-    dbInitializer.SeedAll();
-    
 
-    // Development tool to write Database to csv files
-    // Writes DB data for each model to a corresponding csv file in /Data/WriteData
-    if (builder.Configuration["WRITE_TO_CSV"] == "TRUE")
+
+if ((args.Length == 1) && args[0] == "seed")
+{
+    // Add Seed Data to DB
+    using (var scope = scopeFactory.CreateScope()) 
+    {
+        var dbInitializer = scope.ServiceProvider.GetService<DbInitializer>()!;
+        dbInitializer.SeedAll();
+    }
+}
+else if ((args.Length == 1) && args[0] == "dbtocsv")
+{
+    // Write static data to csv
+    using (var scope = scopeFactory.CreateScope()) 
     {
         var dbToCSV = scope.ServiceProvider.GetService<DbToCSV>()!;
         dbToCSV.WriteAllToCSV();
     }
-
 }
-
-
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+else
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Run app
+
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

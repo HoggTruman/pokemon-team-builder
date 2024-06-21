@@ -1,5 +1,4 @@
-using api.Data;
-using api.Interfaces;
+using api.Interfaces.Repository;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
