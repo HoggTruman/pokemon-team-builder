@@ -28,6 +28,7 @@ public class DbToCSV
             WriteMoveEffect(context);
             WriteGender(context);
             WriteItem(context);
+            WriteNature(context);
 
             WritePokemonPkmnType(context);
             WritePokemonMove(context);
@@ -212,6 +213,26 @@ public class DbToCSV
         {
             var records = context.Item.ToList();
             csv.Context.RegisterClassMap<ItemCSVMap>();
+            csv.WriteRecords(records);
+            Console.WriteLine($"File written to {path}");
+        }
+    }
+
+        private void WriteNature(ApplicationDbContext context)
+    {
+        const string path = @"Data\WriteData\nature.csv";
+
+        if (File.Exists(path))
+        {
+            Console.WriteLine($"File already exists at {path}");
+            return;
+        }
+
+        using (var writer = new StreamWriter(path))
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        {
+            var records = context.Nature.ToList();
+            csv.Context.RegisterClassMap<NatureCSVMap>();
             csv.WriteRecords(records);
             Console.WriteLine($"File written to {path}");
         }
