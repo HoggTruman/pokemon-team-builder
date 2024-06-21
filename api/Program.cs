@@ -115,6 +115,7 @@ builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<IMoveRepository, MoveRepository>();
 builder.Services.AddScoped<INatureRepository, NatureRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<IPkmnTypeRepository, PkmnTypeRepository>();
 
 
 builder.Services.AddScoped<ITokenService, TokenService>();
