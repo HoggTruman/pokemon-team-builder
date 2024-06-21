@@ -130,36 +130,44 @@ var app = builder.Build();
 
 
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
-using (var scope = scopeFactory.CreateScope()) {
-    // Add Seed Data to DB
-    var dbInitializer = scope.ServiceProvider.GetService<DbInitializer>()!;
-    dbInitializer.SeedAll();
-    
 
-    // Development tool to write Database to csv files
-    // Writes DB data for each model to a corresponding csv file in /Data/WriteData
-    if (builder.Configuration["WRITE_TO_CSV"] == "TRUE")
+
+if ((args.Length == 1) && args[0] == "seed")
+{
+    // Add Seed Data to DB
+    using (var scope = scopeFactory.CreateScope()) 
+    {
+        var dbInitializer = scope.ServiceProvider.GetService<DbInitializer>()!;
+        dbInitializer.SeedAll();
+    }
+}
+else if ((args.Length == 1) && args[0] == "dbtocsv")
+{
+    // Write static data to csv
+    using (var scope = scopeFactory.CreateScope()) 
     {
         var dbToCSV = scope.ServiceProvider.GetService<DbToCSV>()!;
         dbToCSV.WriteAllToCSV();
     }
-
 }
-
-
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+else
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Run app
+
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
