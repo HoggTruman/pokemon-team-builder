@@ -1,10 +1,13 @@
+using System.Security.Claims;
 using api.Interfaces.Repository;
 using api.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
 [ApiController]
+[Route("team")]
 public class TeamController : ControllerBase
 {
     private readonly ITeamRepository _repository;
@@ -15,10 +18,13 @@ public class TeamController : ControllerBase
     }
 
 
-    [HttpGet("{userName}")]
-    public IActionResult GetAllByUserName([FromRoute] string userName)
+    [HttpGet]
+    [Authorize]
+    public IActionResult GetUserTeams()
     {
-        var teams = _repository.GetAllByUserName(userName);
+        var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+
+        var teams = _repository.GetTeamsByUserName(userName);
 
         if (teams == null)
         {
@@ -26,6 +32,23 @@ public class TeamController : ControllerBase
         }
             
 
-        return Ok(teams.Select(x => x.toGetUserTeamsDTO()));
+        return Ok(teams.Select(x => x.ToGetUserTeamsDTO()));
+    }
+
+
+    [HttpGet("{id:int}")]
+    [Authorize]
+    public IActionResult GetUserTeamById([FromRoute] int id)
+    {
+        var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+
+        var team = _repository.GetTeamByUserNameAndId(userName, id);
+
+        if (team == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(team.ToGetUserTeamDTO());
     }
 }

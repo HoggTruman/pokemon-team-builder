@@ -16,18 +16,11 @@ public class TeamRepository : ITeamRepository
 
     // used for team select page so no need to include pokemon at this point??
     // maybe include pokemon icons at some point though??
-    public List<Team>? GetAllByUserName(string userName)
+    public List<Team> GetTeamsByUserName(string userName)
     {
-        var user = _context.Users
-            .Include(x => x.Teams)
-            .FirstOrDefault(x => x.UserName == userName);
-
-        if (user == null)
-        {
-            return null;
-        }
-
-        var teams = user.Teams
+        var teams = _context.Team
+            .Include(x => x.AppUser)
+            .Where(x => x.AppUser.UserName == userName)
             .ToList();
 
         return teams;
@@ -35,11 +28,12 @@ public class TeamRepository : ITeamRepository
 
 
     // used to load a specific team for editing
-    public Team? GetById(int id)
+    public Team? GetTeamByUserNameAndId(string username, int id)
     {
         var team = _context.Team
-            .Include(x => x.UserPokemon)                                // PROBABLY NEEDS A MILLION INCLUDES
-            .FirstOrDefault(x => x.Id == id);
+            .Include(x => x.UserPokemon)   // PROBABLY NEEDS A MILLION INCLUDES
+            .Include(x => x.AppUser)
+            .FirstOrDefault(x => x.AppUser.UserName == username && x.Id == id);
 
         return team;
     }
