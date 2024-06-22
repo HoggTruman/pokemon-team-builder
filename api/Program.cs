@@ -123,7 +123,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 
 
 
-builder.Services.AddScoped<IDbInitializer, RawDbInitializer>();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<DbToCSV>();
 
 
