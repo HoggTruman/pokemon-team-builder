@@ -294,8 +294,8 @@ public class DbToCSV
         using (var writer = new StreamWriter(path))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
-            var records = context.Ability.ToList();
-            csv.Context.RegisterClassMap<AbilityCSVMap>();
+            var records = context.PokemonAbility.ToList();
+            csv.Context.RegisterClassMap<PokemonAbilityCSVMap>();
             csv.WriteRecords(records);
             Console.WriteLine($"File written to {path}");
         }
