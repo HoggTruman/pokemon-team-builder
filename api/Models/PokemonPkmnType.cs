@@ -1,16 +1,18 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace api.Models
-{
-    [Table("PokemonPkmnType")]
-    public class PokemonPkmnType
-    {
-        public int PokemonId { get; set; }
-        public int PkmnTypeId { get; set; }
-        
-        public int Slot { get; set; }
+namespace api.Models;
 
-        public Pokemon Pokemon { get; set; } = default!;
-        public PkmnType PkmnType { get; set; } = default!;
-    }
+[Table("PokemonPkmnType")]
+public class PokemonPkmnType
+{
+    [ForeignKey("Pokemon")]
+    public int PokemonId { get; set; }
+    public Pokemon Pokemon { get; set; } = default!;
+
+    [ForeignKey("PkmnType")]
+    public int PkmnTypeId { get; set; }
+    public PkmnType PkmnType { get; set; } = default!;
+    
+    public int Slot { get; set; }
+
 }

@@ -5,13 +5,14 @@ namespace api.Models;
 [Table("PokemonAbility")]
 public class PokemonAbility
 {
-    [ForeignKey("PokemonId")]
+    [ForeignKey("Pokemon")]
     public int PokemonId { get; set; }
-    [ForeignKey("AbilityId")]
+    public Pokemon Pokemon { get; set; } = default!;
+
+    [ForeignKey("Ability")]
     public int AbilityId { get; set; }
+    public Ability Ability { get; set; } = default!;
     
     public int Slot { get; set; }
 
-    public Pokemon Pokemon { get; set; } = default!;
-    public Ability Ability { get; set; } = default!;
 }

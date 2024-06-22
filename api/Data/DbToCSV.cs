@@ -1,6 +1,5 @@
 using System.Globalization;
 using api.Mappers.CSVClassMaps;
-using api.Models;
 using CsvHelper;
 
 namespace api.Data;
@@ -13,6 +12,9 @@ public class DbToCSV
     {
         _scopeFactory = scopeFactory;
     }
+
+    private const string WriteDir = @"Data\WriteData\";
+
 
     public void WriteAllToCSV()
     {
@@ -40,7 +42,7 @@ public class DbToCSV
 
     private void WritePokemon(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\pokemon.csv";
+        const string path = WriteDir + @"pokemon.csv";
 
         if (File.Exists(path))
         {
@@ -60,7 +62,7 @@ public class DbToCSV
 
     private void WritePkmnType(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\pkmn_type.csv";
+        const string path = WriteDir + @"pkmn_type.csv";
 
         if (File.Exists(path))
         {
@@ -80,7 +82,7 @@ public class DbToCSV
 
     private void WriteBaseStats(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\base_stats.csv";
+        const string path = WriteDir + @"base_stats.csv";
 
         if (File.Exists(path))
         {
@@ -100,7 +102,7 @@ public class DbToCSV
 
     private void WriteAbility(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\ability.csv";
+        const string path = WriteDir + @"ability.csv";
 
         if (File.Exists(path))
         {
@@ -120,7 +122,7 @@ public class DbToCSV
 
     private void WriteMove(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\move.csv";
+        const string path = WriteDir + @"move.csv";
 
         if (File.Exists(path))
         {
@@ -140,7 +142,7 @@ public class DbToCSV
 
     private void WriteDamageClass(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\damage_class.csv";
+        const string path = WriteDir + @"damage_class.csv";
 
         if (File.Exists(path))
         {
@@ -160,7 +162,7 @@ public class DbToCSV
 
     private void WriteMoveEffect(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\move_effect.csv";
+        const string path = WriteDir + @"move_effect.csv";
 
         if (File.Exists(path))
         {
@@ -180,7 +182,7 @@ public class DbToCSV
 
     private void WriteGender(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\gender.csv";
+        const string path = WriteDir + @"gender.csv";
 
         if (File.Exists(path))
         {
@@ -200,7 +202,7 @@ public class DbToCSV
 
     private void WriteItem(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\item.csv";
+        const string path = WriteDir + @"item.csv";
 
         if (File.Exists(path))
         {
@@ -220,7 +222,7 @@ public class DbToCSV
 
         private void WriteNature(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\nature.csv";
+        const string path = WriteDir + @"nature.csv";
 
         if (File.Exists(path))
         {
@@ -243,7 +245,7 @@ public class DbToCSV
 
     private void WritePokemonPkmnType(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\pokemon_pkmn_type.csv";
+        const string path = WriteDir + @"pokemon_pkmn_type.csv";
 
         if (File.Exists(path))
         {
@@ -263,7 +265,7 @@ public class DbToCSV
 
     private void WritePokemonMove(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\pokemon_move.csv";
+        const string path = WriteDir + @"pokemon_move.csv";
 
         if (File.Exists(path))
         {
@@ -283,7 +285,7 @@ public class DbToCSV
 
     private void WritePokemonAbility(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\pokemon_ability.csv";
+        const string path = WriteDir + @"pokemon_ability.csv";
 
         if (File.Exists(path))
         {
@@ -294,8 +296,8 @@ public class DbToCSV
         using (var writer = new StreamWriter(path))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
-            var records = context.Ability.ToList();
-            csv.Context.RegisterClassMap<AbilityCSVMap>();
+            var records = context.PokemonAbility.ToList();
+            csv.Context.RegisterClassMap<PokemonAbilityCSVMap>();
             csv.WriteRecords(records);
             Console.WriteLine($"File written to {path}");
         }
@@ -303,7 +305,7 @@ public class DbToCSV
 
     private void WritePokemonGender(ApplicationDbContext context)
     {
-        const string path = @"Data\WriteData\pokemon_gender.csv";
+        const string path = WriteDir + @"pokemon_gender.csv";
 
         if (File.Exists(path))
         {
