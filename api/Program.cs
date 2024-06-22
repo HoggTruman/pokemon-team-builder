@@ -123,7 +123,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 
 
 
-builder.Services.AddScoped<DbInitializer>();
+builder.Services.AddScoped<IDbInitializer, RawDbInitializer>();
 builder.Services.AddScoped<DbToCSV>();
 
 
@@ -139,7 +139,7 @@ if ((args.Length == 1) && args[0] == "seed")
     // Add Seed Data to DB
     using (var scope = scopeFactory.CreateScope()) 
     {
-        var dbInitializer = scope.ServiceProvider.GetService<DbInitializer>()!;
+        var dbInitializer = scope.ServiceProvider.GetService<IDbInitializer>()!;
         dbInitializer.SeedAll();
     }
 }
