@@ -1,7 +1,10 @@
 using System.Security.Claims;
+using api.DTOs.Team;
 using api.Interfaces.Repository;
 using api.Mappers;
+using api.Models.User;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
@@ -11,10 +14,12 @@ namespace api.Controllers;
 public class TeamController : ControllerBase
 {
     private readonly ITeamRepository _repository;
+    private readonly UserManager<AppUser> _userManager;
 
-    public TeamController(ITeamRepository repository)
+    public TeamController(ITeamRepository repository, UserManager<AppUser> userManager)
     {
         _repository = repository;
+        _userManager = userManager;
     }
 
 
@@ -48,6 +53,21 @@ public class TeamController : ControllerBase
         {
             return NotFound();
         }
+
+        return Ok(team.ToGetUserTeamDTO());
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> CreateTeam([FromBody] CreateTeamDTO createTeamDTO)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+        var appUser = await _userManager.FindByNameAsync(userName);
+        
+        var team = _repository.CreateTeam(createTeamDTO, appUser.Id);
 
         return Ok(team.ToGetUserTeamDTO());
     }

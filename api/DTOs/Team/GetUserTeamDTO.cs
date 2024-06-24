@@ -9,5 +9,5 @@ public class GetUserTeamDTO
     public string TeamName { get; set; } = "";
 
     [MaxLength(6, ErrorMessage = "A team can not have more than 6 pokemon")]
-    public List<UserPokemonDTO> UserPokemon { get; set; } = [];
+    public List<GetUserPokemonDTO> UserPokemon { get; set; } = [];
 }

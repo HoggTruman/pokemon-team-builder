@@ -9,7 +9,7 @@ public interface ITeamRepository
 
     Team? GetTeamByUserNameAndId(string username, int id);
 
-    Team? CreateTeam(CreateTeamDTO createTeamDTO);
+    Team? CreateTeam(CreateTeamDTO createTeamDTO, string userId);
 
     Team? UpdateTeamById(int id, UpdateTeamDTO updateTeamDTO);
 

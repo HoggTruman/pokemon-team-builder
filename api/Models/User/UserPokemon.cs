@@ -13,28 +13,28 @@ public class UserPokemon
 
     [ForeignKey("Team")]
     public int TeamId { get; set; }
-    public Team Team { get; set; } = default!;
+    public Team Team { get; set; } = null!;
 
     public int TeamSlot { get; set; }
 
 
     [ForeignKey("Pokemon")]
-    public int PokemonId { get; set; }
-    public Pokemon Pokemon { get; set; } = default!;
+    public int? PokemonId { get; set; }
+    public Pokemon? Pokemon { get; set; } = null!;
 
     public string? Nickname { get; set; }
 
-    public int Level { get; set; }
+    public int Level { get; set; } = 100;
 
     [ForeignKey("Gender")]
-    public int GenderId { get; set; }
-    public Gender Gender { get; set; } = default!;
+    public int? GenderId { get; set; }
+    public Gender? Gender { get; set; } = null!;
 
     public bool Shiny { get; set; }
 
     [ForeignKey("TeraPkmnType")]
-    public int TeraPkmnTypeId { get; set; }
-    public PkmnType TeraPkmnType { get; set; } = default!;
+    public int? TeraPkmnTypeId { get; set; }
+    public PkmnType? TeraPkmnType { get; set; } = null!;
 
 
     [ForeignKey("Item")]
@@ -42,8 +42,8 @@ public class UserPokemon
     public Item? Item { get; set; }
 
     [ForeignKey("Ability")]
-    public int AbilityId { get; set; }
-    public Ability Ability { get; set; } = default!;
+    public int? AbilityId { get; set; }
+    public Ability? Ability { get; set; } = null!;
 
 
     [ForeignKey("Move1")]
@@ -64,8 +64,8 @@ public class UserPokemon
 
 
     [ForeignKey("Nature")]
-    public int NatureId { get; set; }
-    public Nature Nature { get; set; } = default!;
+    public int? NatureId { get; set; }
+    public Nature? Nature { get; set; } = null!;
 
 
     public int HPEV { get; set; }
@@ -76,10 +76,10 @@ public class UserPokemon
     public int SpeedEV { get; set; }
 
 
-    public int HPIV { get; set; }
-    public int AttackIV { get; set; }
-    public int DefenseIV { get; set; }
-    public int SpecialAttackIV { get; set; }
-    public int SpecialDefenseIV { get; set; }
-    public int SpeedIV { get; set; }
+    public int HPIV { get; set; } = 31;
+    public int AttackIV { get; set; } = 31;
+    public int DefenseIV { get; set; } = 31;
+    public int SpecialAttackIV { get; set; } = 31;
+    public int SpecialDefenseIV { get; set; } = 31;
+    public int SpeedIV { get; set; } = 31;
 }   
