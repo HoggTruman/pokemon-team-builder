@@ -1,4 +1,4 @@
-using api.Models;
+using api.Models.Static;
 using api.DTOs.BaseStats;
 
 

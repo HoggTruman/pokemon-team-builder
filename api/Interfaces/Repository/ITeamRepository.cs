@@ -5,13 +5,13 @@ namespace api.Interfaces.Repository;
 
 public interface ITeamRepository
 {
-    List<Team>? GetTeamsByUserName(string userName);
+    List<Team>? GetTeams(string userId);
 
-    Team? GetTeamByUserNameAndId(string username, int id);
+    Team? GetTeamById(int id, string userId);
 
-    Team? CreateTeam(CreateTeamDTO createTeamDTO);
+    Team CreateTeam(CreateUpdateTeamDTO createTeamDTO, string userId);
 
-    Team? UpdateTeamById(int id, UpdateTeamDTO updateTeamDTO);
+    Team? UpdateTeam(CreateUpdateTeamDTO updateTeamDTO, int id, string userId);
 
-    void DeleteTeamById(int id); // Will need to kill orphans left in UserPokemon
+    Team? DeleteTeamById(int id, string userId);
 }

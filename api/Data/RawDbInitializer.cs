@@ -1,6 +1,6 @@
 using System.Globalization;
 using CsvHelper;
-using api.Models;
+using api.Models.Static;
 using api.Mappers.CSVClassMaps;
 using api.Interfaces;
 

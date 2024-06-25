@@ -1,5 +1,5 @@
 using api.Data;
-using api.Models;
+using api.Models.Static;
 using api.Interfaces.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

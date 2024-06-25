@@ -1,26 +1,29 @@
 using api.Data;
 using api.DTOs.Team;
 using api.Interfaces.Repository;
+using api.Mappers;
 using api.Models.User;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 public class TeamRepository : ITeamRepository
 {
     private readonly ApplicationDbContext _context;
+    private readonly UserManager<AppUser> _userManager;
 
-    public TeamRepository(ApplicationDbContext context)
+    public TeamRepository(ApplicationDbContext context, UserManager<AppUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
 
     // used for team select page so no need to include pokemon at this point??
     // maybe include pokemon icons at some point though??
-    public List<Team> GetTeamsByUserName(string userName)
+    public List<Team> GetTeams(string userId)
     {
         var teams = _context.Team
-            .Include(x => x.AppUser)
-            .Where(x => x.AppUser.UserName == userName)
+            .Where(x => x.AppUserId == userId)
             .ToList();
 
         return teams;
@@ -28,32 +31,75 @@ public class TeamRepository : ITeamRepository
 
 
     // used to load a specific team for editing
-    public Team? GetTeamByUserNameAndId(string username, int id)
+    public Team? GetTeamById(int id, string userId)
     {
         var team = _context.Team
-            .Include(x => x.UserPokemon)   // PROBABLY NEEDS A MILLION INCLUDES
-            .Include(x => x.AppUser)
-            .FirstOrDefault(x => x.AppUser.UserName == username && x.Id == id);
+            .Include(x => x.UserPokemon)
+            .FirstOrDefault(x => x.AppUserId == userId && x.Id == id);
 
         return team;
     }
 
 
-    public Team? UpdateTeamById(int id, UpdateTeamDTO updateTeamDTO)
+    public Team CreateTeam(CreateUpdateTeamDTO createTeamDTO, string userId)
     {
-        throw new NotImplementedException();
+        var team = new Team
+        {
+            AppUserId = userId,
+            TeamName = createTeamDTO.TeamName,
+        };
+
+        var userPokemon = createTeamDTO.UserPokemon.Select(x => x.ToUserPokemon()).ToList();
+        userPokemon.ForEach(x => x.TeamId = team.Id);
+
+        team.UserPokemon = userPokemon; 
+
+
+        _context.Team.Add(team);
+        _context.SaveChanges();
+
+        return team;
     }
 
 
-    public Team? CreateTeam(CreateTeamDTO createTeamDTO)
+    public Team? UpdateTeam(CreateUpdateTeamDTO updateTeamDTO, int id, string userId)
     {
-        throw new NotImplementedException();
+        var team = _context.Team
+            .Include(x => x.UserPokemon)
+            .FirstOrDefault(x => x.AppUserId == userId && x.Id == id);
+
+        if (team == null)
+        {
+            return null;
+        }
+
+        team.TeamName = updateTeamDTO.TeamName;
+
+        _context.UserPokemon.RemoveRange(team.UserPokemon);
+
+        var newUserPokemon = updateTeamDTO.UserPokemon.Select(x => x.ToUserPokemon()).ToList();
+        newUserPokemon.ForEach(x => x.TeamId = team.Id);
+
+        team.UserPokemon = newUserPokemon;
+
+
+        _context.SaveChanges();
+
+        return team;
     }
 
 
-    public void DeleteTeamById(int id)
+    public Team? DeleteTeamById(int id, string userId)
     {
-        throw new NotImplementedException();
-    }
+        var team = _context.Team
+            .FirstOrDefault(x => x.AppUserId == userId && x.Id == id);
 
+        if (team != null)
+        {
+            _context.Team.Remove(team);
+            _context.SaveChanges();
+        }
+
+        return team;
+    }
 }

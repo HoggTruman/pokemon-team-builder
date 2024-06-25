@@ -22,7 +22,7 @@ public static class TeamMappers
             Id = teamModel.Id,
             TeamName = teamModel.TeamName,
             UserPokemon = teamModel.UserPokemon
-                .Select(x => x.ToUserPokemonDTO())
+                .Select(x => x.ToGetUserPokemonDTO())
                 .OrderBy(x => x.TeamSlot)
                 .ToList()
                 

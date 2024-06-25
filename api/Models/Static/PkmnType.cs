@@ -1,16 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace api.Models;
+namespace api.Models.Static;
 
-[Table("MoveEffect")]
-public class MoveEffect
+[Table("PkmnType")]
+public class PkmnType
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public int Id { get; set; }
-    public string Description { get; set; } = "";
+    public required string Identifier { get; set; }
 
-
-    public List<Move> Moves { get; } = [];        
+    public List<Pokemon> Pokemon { get; } = [];
 }

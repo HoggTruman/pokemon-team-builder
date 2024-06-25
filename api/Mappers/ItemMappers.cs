@@ -1,5 +1,5 @@
 using api.DTOs.Item;
-using api.Models;
+using api.Models.Static;
 
 namespace api.Mappers;
 

@@ -1,7 +1,6 @@
 using api.DTOs.Account;
 using api.Interfaces;
 using api.Models.User;
-using api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +21,8 @@ public class AccountController : ControllerBase
         _signInManager = signInManager;
         _tokenService = tokenService;
     }
+
+
 
 
     [HttpPost("login")]
@@ -47,10 +48,11 @@ public class AccountController : ControllerBase
                 );
             }
         }
-            
 
         return Unauthorized("Incorrect username/password");
     }
+
+
 
 
     [HttpPost("register")]

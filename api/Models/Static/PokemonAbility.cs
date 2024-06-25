@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace api.Models;
+namespace api.Models.Static;
 
 [Table("PokemonAbility")]
 public class PokemonAbility
