@@ -40,7 +40,8 @@ public class TeamRepository : ITeamRepository
         return team;
     }
 
-    public Team CreateTeam(CreateTeamDTO createTeamDTO, string userId)
+
+    public Team CreateTeam(CreateUpdateTeamDTO createTeamDTO, string userId)
     {
         var team = new Team
         {
@@ -60,11 +61,12 @@ public class TeamRepository : ITeamRepository
         return team;
     }
 
-    public Team? UpdateTeam(UpdateTeamDTO updateTeamDTO, string userId)
+
+    public Team? UpdateTeam(CreateUpdateTeamDTO updateTeamDTO, int id, string userId)
     {
         var team = _context.Team
             .Include(x => x.UserPokemon)
-            .FirstOrDefault(x => x.AppUserId == userId && x.Id == updateTeamDTO.Id);
+            .FirstOrDefault(x => x.AppUserId == userId && x.Id == id);
 
         if (team == null)
         {
@@ -72,7 +74,6 @@ public class TeamRepository : ITeamRepository
         }
 
         team.TeamName = updateTeamDTO.TeamName;
-
 
         _context.UserPokemon.RemoveRange(team.UserPokemon);
 
@@ -86,9 +87,6 @@ public class TeamRepository : ITeamRepository
 
         return team;
     }
-
-
-
 
 
     public Team? DeleteTeamById(int id, string userId)

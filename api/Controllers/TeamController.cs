@@ -68,7 +68,7 @@ public class TeamController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> CreateTeam([FromBody] CreateTeamDTO createTeamDTO)
+    public async Task<IActionResult> CreateTeam([FromBody] CreateUpdateTeamDTO createTeamDTO)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -85,9 +85,9 @@ public class TeamController : ControllerBase
     }
 
 
-    [HttpPut]
+    [HttpPut("{id:int}")]
     [Authorize]
-    public async Task<IActionResult> UpdateTeam([FromBody] UpdateTeamDTO updateTeamDTO)  // MOVE team id into route
+    public async Task<IActionResult> UpdateTeam([FromBody] CreateUpdateTeamDTO updateTeamDTO, [FromRoute] int id)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -98,7 +98,7 @@ public class TeamController : ControllerBase
         if (appUser == null)
             return Unauthorized();
 
-        var team = _repository.UpdateTeam(updateTeamDTO, appUser.Id);
+        var team = _repository.UpdateTeam(updateTeamDTO, id, appUser.Id);
 
         if (team == null)
             return NotFound();

@@ -3,7 +3,7 @@ using api.DTOs.UserPokemon;
 
 namespace api.DTOs.Team;
 
-public class CreateTeamDTO
+public class CreateUpdateTeamDTO
 {
     public string TeamName { get; set; } = "";
 
