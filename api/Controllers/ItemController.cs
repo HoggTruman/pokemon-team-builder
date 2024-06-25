@@ -1,6 +1,5 @@
 using api.Interfaces.Repository;
 using api.Mappers;
-using api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;

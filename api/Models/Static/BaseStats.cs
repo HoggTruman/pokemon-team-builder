@@ -6,7 +6,7 @@ COULD THIS JUST BE INCLUDED IN POKEMON?? NOT SURE IT IS NECESSARY TO HAVE SEPARA
 */
 
 
-namespace api.Models ;
+namespace api.Models.Static;
 
 [Table("BaseStats")]
 public class BaseStats

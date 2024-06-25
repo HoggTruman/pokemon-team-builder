@@ -1,14 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace api.Models;
+namespace api.Models.Static;
 
-[Table("Item")]
-public class Item
+[Table("Gender")]
+public class Gender
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public int Id { get; set; }
     public string Identifier { get; set; } = "";
-    public string Effect { get; set; } = "";
+
+    public List<Pokemon> Pokemon { get; set; } = [];
+    public List<PokemonGender> PokemonGenders = [];
 }
