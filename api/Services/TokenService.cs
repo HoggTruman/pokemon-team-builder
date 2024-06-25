@@ -15,7 +15,7 @@ public class TokenService : ITokenService
     {
         _configuration = configuration;
         _key = new SymmetricSecurityKey(
-            System.Text.Encoding.UTF8.GetBytes(configuration["SIGNING_KEY"]) // get from .env
+            System.Text.Encoding.UTF8.GetBytes(configuration["SIGNING_KEY"]!) // get from .env
         );
     }
 
@@ -23,7 +23,7 @@ public class TokenService : ITokenService
     {
         var claims = new List<Claim>()
         {
-            new Claim(JwtRegisteredClaimNames.GivenName, appUser.UserName)
+            new Claim(JwtRegisteredClaimNames.GivenName, appUser.UserName!)
         };
 
         var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
