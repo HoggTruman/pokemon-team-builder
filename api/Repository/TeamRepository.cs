@@ -91,9 +91,17 @@ public class TeamRepository : ITeamRepository
 
 
 
-    public Team DeleteTeamById(int id)
+    public Team? DeleteTeamById(int id, string userId)
     {
-        throw new NotImplementedException();
-    }
+        var team = _context.Team
+            .FirstOrDefault(x => x.AppUserId == userId && x.Id == id);
 
+        if (team != null)
+        {
+            _context.Team.Remove(team);
+            _context.SaveChanges();
+        }
+
+        return team;
+    }
 }

@@ -13,5 +13,5 @@ public interface ITeamRepository
 
     Team? UpdateTeam(UpdateTeamDTO updateTeamDTO, string userId);
 
-    Team? DeleteTeamById(int id); // Will need to kill orphans left in UserPokemon
+    Team? DeleteTeamById(int id, string userId);
 }

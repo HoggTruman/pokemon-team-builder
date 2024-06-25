@@ -64,7 +64,7 @@ public class TeamController : ControllerBase
 
         return Ok(team.ToGetUserTeamDTO());
     }
-    
+
 
     [HttpPost]
     [Authorize]
@@ -81,13 +81,13 @@ public class TeamController : ControllerBase
         
         var team = _repository.CreateTeam(createTeamDTO, appUser.Id);
 
-        return Ok(team.ToGetUserTeamDTO());
+        return CreatedAtAction(nameof(GetUserTeamById), team.ToGetUserTeamDTO());
     }
 
 
     [HttpPut]
     [Authorize]
-    public async Task<IActionResult> UpdateTeam([FromBody] UpdateTeamDTO updateTeamDTO)
+    public async Task<IActionResult> UpdateTeam([FromBody] UpdateTeamDTO updateTeamDTO)  // MOVE team id into route
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -104,5 +104,27 @@ public class TeamController : ControllerBase
             return NotFound();
 
         return Ok(team.ToGetUserTeamDTO());
+    }
+
+
+    [HttpDelete("{id:int}")]
+    [Authorize]
+    public async Task<IActionResult> DeleteTeam(int id)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+        var appUser = await _userManager.FindByNameAsync(userName);
+
+        if (appUser == null)
+            return Unauthorized();
+
+        var team = _repository.DeleteTeamById(id, appUser.Id);
+
+        if (team == null)
+            return NotFound();
+
+        return NoContent();
     }
 }
