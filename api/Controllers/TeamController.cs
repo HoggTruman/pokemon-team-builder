@@ -30,6 +30,9 @@ public class TeamController : ControllerBase
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
         var appUser = await _userManager.FindByNameAsync(userName);
 
+        if (appUser == null)
+            return Unauthorized();
+
         var teams = _repository.GetTeams(appUser.Id);
 
         if (teams == null)
@@ -49,6 +52,9 @@ public class TeamController : ControllerBase
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
         var appUser = await _userManager.FindByNameAsync(userName);
 
+        if (appUser == null)
+            return Unauthorized();
+
         var team = _repository.GetTeamById(id, appUser.Id);
 
         if (team == null)
@@ -58,6 +64,7 @@ public class TeamController : ControllerBase
 
         return Ok(team.ToGetUserTeamDTO());
     }
+    
 
     [HttpPost]
     [Authorize]
@@ -68,11 +75,15 @@ public class TeamController : ControllerBase
 
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
         var appUser = await _userManager.FindByNameAsync(userName);
+
+        if (appUser == null)
+            return Unauthorized();
         
         var team = _repository.CreateTeam(createTeamDTO, appUser.Id);
 
         return Ok(team.ToGetUserTeamDTO());
     }
+
 
     [HttpPut]
     [Authorize]
@@ -83,6 +94,9 @@ public class TeamController : ControllerBase
 
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
         var appUser = await _userManager.FindByNameAsync(userName);
+
+        if (appUser == null)
+            return Unauthorized();
 
         var team = _repository.UpdateTeam(updateTeamDTO, appUser.Id);
 
