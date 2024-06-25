@@ -25,11 +25,12 @@ public class TeamController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public IActionResult GetUserTeams()
+    public async Task<IActionResult> GetUserTeams()
     {
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+        var appUser = await _userManager.FindByNameAsync(userName);
 
-        var teams = _repository.GetTeamsByUserName(userName);
+        var teams = _repository.GetTeams(appUser.Id);
 
         if (teams == null)
         {
@@ -43,11 +44,12 @@ public class TeamController : ControllerBase
 
     [HttpGet("{id:int}")]
     [Authorize]
-    public IActionResult GetUserTeamById([FromRoute] int id)
+    public async Task<IActionResult> GetUserTeamById([FromRoute] int id)
     {
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+        var appUser = await _userManager.FindByNameAsync(userName);
 
-        var team = _repository.GetTeamByUserNameAndId(userName, id);
+        var team = _repository.GetTeamById(id, appUser.Id);
 
         if (team == null)
         {
@@ -68,6 +70,24 @@ public class TeamController : ControllerBase
         var appUser = await _userManager.FindByNameAsync(userName);
         
         var team = _repository.CreateTeam(createTeamDTO, appUser.Id);
+
+        return Ok(team.ToGetUserTeamDTO());
+    }
+
+    [HttpPut]
+    [Authorize]
+    public async Task<IActionResult> UpdateTeam([FromBody] UpdateTeamDTO updateTeamDTO)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+        var appUser = await _userManager.FindByNameAsync(userName);
+
+        var team = _repository.UpdateTeam(updateTeamDTO, appUser.Id);
+
+        if (team == null)
+            return NotFound();
 
         return Ok(team.ToGetUserTeamDTO());
     }
