@@ -25,7 +25,7 @@ public class TeamController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetUserTeams()
+    public async Task<IActionResult> GetTeams()
     {
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
         var appUser = await _userManager.FindByNameAsync(userName);
@@ -47,7 +47,7 @@ public class TeamController : ControllerBase
 
     [HttpGet("{id:int}")]
     [Authorize]
-    public async Task<IActionResult> GetUserTeamById([FromRoute] int id)
+    public async Task<IActionResult> GetTeamById([FromRoute] int id)
     {
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
         var appUser = await _userManager.FindByNameAsync(userName);
@@ -81,7 +81,7 @@ public class TeamController : ControllerBase
         
         var team = _repository.CreateTeam(createTeamDTO, appUser.Id);
 
-        return CreatedAtAction(nameof(GetUserTeamById), team.ToGetUserTeamDTO());
+        return CreatedAtAction(nameof(GetTeamById), new { id = team.Id }, team.ToGetUserTeamDTO());
     }
 
 

@@ -25,5 +25,17 @@ namespace api.Controllers
 
             return Ok(natures);
         }
+
+
+        [HttpGet("{id:int}")]
+        public IActionResult GetById(int id)
+        {
+            var nature = _repository.GetById(id);
+
+            if (nature == null)
+                return NotFound();
+
+            return Ok(nature.ToNatureDTO());
+        }
     }
 }
