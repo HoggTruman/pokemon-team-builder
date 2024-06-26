@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace api.DTOs.UserPokemon;
 
-public class CreateUserPokemonDTO
+public class CreateUserPokemonDTO : IValidatableObject
 {
     // public int TeamId { get; set; }
 
@@ -56,6 +56,8 @@ public class CreateUserPokemonDTO
     public int? NatureId { get; set; }
 
 
+
+
     [DefaultValue(0)]
     [Range(0, 252, ErrorMessage = "{0} must be between {1} and {2}")]
     public int HPEV { get; set; }
@@ -81,6 +83,8 @@ public class CreateUserPokemonDTO
     public int SpeedEV { get; set; }
 
 
+
+
     [DefaultValue(31)]
     [Range(0, 31, ErrorMessage = "{0} must be between {1} and {2}")]
     public int HPIV { get; set; } = 31;
@@ -104,4 +108,33 @@ public class CreateUserPokemonDTO
     [DefaultValue(31)]
     [Range(0, 31, ErrorMessage = "{0} must be between {1} and {2}")]
     public int SpeedIV { get; set; } = 31;
+
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        const int MAX_EV_TOTAL = 510;
+
+        int evSum = HPEV + AttackEV + DefenseEV + SpecialAttackEV + SpecialDefenseEV + SpeedEV;
+
+        if (evSum > MAX_EV_TOTAL)
+        {
+            yield return new ValidationResult(
+                "The total of a pokemon's EVs can not exceed 510"
+            );
+        }
+
+
+
+        var moveIdList = new List<int?> {Move1Id, Move2Id, Move3Id, Move4Id};
+        moveIdList.RemoveAll(x => x == null);
+        var moveIdSet = new HashSet<int?>(moveIdList);
+
+        if (moveIdList.Count != moveIdSet.Count)
+        {
+            yield return new ValidationResult(
+                "Specified pokemon moves must be unique"
+            );
+        }
+        
+    }
 }
