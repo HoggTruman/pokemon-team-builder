@@ -3,6 +3,7 @@ using CsvHelper;
 using api.Models.Static;
 using api.Mappers.CSVClassMaps;
 using api.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace api.Data;
@@ -25,6 +26,9 @@ public class RawDbInitializer : IDbInitializer
         using(var scope = _scopeFactory.CreateScope())
         using(var context = scope.ServiceProvider.GetService<ApplicationDbContext>()!)
         {
+            ClearTables(context);
+            
+
             AddPokemon(context);
             AddPkmnType(context);
             AddBaseStats(context);
@@ -49,6 +53,28 @@ public class RawDbInitializer : IDbInitializer
 
         }
     }
+    
+
+    private void ClearTables(ApplicationDbContext context)
+    {
+        context.Pokemon.ExecuteDelete();
+        context.PkmnType.ExecuteDelete();
+        context.BaseStats.ExecuteDelete();
+        context.Ability.ExecuteDelete();
+        context.Move.ExecuteDelete();
+        context.DamageClass.ExecuteDelete();
+        context.MoveEffect.ExecuteDelete();
+        context.Gender.ExecuteDelete();
+        context.Item.ExecuteDelete();
+        context.Nature.ExecuteDelete();
+
+        context.PokemonPkmnType.ExecuteDelete();
+        context.PokemonMove.ExecuteDelete();
+        context.PokemonAbility.ExecuteDelete();
+        context.PokemonGender.ExecuteDelete();
+    }
+
+
 
 
     private void AddPokemon(ApplicationDbContext context)
@@ -348,49 +374,45 @@ public class RawDbInitializer : IDbInitializer
                         SpeedMultiplier = 1
                     };
 
-                    if (csv.GetField("increased_stat_id") == csv.GetField("decreased_stat_id"))
+                    if (csv.GetField("increased_stat_id") != csv.GetField("decreased_stat_id"))
                     {
-                        continue;
-                    }
-                        
+                        switch (csv.GetField<int>("increased_stat_id"))
+                        {
+                            case 2:
+                                record.AttackMultiplier = INCREASED_MULTIPLIER;
+                                break;
+                            case 3:
+                                record.DefenseMultiplier = INCREASED_MULTIPLIER;
+                                break;
+                            case 4:
+                                record.SpecialAttackMultiplier = INCREASED_MULTIPLIER;
+                                break;
+                            case 5:
+                                record.SpecialDefenseMultiplier = INCREASED_MULTIPLIER;
+                                break;
+                            case 6:
+                                record.SpeedMultiplier = INCREASED_MULTIPLIER;
+                                break;                                                                        
+                        }
 
-                    switch (csv.GetField<int>("increased_stat_id"))
-                    {
-                        case 2:
-                            record.AttackMultiplier = INCREASED_MULTIPLIER;
-                            break;
-                        case 3:
-                            record.DefenseMultiplier = INCREASED_MULTIPLIER;
-                            break;
-                        case 4:
-                            record.SpecialAttackMultiplier = INCREASED_MULTIPLIER;
-                            break;
-                        case 5:
-                            record.SpecialDefenseMultiplier = INCREASED_MULTIPLIER;
-                            break;
-                        case 6:
-                            record.SpeedMultiplier = INCREASED_MULTIPLIER;
-                            break;                                                                        
-                    }
-
-
-                    switch (csv.GetField<int>("decreased_stat_id"))
-                    {
-                        case 2:
-                            record.AttackMultiplier = DECREASED_MULTIPLIER;
-                            break;
-                        case 3:
-                            record.DefenseMultiplier = DECREASED_MULTIPLIER;
-                            break;
-                        case 4:
-                            record.SpecialAttackMultiplier = DECREASED_MULTIPLIER;
-                            break;
-                        case 5:
-                            record.SpecialDefenseMultiplier = DECREASED_MULTIPLIER;
-                            break;
-                        case 6:
-                            record.SpeedMultiplier = DECREASED_MULTIPLIER;
-                            break;                                                                        
+                        switch (csv.GetField<int>("decreased_stat_id"))
+                        {
+                            case 2:
+                                record.AttackMultiplier = DECREASED_MULTIPLIER;
+                                break;
+                            case 3:
+                                record.DefenseMultiplier = DECREASED_MULTIPLIER;
+                                break;
+                            case 4:
+                                record.SpecialAttackMultiplier = DECREASED_MULTIPLIER;
+                                break;
+                            case 5:
+                                record.SpecialDefenseMultiplier = DECREASED_MULTIPLIER;
+                                break;
+                            case 6:
+                                record.SpeedMultiplier = DECREASED_MULTIPLIER;
+                                break;                                                                        
+                        }
                     }
 
                     records.Add(record);
