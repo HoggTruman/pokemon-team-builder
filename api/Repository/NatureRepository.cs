@@ -22,4 +22,13 @@ public class NatureRepository : INatureRepository
 
         return natures;
     }
+
+    public Nature? GetById(int id)
+    {
+        var nature = _context.Nature
+            .AsNoTracking()
+            .FirstOrDefault(x => x.Id == id);
+
+        return nature;
+    }
 }
