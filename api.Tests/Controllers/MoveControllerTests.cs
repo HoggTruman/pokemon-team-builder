@@ -2,6 +2,7 @@ using api.Controllers;
 using api.Interfaces.Repository;
 using api.Models.Static;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Moq;
 
@@ -16,27 +17,13 @@ public class MoveControllerTests
         _repositoryStub = new Mock<IMoveRepository>();
     }
 
-    private readonly List<Move> testData = 
-    [
-        new()
-        {
-
-        },
-        new()
-        {
-
-        }
-    ];
-
-
+    List<Move> testMoves = TestData.Moves;
 
 
     [Fact]
     public void GetAll_WithNoMoves_ReturnsOk()
     {
         // Arrange
-        const int ExpectedStatusCode = 200;
-
         _repositoryStub.Setup(repo => repo.GetAll())
             .Returns(new List<Move>());
 
@@ -48,7 +35,7 @@ public class MoveControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        statusCodeResult.StatusCode.Should().Be(ExpectedStatusCode);
+        statusCodeResult.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
 
@@ -56,10 +43,8 @@ public class MoveControllerTests
     public void GetAll_WithMoves_ReturnsOk()
     {
         // Arrange
-        const int ExpectedStatusCode = 200;
-
         _repositoryStub.Setup(repo => repo.GetAll())
-            .Returns(testData);
+            .Returns(testMoves);
 
         var controller = new MoveController(_repositoryStub.Object);
 
@@ -69,19 +54,17 @@ public class MoveControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        statusCodeResult.StatusCode.Should().Be(ExpectedStatusCode);
+        statusCodeResult.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
 
-    [Fact]
-    public void GetMovesByPokemonId_WithMatches_ReturnsOk()
+    [Theory]
+    [InlineData(1)]
+    public void GetMovesByPokemonId_WithMatches_ReturnsOk(int testPokemonId)
     {
         // Arrange 
-        const int ExpectedStatusCode = 200;
-        const int testPokemonId = 1;
-
         _repositoryStub.Setup(repo => repo.GetMovesByPokemonId(testPokemonId))
-            .Returns(testData);
+            .Returns(testMoves);
 
         var controller = new MoveController(_repositoryStub.Object);
 
@@ -91,17 +74,15 @@ public class MoveControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        statusCodeResult.StatusCode.Should().Be(ExpectedStatusCode);
+        statusCodeResult.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
 
-    [Fact]
-    public void GetMovesByPokemonId_WithoutMatches_ReturnsNotFound()
+    [Theory]
+    [InlineData(1)]
+    public void GetMovesByPokemonId_WithoutMatches_ReturnsNotFound(int testPokemonId)
     {
         // Arrange 
-        const int ExpectedStatusCode = 404;
-        const int testPokemonId = 1;
-
         _repositoryStub.Setup(repo => repo.GetMovesByPokemonId(testPokemonId))
             .Returns((List<Move>?)null);
 
@@ -113,6 +94,6 @@ public class MoveControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        statusCodeResult.StatusCode.Should().Be(ExpectedStatusCode);
+        statusCodeResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
     }
 }

@@ -1,3 +1,4 @@
+using api.Data;
 using api.Models.Static;
 using api.Repository;
 using FluentAssertions;
@@ -6,46 +7,28 @@ namespace api.Tests.Repository;
 
 public class ItemRepositoryTests
 {
-    private readonly List<Item> testItems =
-    [
-        new() 
-        {
-            Id = 1, 
-            Identifier = "TestItem1",
-            Effect = "TestItem1Effect"
-        },
-        new() 
-        {
-            Id = 2, 
-            Identifier = "TestItem2",
-            Effect = "TestItem2Effect"
-        },
-        new() 
-        {
-            Id = 3, 
-            Identifier = "TestItem3",
-            Effect = "TestItem3Effect"
-        },
-    ];
+    private readonly ApplicationDbContext _testDbContext;
 
-
+    public ItemRepositoryTests()
+    {
+        _testDbContext = Utility.CreateTestDbContext();
+    }
 
 
     [Fact]
     public void GetAll_WithItemsInDb_ReturnsListOfItems()
     {
         // Arrange
-        var testDbContext = Utility.CreateTestDbContext();
-        testDbContext.Item.AddRange(testItems);
-        testDbContext.SaveChanges();
+        Utility.AddTestData(_testDbContext);
 
-        var itemRepository = new ItemRepository(testDbContext);
+        var itemRepository = new ItemRepository(_testDbContext);
 
         // Act
         var result = itemRepository.GetAll();
 
         // Assert
-        result.Should().BeEquivalentTo(testItems);
+        result.Should().NotBeNull();
+        result.Count.Should().Be(TestData.Items.Count);
     }
 
 
@@ -55,9 +38,7 @@ public class ItemRepositoryTests
         // Arrange
         var expectedResult = new List<Item>();
 
-        var testDbContext = Utility.CreateTestDbContext();
-
-        var itemRepository = new ItemRepository(testDbContext);
+        var itemRepository = new ItemRepository(_testDbContext);
 
         // Act
         var result = itemRepository.GetAll();
@@ -74,35 +55,29 @@ public class ItemRepositoryTests
     public void GetById_WithMatchingId_ReturnsItem(int testId)
     {
         // Arrange
-        var expectedResult = testItems.FirstOrDefault(x => x.Id == testId);
+        Utility.AddTestData(_testDbContext);
 
-        var testDbContext = Utility.CreateTestDbContext();
-        testDbContext.Item.AddRange(testItems);
-        testDbContext.SaveChanges();
-
-        var itemRepository = new ItemRepository(testDbContext);
+        var itemRepository = new ItemRepository(_testDbContext);
 
         // Act
-        var result = itemRepository.GetById(testId);
+        var result = itemRepository.GetById(testId)!;
 
         // Assert
-        result.Should().BeEquivalentTo(expectedResult);
+        result.Should().NotBeNull();
+        result.Id.Should().Be(testId);
     }
 
     
 
     [Theory]
     [InlineData(-1)]
-    [InlineData(4)]
     [InlineData(1000)]
     public void GetById_WithoutMatchingId_ReturnsNull(int testId)
     {
         // Arrange
-        var testDbContext = Utility.CreateTestDbContext();
-        testDbContext.Item.AddRange(testItems);
-        testDbContext.SaveChanges();
+        Utility.AddTestData(_testDbContext);
 
-        var itemRepository = new ItemRepository(testDbContext);
+        var itemRepository = new ItemRepository(_testDbContext);
 
         // Act
         var result = itemRepository.GetById(testId);

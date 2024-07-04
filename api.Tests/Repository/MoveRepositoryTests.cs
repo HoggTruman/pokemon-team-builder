@@ -2,9 +2,6 @@ using api.Data;
 using api.Models.Static;
 using api.Repository;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using Xunit.Abstractions;
 
 namespace api.Tests.Repository;
 
@@ -15,14 +12,12 @@ public class MoveRepositoryTests
     public MoveRepositoryTests()
     {
         _testDbContext = Utility.CreateTestDbContext();
-        // Utility.AddTestData(_testDbContext);
     }
 
     [Fact]
     public void GetAll_WithMovesInDb_ReturnsListOfMoves()
     {
         // Arrange
-        // var testDbContext = Utility.CreateTestDbContext();
         Utility.AddTestData(_testDbContext);
 
         var moveRepository = new MoveRepository(_testDbContext);
@@ -39,8 +34,6 @@ public class MoveRepositoryTests
             result.FirstOrDefault(x => x.Id == testMove.Id).Should().NotBeNull();
         }
 
-        // testDbContext.Database.EnsureDeleted();
-        // testDbContext.Dispose(); 
     }
 
 
@@ -49,8 +42,6 @@ public class MoveRepositoryTests
     {
         // Arrange
         var expectedResult = new List<Move>();
-        // var testDbContext = Utility.CreateTestDbContext();
-        
 
         var moveRepository = new MoveRepository(_testDbContext);
 
@@ -70,10 +61,9 @@ public class MoveRepositoryTests
     public void GetMovesByPokemonId_WithMatchingPokemonId_ReturnsListOfMoves(int testPokemonId)
     {
         // Arrange
-        var testDbContext = Utility.CreateTestDbContext();
-        Utility.AddTestData(testDbContext);
+        Utility.AddTestData(_testDbContext);
     
-        var moveRepository = new MoveRepository(testDbContext);
+        var moveRepository = new MoveRepository(_testDbContext);
 
 
         // Act
@@ -87,7 +77,6 @@ public class MoveRepositoryTests
         {
             resultMove.Pokemon.FirstOrDefault(x => x.Id == testPokemonId).Should().NotBeNull();
         }
-
     }
 
     
@@ -98,9 +87,8 @@ public class MoveRepositoryTests
     public void GetById_WithoutMatchingId_ReturnsNull(int testPokemonId)
     {
         // Arrange
-        var testDbContext = Utility.CreateTestDbContext();
-        Utility.AddTestData(testDbContext);
-        var moveRepository = new MoveRepository(testDbContext);
+        Utility.AddTestData(_testDbContext);
+        var moveRepository = new MoveRepository(_testDbContext);
 
         // Act
         var result = moveRepository.GetMovesByPokemonId(testPokemonId);
