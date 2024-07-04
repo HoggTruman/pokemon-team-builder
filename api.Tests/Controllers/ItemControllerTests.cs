@@ -5,6 +5,7 @@ using Moq;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace api.Tests.Controllers;
 
@@ -17,35 +18,13 @@ public class ItemControllerTests
         _repositoryStub = new Mock<IItemRepository>();
     }
 
-    private readonly List<Item> testItems =
-    [
-        new() 
-        {
-            Id = 1, 
-            Identifier = "TestItem1",
-            Effect = "TestItem1Effect"
-        },
-        new() 
-        {
-            Id = 2, 
-            Identifier = "TestItem2",
-            Effect = "TestItem2Effect"
-        },
-        new() 
-        {
-            Id = 3, 
-            Identifier = "TestItem3",
-            Effect = "TestItem3Effect"
-        },
-    ];
+    List<Item> testItems = TestData.Items;
 
 
     [Fact]
     public void GetAll_WithItemsInRepo_ReturnsOk()
     {
         // Arrange
-        const int ExpectedStatusCode = 200;
-
         _repositoryStub.Setup(repo => repo.GetAll()).Returns(testItems);
         var itemController = new ItemController(_repositoryStub.Object);
 
@@ -56,7 +35,7 @@ public class ItemControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        statusCodeResult.StatusCode.Should().Be(ExpectedStatusCode);
+        statusCodeResult.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
 
@@ -67,8 +46,6 @@ public class ItemControllerTests
     public void GetById_WithIdMatchingItem_ReturnsOk(int testId)
     {
         // Arrange
-        const int ExpectedStatusCode = 200;
-
         _repositoryStub.Setup(repo => repo.GetById(testId))
             .Returns(testItems.FirstOrDefault(x => x.Id == testId));
         var itemController = new ItemController(_repositoryStub.Object);        
@@ -79,7 +56,7 @@ public class ItemControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        statusCodeResult.StatusCode.Should().Be(ExpectedStatusCode);
+        statusCodeResult.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
 
@@ -90,8 +67,6 @@ public class ItemControllerTests
     public void GetById_WithIdNotMatchingItem_ReturnsNotFound(int testId)
     {
         // Arrange
-        const int ExpectedStatusCode = 404;
-
         _repositoryStub.Setup(repo => repo.GetById(testId))
             .Returns((Item?)null);
         var itemController = new ItemController(_repositoryStub.Object);        
@@ -102,6 +77,6 @@ public class ItemControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        statusCodeResult.StatusCode.Should().Be(ExpectedStatusCode);
+        statusCodeResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
     }
 }
