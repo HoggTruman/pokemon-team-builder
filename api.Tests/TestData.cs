@@ -209,6 +209,38 @@ public static class TestData
                     DamageClassId = 3,
                     MoveEffectId = 3,
                     MoveEffectChance = 100,     
+                },
+                new()
+                {
+                    Id = 4,
+                    Identifier = "TestMove4",
+                    PkmnTypeId = 1,
+                    DamageClassId = 1,
+                    MoveEffectId = 1
+                },
+                new()
+                {
+                    Id = 5,
+                    Identifier = "TestMove5",
+                    PkmnTypeId = 1,
+                    DamageClassId = 1,
+                    MoveEffectId = 1
+                },
+                new()
+                {
+                    Id = 6,
+                    Identifier = "TestMove6",
+                    PkmnTypeId = 1,
+                    DamageClassId = 1,
+                    MoveEffectId = 1
+                },
+                new()
+                {
+                    Id = 7,
+                    Identifier = "TestMove7",
+                    PkmnTypeId = 1,
+                    DamageClassId = 1,
+                    MoveEffectId = 1
                 }
             };
         }
@@ -431,6 +463,36 @@ public static class TestData
                 {
                     PokemonId = 3,
                     MoveId = 3
+                },
+                new()
+                {
+                    PokemonId = 1,
+                    MoveId = 4
+                },
+                new()
+                {
+                    PokemonId = 2,
+                    MoveId = 4
+                },
+                new()
+                {
+                    PokemonId = 1,
+                    MoveId = 5
+                },
+                new()
+                {
+                    PokemonId = 3,
+                    MoveId = 5
+                },
+                new()
+                {
+                    PokemonId = 1,
+                    MoveId = 6
+                },
+                new()
+                {
+                    PokemonId = 2,
+                    MoveId = 7
                 }
             };
         }        
