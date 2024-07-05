@@ -35,12 +35,6 @@ public class TeamController : ControllerBase
 
         var teams = _repository.GetTeams(appUser.Id);
 
-        if (teams == null)
-        {
-            return NotFound();
-        }
-            
-
         return Ok(teams.Select(x => x.ToGetUserTeamsDTO()));
     }
 

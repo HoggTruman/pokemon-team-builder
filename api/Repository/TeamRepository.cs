@@ -18,7 +18,8 @@ public class TeamRepository : ITeamRepository
     }
 
 
-    // used for team select page so no need to include pokemon at this point??
+    // used for team select page so no need to include pokemon at this point
+    // by the time this method is called, we assume the user is valid so can just return an empty list if no entries are found
     // maybe include pokemon icons at some point though??
     public List<Team> GetTeams(string userId)
     {

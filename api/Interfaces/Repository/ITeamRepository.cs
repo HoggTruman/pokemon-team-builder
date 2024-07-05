@@ -5,7 +5,7 @@ namespace api.Interfaces.Repository;
 
 public interface ITeamRepository
 {
-    List<Team>? GetTeams(string userId);
+    List<Team> GetTeams(string userId);
 
     Team? GetTeamById(int id, string userId);
 
