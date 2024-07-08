@@ -3,18 +3,15 @@ using api.DTOs.Team;
 using api.Interfaces.Repository;
 using api.Mappers;
 using api.Models.User;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 public class TeamRepository : ITeamRepository
 {
     private readonly ApplicationDbContext _context;
-    private readonly UserManager<AppUser> _userManager;
 
-    public TeamRepository(ApplicationDbContext context, UserManager<AppUser> userManager)
+    public TeamRepository(ApplicationDbContext context)
     {
         _context = context;
-        _userManager = userManager;
     }
 
 
@@ -64,6 +61,8 @@ public class TeamRepository : ITeamRepository
 
     public Team? UpdateTeamById(int id, CreateUpdateTeamDTO updateTeamDTO, string userId)
     {
+        // Note: UserPokemon are deleted and recreated currently so will have different Ids after update
+        
         var team = _context.Team
             .Include(x => x.UserPokemon)
             .FirstOrDefault(x => x.AppUserId == userId && x.Id == id);
