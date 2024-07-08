@@ -16,7 +16,7 @@ public class PokemonRepository : IPokemonRepository
     }
 
 
-    public List<Pokemon> GetAllPokemon()
+    public List<Pokemon> GetAll()
     {
         var pokemon = _context.Pokemon
             .Include(x => x.PokemonPkmnTypes)
@@ -31,7 +31,7 @@ public class PokemonRepository : IPokemonRepository
         return pokemon;
     }
 
-    public Pokemon? GetPokemonById(int id)
+    public Pokemon? GetById(int id)
     {
         var pokemon = _context.Pokemon
             .Include(x => x.PokemonPkmnTypes)

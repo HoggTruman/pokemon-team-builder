@@ -35,12 +35,6 @@ public class TeamController : ControllerBase
 
         var teams = _repository.GetTeams(appUser.Id);
 
-        if (teams == null)
-        {
-            return NotFound();
-        }
-            
-
         return Ok(teams.Select(x => x.ToGetUserTeamsDTO()));
     }
 
@@ -87,7 +81,7 @@ public class TeamController : ControllerBase
 
     [HttpPut("{id:int}")]
     [Authorize]
-    public async Task<IActionResult> UpdateTeam([FromBody] CreateUpdateTeamDTO updateTeamDTO, [FromRoute] int id)
+    public async Task<IActionResult> UpdateTeam([FromRoute] int id, [FromBody] CreateUpdateTeamDTO updateTeamDTO)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -98,7 +92,7 @@ public class TeamController : ControllerBase
         if (appUser == null)
             return Unauthorized();
 
-        var team = _repository.UpdateTeam(updateTeamDTO, id, appUser.Id);
+        var team = _repository.UpdateTeamById(id, updateTeamDTO, appUser.Id);
 
         if (team == null)
             return NotFound();
@@ -109,7 +103,7 @@ public class TeamController : ControllerBase
 
     [HttpDelete("{id:int}")]
     [Authorize]
-    public async Task<IActionResult> DeleteTeam(int id)
+    public async Task<IActionResult> DeleteTeam([FromRoute] int id)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

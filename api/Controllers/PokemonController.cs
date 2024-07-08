@@ -21,7 +21,7 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var pokemon = _repository.GetAllPokemon().Select(x => x.ToPokemonDTO());
+            var pokemon = _repository.GetAll().Select(x => x.ToPokemonDTO());
 
             return Ok(pokemon);
         }
@@ -29,7 +29,7 @@ namespace api.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetById([FromRoute] int id)
         {
-            var pokemon = _repository.GetPokemonById(id);
+            var pokemon = _repository.GetById(id);
 
             if (pokemon == null)
             {

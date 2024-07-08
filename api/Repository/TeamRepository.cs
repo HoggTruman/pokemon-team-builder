@@ -3,23 +3,20 @@ using api.DTOs.Team;
 using api.Interfaces.Repository;
 using api.Mappers;
 using api.Models.User;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 public class TeamRepository : ITeamRepository
 {
     private readonly ApplicationDbContext _context;
-    private readonly UserManager<AppUser> _userManager;
 
-    public TeamRepository(ApplicationDbContext context, UserManager<AppUser> userManager)
+    public TeamRepository(ApplicationDbContext context)
     {
         _context = context;
-        _userManager = userManager;
     }
 
 
-    // used for team select page so no need to include pokemon at this point??
-    // maybe include pokemon icons at some point though??
+    // used for team select page so no need to include pokemon at this point
+    // by the time this method is called, we assume the user is valid so can just return an empty list if no entries are found
     public List<Team> GetTeams(string userId)
     {
         var teams = _context.Team
@@ -62,8 +59,10 @@ public class TeamRepository : ITeamRepository
     }
 
 
-    public Team? UpdateTeam(CreateUpdateTeamDTO updateTeamDTO, int id, string userId)
+    public Team? UpdateTeamById(int id, CreateUpdateTeamDTO updateTeamDTO, string userId)
     {
+        // Note: UserPokemon are deleted and recreated currently so will have different Ids after update
+        
         var team = _context.Team
             .Include(x => x.UserPokemon)
             .FirstOrDefault(x => x.AppUserId == userId && x.Id == id);

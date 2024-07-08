@@ -91,6 +91,24 @@ namespace api.Data
             };
 
             modelBuilder.Entity<IdentityRole>().HasData(roles);
+
+
+            // Add Test Users
+            List<AppUser> appUsers = new()
+            {
+                new AppUser()
+                {
+                    Id = "test1",
+                    UserName = "TestUser1"
+                },
+                new AppUser()
+                {
+                    Id = "test2",
+                    UserName = "TestUser2"
+                }
+            };
+
+            modelBuilder.Entity<AppUser>().HasData(appUsers);
         }
     }
 }
