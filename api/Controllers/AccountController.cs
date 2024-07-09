@@ -31,7 +31,7 @@ public class AccountController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDTO.UserName);
+        var user = await _userManager.FindByNameAsync(loginDTO.UserName);
 
         if (user != null)
         {
