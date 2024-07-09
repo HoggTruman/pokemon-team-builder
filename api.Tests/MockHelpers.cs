@@ -1,3 +1,4 @@
+using api.Data;
 using api.Models.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
