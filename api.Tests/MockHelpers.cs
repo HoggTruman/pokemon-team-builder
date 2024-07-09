@@ -1,3 +1,4 @@
+using api.Data;
 using api.Models.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -73,5 +74,23 @@ public static class MockHelpers
         );
 
         return mockSignInManager;
+    }
+
+
+    public static Mock<IServiceScopeFactory> CreateMockServiceScopeFactory()
+    {
+        var mockServiceProvider = new Mock<IServiceProvider>();
+        mockServiceProvider.Setup(x => x.GetService(typeof(ApplicationDbContext)))
+            .Returns(Utility.CreateTestDbContext());
+
+        var mockScope = new Mock<IServiceScope>();
+        mockScope.Setup(x => x.ServiceProvider)
+            .Returns(mockServiceProvider.Object);
+
+        var mockScopeFactory = new Mock<IServiceScopeFactory>();        
+        mockScopeFactory.Setup(x => x.CreateScope())
+            .Returns(mockScope.Object);
+
+        return mockScopeFactory;
     }
 }
