@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers;
 
 [ApiController]
-[Route("team")]
+[Route("api/team")]
 public class TeamController : ControllerBase
 {
     private readonly ITeamRepository _repository;
