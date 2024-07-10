@@ -11,7 +11,7 @@ namespace api.DTOs.Move
         public int? Accuracy { get; set; }
         public int Priority { get; set; }
 
-        [JsonPropertyName("Type")]
+        [JsonPropertyName("type")]
         public string PkmnType { get; set; } = "";
 
         public string DamageClass { get; set; } = "";
