@@ -9,16 +9,16 @@ class TeamList extends React.Component {
     }
 
     render() {
-        const teamRender = this.props.teams.map((team, teamIndex) => (
-            <TeamInList 
-                key={team.id}
-            />
-        ));
+        // const teamRender = this.props.teams.map((team, teamIndex) => (
+        //     <TeamInList 
+        //         key={team.id}
+        //     />
+        // ));
 
         return (
-            <section id="team-list">
+            <div id="team-list">
 
-            </section>
+            </div>
         )
     }
 }

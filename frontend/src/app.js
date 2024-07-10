@@ -1,13 +1,16 @@
 import React from "react";
-import TeamListView from "./components/teamlist/TeamListView";
-import TeamEditView from "./components/teamedit/TeamEditView";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import PageSelector from "./components/PageSelector";
+import TopBar from "./components/Header";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         const defaultState = {
-            view: "team_list",
+            page: "team_list",
             teams: []
         };
 
@@ -15,14 +18,13 @@ class App extends React.Component {
     }
   
     render() {
-        if (this.state.view == "team_list")
-            return (
-                <TeamListView 
-                    teams={this.state.teams}
-                />
-            );
-        else if (this.state.view == "team_edit")
-            return <TeamEditView />;
+        return (
+            <>
+                <TopBar />
+                <PageSelector page={this.state.page}/>
+                <ToastContainer />
+            </>
+        )
     }
 }
   

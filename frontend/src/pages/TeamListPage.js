@@ -1,8 +1,8 @@
 import React from "react";
-import TeamList from "./TeamList";
+import TeamList from "../components/teamlist/TeamList";
 
 
-class TeamListView extends React.Component {
+class TeamListPage extends React.Component {
     constructor(props) {
         super(props)
 
@@ -13,8 +13,8 @@ class TeamListView extends React.Component {
             <>
                 <h1>Team Builder</h1>
                 <h2>Select a team or create a new one</h2>
-                <TeamList 
-                    teams={this.props.teams}
+                <TeamList
+                    
                 />
             </>
         )
@@ -23,4 +23,4 @@ class TeamListView extends React.Component {
 
 
 
-export default TeamListView;
+export default TeamListPage;

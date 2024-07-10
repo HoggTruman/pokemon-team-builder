@@ -1,7 +1,7 @@
 import React from "react";
 
 
-class TeamEditView extends React.Component {
+class TeamEditPage extends React.Component {
     constructor(props) {
         super(props)
 
@@ -18,4 +18,4 @@ class TeamEditView extends React.Component {
 
 
 
-export default TeamEditView;
+export default TeamEditPage;
