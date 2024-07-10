@@ -5,6 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 import PageSelector from "./components/PageSelector";
 import TopBar from "./components/TopBar";
 
+import "./App.css";
+
 class App extends React.Component {
     constructor(props) {
         super(props);
