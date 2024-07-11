@@ -1,4 +1,6 @@
 import React from "react";
+import "./TopBar.css"
+import AccountButtons from "./TopBar/AccountButtons";
 
 class TopBar extends React.Component {
     constructor(props) {
@@ -8,7 +10,8 @@ class TopBar extends React.Component {
     render() {
         return (
             <div id="topbar">
-                topbar
+                <h1>Team Builder</h1>
+                <AccountButtons />
             </div>
         ) 
     }
