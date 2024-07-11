@@ -1,0 +1,15 @@
+.teamInList {
+    display: flex;
+    border: 1px solid black;
+    width: max-content;
+    padding: 0.2rem;
+}
+
+.teamInList {
+    .teamButton {
+        width: 20rem;
+        border: 1px solid black;
+        margin: 0.2rem;
+    }
+}
+

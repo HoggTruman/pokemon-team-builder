@@ -11,8 +11,10 @@ class TeamListPage extends React.Component {
     render() {
         return (
             <>
-                <h1>Team Builder</h1>
+                <h1>Teams</h1>
                 <h2>Select a team or create a new one</h2>
+                <button>New Team</button>
+                <button>Get teams from server</button>
                 <TeamList
                     
                 />

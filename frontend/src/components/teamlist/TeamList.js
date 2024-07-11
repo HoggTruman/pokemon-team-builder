@@ -9,15 +9,19 @@ class TeamList extends React.Component {
     }
 
     render() {
-        // const teamRender = this.props.teams.map((team, teamIndex) => (
-        //     <TeamInList 
-        //         key={team.id}
-        //     />
-        // ));
+        const TEAMS = [
+            {},
+        ];
+
+        let teamRender = TEAMS.map((team, teamIndex) => (
+            <TeamInList 
+                key={"TEAMID"}
+            />
+        ));
 
         return (
             <div id="team-list">
-
+                {teamRender}
             </div>
         )
     }
