@@ -1,6 +1,8 @@
 import React from "react";
 import SelectPokemonButton from "./SelectPokemonButton";
 
+import "./TeamEditMenu.css";
+
 function TeamEditMenu(props) {
 
     let pokemonButtons = props.pokemonList.map(pokemon => (
@@ -12,7 +14,7 @@ function TeamEditMenu(props) {
 
     let addPokemonButton = (
         <div
-            className="addPokemonButton"
+            id="addPokemonButton"
         >
             <img
                 src=""
@@ -27,7 +29,7 @@ function TeamEditMenu(props) {
             id="teamEditMenu"
         >
             <button>{"< Teams"}</button>
-            <div className="selectPokemonButtons">
+            <div id="selectPokemonButtons">
                 {pokemonButtons}
                 {pokemonButtons.length < 6? addPokemonButton: null}
             </div>

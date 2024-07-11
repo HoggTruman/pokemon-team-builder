@@ -1,7 +1,10 @@
 import React from "react";
 
+import "./SelectPokemonButton.css";
+
 function SelectPokemonButton(props) {
 
+    // maybe use actual button instead of div??
 
     return (
         <div

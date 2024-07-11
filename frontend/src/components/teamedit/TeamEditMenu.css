@@ -1,0 +1,19 @@
+#teamEditMenu {
+    border: 1px solid black;
+    display: flex;
+}
+
+#teamEditMenu {
+    #selectPokemonbuttons {
+        display: flex;
+        align-items: flex-start;
+        justify-content: left;
+    }
+
+    #selectPokemonButtons > #addPokemonButton {
+        display: inline-block;
+        border: 1px solid red;
+        padding: 0.2rem;
+    }
+
+}
