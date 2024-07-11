@@ -9,10 +9,18 @@ class PageSelector extends React.Component {
 
     render() {
         if (this.props.page == "team_list") {
-            return <TeamListPage />;
+            return (
+                <TeamListPage 
+                    setPage={this.props.setPage}
+                />
+            );
         }
         else if (this.props.page == "team_edit") {
-            return <TeamEditPage />;
+            return (
+                <TeamEditPage
+                    setPage={this.props.setPage}
+                />
+            );
         }
             
     }

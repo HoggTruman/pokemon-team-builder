@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -7,27 +7,27 @@ import TopBar from "./components/TopBar";
 
 import "./App.css";
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+function App(props) {
+    const defaultState = {
+        page: "team_list",
+        teams: []
+    };
 
-        const defaultState = {
-            page: "team_list",
-            teams: []
-        };
+    const [page, setPage] = useState(defaultState.page);
 
-        this.state = defaultState;
-    }
+
   
-    render() {
-        return (
-            <>
-                <TopBar />
-                <PageSelector page={this.state.page}/>
-                <ToastContainer />
-            </>
-        )
-    }
+    
+    return (
+        <>
+            <TopBar />
+            <PageSelector 
+                page={page}
+                setPage={setPage}
+            />
+            <ToastContainer />
+        </>
+    )
 }
   
 export default App;

@@ -13,7 +13,11 @@ class TeamListPage extends React.Component {
             <>
                 <h1>Teams</h1>
                 <h2>Select a team or create a new one</h2>
-                <button>New Team</button>
+                <button
+                    onClick={() => this.props.setPage("team_edit")}
+                >
+                    New Team
+                </button>
                 <button>Get teams from server</button>
                 <TeamList
                     
