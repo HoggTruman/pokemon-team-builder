@@ -45,7 +45,7 @@ function PokemonEditWindow(props) {
                 </select>
             </div>
 
-            <div>
+            <div id="movesSection">
                 <label>Moves</label>
                 <input id="move1Input" type="text" name="move1"/>
                 <input id="move2Input" type="text" name="move2"/>
@@ -61,7 +61,7 @@ function PokemonEditWindow(props) {
 
             <StatsSection />
 
-
+            <button id="deletePokemonButton">Delete Pokemon</button>
         </div>
     )
 }

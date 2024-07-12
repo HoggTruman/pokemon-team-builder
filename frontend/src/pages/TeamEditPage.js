@@ -1,7 +1,8 @@
 import React from "react";
 import TeamEditMenu from "../components/teamedit/TeamEditMenu";
 import PokemonEditWindow from "../components/teamedit/PokemonEditWindow";
-import DetailEditWindow from "../components/teamedit/DetailEditWindow";
+import OptionsWindow from "../components/teamedit/OptionsWindow/OptionsWindow";
+
 
 
 class TeamEditPage extends React.Component {
@@ -17,8 +18,7 @@ class TeamEditPage extends React.Component {
                     pokemonList={[1,2,3]}
                 />
                 <PokemonEditWindow />
-                <DetailEditWindow />
-                <div>Team Edit Page</div>
+                <OptionsWindow activeField={"pokemon"} />
             </>
         )
     }
