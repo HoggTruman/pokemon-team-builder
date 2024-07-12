@@ -9,10 +9,10 @@ function StatRow(props) {
                 <p>basestat value</p>
             </td>
             <td>
-                <input type="number" min={0} max={252} step={4} value={0} name={"statnameEV"}/>
+                <input type="number" min={0} max={252} step={4} defaultValue={0} name={"statnameEV"}/>
             </td>
             <td>
-                <input type="number" min={0} max={31} value={31} name={"statnameIV"}/>
+                <input type="number" min={0} max={31} defaultValue={31} name={"statnameIV"}/>
             </td>
             <td>
                 <p>calculate stat here</p>
