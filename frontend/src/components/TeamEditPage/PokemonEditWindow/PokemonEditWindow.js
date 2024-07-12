@@ -1,10 +1,13 @@
 import React from "react";
 import StatsSection from "./StatsSection";
 
+import "./PokemonEditWindow.css";
+
+
 function PokemonEditWindow(props) {
     return (
         <div id="pokemonEditWindow">
-            <div>
+            <div id="pokemonSection">
                 <img src="" alt="pokemon-img" />
                 <div>type images?</div>
 

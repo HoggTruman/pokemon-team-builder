@@ -3,9 +3,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import PageSelector from "./components/PageSelector";
-import TopBar from "./components/TopBar";
+
 
 import "./App.css";
+import TopBar from "./components/TopBar/TopBar";
 
 function App(props) {
     const defaultState = {

@@ -1,5 +1,5 @@
 import React from "react";
-import TeamList from "../components/teamlist/TeamList";
+import TeamList from "../components/TeamListPage/TeamList";
 
 
 class TeamListPage extends React.Component {

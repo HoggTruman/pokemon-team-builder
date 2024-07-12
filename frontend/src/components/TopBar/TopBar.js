@@ -1,6 +1,6 @@
 import React from "react";
 import "./TopBar.css"
-import AccountButtons from "./TopBar/AccountButtons";
+import AccountButtons from "./AccountButtons";
 
 class TopBar extends React.Component {
     constructor(props) {

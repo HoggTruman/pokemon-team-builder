@@ -1,0 +1,14 @@
+#pokemonEditWindow {
+    border: 1px solid limegreen;
+}
+
+#pokemonEditWindow {
+    #pokemonSection {
+        border: 1px solid yellow;
+    }
+
+    #pokemonSection > img {
+        width: 100px;
+        height: 100px;
+    }
+}
