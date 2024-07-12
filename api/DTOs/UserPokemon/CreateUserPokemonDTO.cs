@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace api.DTOs.UserPokemon;
 
@@ -58,6 +59,7 @@ public class CreateUserPokemonDTO : IValidatableObject
 
     [DefaultValue(0)]
     [Range(0, 252, ErrorMessage = "{0} must be between {1} and {2}")]
+    [JsonPropertyName("hpEV")]
     public int HPEV { get; set; }
 
     [DefaultValue(0)]
@@ -85,6 +87,7 @@ public class CreateUserPokemonDTO : IValidatableObject
 
     [DefaultValue(31)]
     [Range(0, 31, ErrorMessage = "{0} must be between {1} and {2}")]
+    [JsonPropertyName("hpIV")]
     public int HPIV { get; set; } = 31;
 
     [DefaultValue(31)]

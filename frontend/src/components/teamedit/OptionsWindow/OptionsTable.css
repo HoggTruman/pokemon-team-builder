@@ -1,0 +1,20 @@
+table.optionsTable {
+    border: 1px solid black;
+    overflow-y:scroll;
+    /* width: 1000px; */
+    height:100px;
+    display:block;
+}
+
+table.optionsTable {
+    tr.optionsHeaders {
+        display: table-caption;
+        position: sticky;
+        top: 0;
+        background-color: grey;
+    }
+
+    /* th, td {
+        padding: 0.1rem 0.2rem;
+    } */
+}

@@ -4,7 +4,7 @@ namespace api.DTOs.BaseStats
 {
     public class BaseStatsDTO
     {
-        [JsonPropertyName("HP")]
+        [JsonPropertyName("hp")]
         public int HP { get; set; }
         public int Attack { get; set; }
         public int Defense { get; set; }
