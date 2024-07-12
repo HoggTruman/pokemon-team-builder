@@ -18,7 +18,7 @@ class TeamListPage extends React.Component {
                 >
                     New Team
                 </button>
-                <button>Get teams from server</button>
+                <button>Get teams from server/ save teams to server</button>
                 <TeamList
                     
                 />

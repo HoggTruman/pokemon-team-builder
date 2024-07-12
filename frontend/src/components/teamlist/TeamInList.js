@@ -20,6 +20,11 @@ class TeamInList extends React.Component {
                     <p>pokemon icons??</p>
                 </div>
                 <button
+                    onClick={() => "edit name window"}
+                >
+                    change name
+                </button>
+                <button
                     onClick={() => "confirm delete team"}
                 >
                     delete
