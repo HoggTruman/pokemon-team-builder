@@ -16,7 +16,7 @@ function TeamListPage(props) {
             </button>
             <button>Get teams from server/ save teams to server</button>
             <TeamList
-                
+                setPage={props.setPage}
             />
         </>
     )

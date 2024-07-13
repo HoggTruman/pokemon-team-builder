@@ -4,21 +4,34 @@ import "./TeamInList.css";
 
 
 function TeamInList(props) {
+    function handleClickTeamButton() {
+        props.setPage("team_edit");
+        // SET CURRENTTEAMSTATE TO THIS TEAM
+    }
 
+
+
+
+    // Render
+    let icons = props.team.pokemon.map((pokemon, pokemonIndex) => (
+        <img src="" alt={pokemon.pokemonId + " "} />
+    ));
 
     return (
         <div 
             className="teamInList"
             key={props.id}
         >
-            <div className="teamButton">
-                <p>TEAMNAME</p>
-                <p>pokemon icons??</p>
-            </div>
+            <button className="teamButton" onClick={handleClickTeamButton}>
+                <p>{props.team.teamName}</p>
+                <div id="teamInListIcons">
+                    {icons}
+                </div>
+            </button>
             <button
                 onClick={() => "edit name window"}
             >
-                change name
+                edit name
             </button>
             <button
                 onClick={() => "confirm delete team"}
