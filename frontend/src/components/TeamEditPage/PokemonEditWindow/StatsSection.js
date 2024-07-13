@@ -1,6 +1,8 @@
 import React from "react";
 import StatRow from "./StatRow";
 
+import "./StatsSection.css";
+
 function StatsSection(props) {
     return (
         <div id="statsSection">
@@ -50,8 +52,7 @@ function StatsSection(props) {
             </table>
 
             <div>
-            <p>remaining EVs:</p>
-            <p>{"(calc remaining evs)"}</p>
+            <p>remaining EVs: <span>{"(calc remaining evs)"}</span></p>
             </div>
 
             <label htmlFor="natureSelect">Nature</label>

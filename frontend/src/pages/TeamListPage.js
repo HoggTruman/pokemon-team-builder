@@ -1,5 +1,5 @@
 import React from "react";
-import TeamList from "../components/teamlist/TeamList";
+import TeamList from "../components/TeamListPage/TeamList";
 
 
 class TeamListPage extends React.Component {
@@ -18,7 +18,7 @@ class TeamListPage extends React.Component {
                 >
                     New Team
                 </button>
-                <button>Get teams from server</button>
+                <button>Get teams from server/ save teams to server</button>
                 <TeamList
                     
                 />

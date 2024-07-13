@@ -1,0 +1,13 @@
+#pokemonSection {
+    display: inline-block;
+    border: 1px solid darkcyan;
+    width: 250px;
+    height: 150px;
+    vertical-align: top;
+}
+
+#pokemonSection {
+    label {
+        display: block;
+    }
+}

@@ -1,7 +1,8 @@
 import React from "react";
-import TeamEditMenu from "../components/teamedit/TeamEditMenu";
-import PokemonEditWindow from "../components/teamedit/PokemonEditWindow";
-import OptionsWindow from "../components/teamedit/OptionsWindow/OptionsWindow";
+import TeamEditMenu from "../components/TeamEditPage/TeamEditMenu/TeamEditMenu";
+import PokemonEditWindow from "../components/TeamEditPage/PokemonEditWindow/PokemonEditWindow";
+import OptionsWindow from "../components/TeamEditPage/OptionsWindow/OptionsWindow";
+
 
 
 
