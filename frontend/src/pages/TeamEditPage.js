@@ -6,25 +6,20 @@ import OptionsWindow from "../components/TeamEditPage/OptionsWindow/OptionsWindo
 
 
 
-class TeamEditPage extends React.Component {
-    constructor(props) {
-        super(props)
+function TeamEditPage(props) {
 
-    }
 
-    render() {
-        return (
-            <>
-                <TeamEditMenu
-                    pokemonList={[1,2,3]}
-                />
-                <PokemonEditWindow />
-                <OptionsWindow activeField={"pokemon"} />
-            </>
-        )
-    }
+    return (
+        <>
+            <TeamEditMenu
+                setPage
+                pokemonList={[1,2,3]}
+            />
+            <PokemonEditWindow />
+            <OptionsWindow activeField={"pokemon"} />
+        </>
+    )
 }
-
 
 
 export default TeamEditPage;

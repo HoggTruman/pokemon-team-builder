@@ -2,29 +2,24 @@ import React from "react";
 import TeamInList from "./TeamInList";
 
 
-class TeamList extends React.Component {
-    constructor(props) {
-        super(props)
+function TeamList(props) {
 
-    }
 
-    render() {
-        const TEAMS = [
-            {},
-        ];
+    const TEAMS = [
+        {},
+    ];
 
-        let teamRender = TEAMS.map((team, teamIndex) => (
-            <TeamInList 
-                key={"TEAMID"}
-            />
-        ));
+    let teamRender = TEAMS.map((team, teamIndex) => (
+        <TeamInList 
+            key={"TEAMID"}
+        />
+    ));
 
-        return (
-            <div id="team-list">
-                {teamRender}
-            </div>
-        )
-    }
+    return (
+        <div id="team-list">
+            {teamRender}
+        </div>
+    );
 }
 
 
