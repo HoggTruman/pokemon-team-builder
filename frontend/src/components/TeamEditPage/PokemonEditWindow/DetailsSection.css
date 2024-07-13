@@ -1,0 +1,30 @@
+#detailsSection {
+    display: inline-block;
+    border: 1px solid orange;
+    width: 400px;
+    height: 150px;
+    vertical-align: top;
+}
+
+#detailsSection {
+    div.row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    div.field {
+        padding: 0.5rem;
+    }
+
+    div.field > label.side {
+        margin-right: 0.5rem;
+    }
+
+    div.field > label.above {
+        display: block;
+    }
+    /* label {
+        margin-right: 0.5rem;
+    } */
+
+}

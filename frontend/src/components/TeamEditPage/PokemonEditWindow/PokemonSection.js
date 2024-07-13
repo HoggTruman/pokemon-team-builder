@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./PokemonSection.css";
+
 function PokemonSection(props) {
     return (
         <div id="pokemonSection">

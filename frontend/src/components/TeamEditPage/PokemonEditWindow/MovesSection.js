@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./MovesSection.css";
+
 function MovesSection(props) {
     return (
         <div id="movesSection">

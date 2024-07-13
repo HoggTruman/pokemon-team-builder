@@ -1,0 +1,13 @@
+#movesSection {
+    display: inline-block;
+    border: 1px solid palevioletred;
+    width: 200px;
+    height: 150px;
+    vertical-align: top;
+}
+
+#movesSection {
+    input {
+        margin: 0.2rem 0;
+    }
+}
