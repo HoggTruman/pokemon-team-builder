@@ -14,9 +14,43 @@ function App(props) {
         teams: []
     };
 
+    const demoTeams = [
+        {
+            teamName:"team1",
+            pokemon: [
+                {
+                    pokemonId: 1
+                },
+                {
+                    pokemonId: 2
+                },
+            ]
+        },
+        {
+            teamName:"team2",
+            pokemon: [
+                {
+                    pokemonId: 10
+                },
+            ]
+        },
+        {
+            teamName:"team3",
+            pokemon: [
+                {
+                    pokemonId: 11
+                },
+                {
+                    pokemonId: 22
+                },
+            ]
+        },
+    ];
+
     const [page, setPage] = useState(defaultState.page);
+    const [teams, setTeams] = useState(demoTeams);
 
-
+    
   
     
     return (
@@ -25,6 +59,7 @@ function App(props) {
             <PageSelector 
                 page={page}
                 setPage={setPage}
+                teams={teams}
             />
             <ToastContainer />
         </>

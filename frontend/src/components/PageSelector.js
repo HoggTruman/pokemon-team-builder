@@ -9,6 +9,7 @@ function PageSelector(props) {
         return (
             <TeamListPage 
                 setPage={props.setPage}
+                teams={props.teams}
             />
         );
     }
@@ -16,6 +17,7 @@ function PageSelector(props) {
         return (
             <TeamEditPage
                 setPage={props.setPage}
+                teams={props.teams}
             />
         );
     }    

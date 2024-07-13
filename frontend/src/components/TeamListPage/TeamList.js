@@ -5,42 +5,8 @@ import TeamInList from "./TeamInList";
 function TeamList(props) {
 
 
-    const TEAMS = [
-        {
-            teamName:"team1",
-            pokemon: [
-                {
-                    pokemonId: 1
-                },
-                {
-                    pokemonId: 2
-                },
-            ]
-        },
-        {
-            teamName:"team2",
-            pokemon: [
-                {
-                    pokemonId: 10
-                },
-            ]
-        },
-        {
-            teamName:"team3",
-            pokemon: [
-                {
-                    pokemonId: 11
-                },
-                {
-                    pokemonId: 22
-                },
-            ]
-        },
-    ];
-
-
-    // render
-    let teamRender = TEAMS.map((team, teamIndex) => (
+    // Render
+    let teamRender = props.teams.map((team, teamIndex) => (
         <TeamInList 
             key={"TEAMID"}
             team={team}
