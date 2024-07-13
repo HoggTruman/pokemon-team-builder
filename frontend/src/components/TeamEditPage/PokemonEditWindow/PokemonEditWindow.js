@@ -20,8 +20,6 @@ function PokemonEditWindow(props) {
             <MovesSection />
 
             <StatsSection />
-
-            <button id="deletePokemonButton">Delete Pokemon</button>
         </div>
     )
 }

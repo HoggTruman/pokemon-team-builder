@@ -7,7 +7,7 @@ function TeamEditMenu(props) {
 
     let pokemonButtons = props.pokemonList.map(pokemon => (
         <SelectPokemonButton
-            key="pokemon.id"
+            key="pokemon.id?!?!??!?!"
             pokemon={pokemon}
         />
     ));
@@ -25,14 +25,13 @@ function TeamEditMenu(props) {
     );
 
     return (
-        <div
-            id="teamEditMenu"
-        >
+        <div id="teamEditMenu">
             <button>{"< Teams"}</button>
             <div id="selectPokemonButtons">
                 {pokemonButtons}
                 {pokemonButtons.length < 6? addPokemonButton: null}
             </div>
+            <button id="deletePokemonButton">{"delete current"}</button>
         </div>
     )
 }
