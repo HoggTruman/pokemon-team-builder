@@ -12,7 +12,7 @@ function TeamEditPage(props) {
     return (
         <>
             <TeamEditMenu
-                setPage
+                setPage={props.setPage}
                 pokemonList={[1,2,3]}
             />
             <PokemonEditWindow />
