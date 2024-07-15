@@ -3,3 +3,7 @@
     border: 1px solid red;
     padding: 0.2rem;
 }
+
+.selectPokemonButton.active {
+        background-color: silver;
+}

@@ -11,6 +11,8 @@ function TeamList(props) {
             key={"TEAMID"}
             team={team}
             setPage={props.setPage}
+            setActiveTeamId={props.setActiveTeamId}
+            setActivePokemonSlot={props.setActivePokemonSlot}
         />
     ));
 

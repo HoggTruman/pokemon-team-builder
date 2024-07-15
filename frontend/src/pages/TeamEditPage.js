@@ -13,9 +13,14 @@ function TeamEditPage(props) {
         <>
             <TeamEditMenu
                 setPage={props.setPage}
-                pokemonList={[1,2,3]}
+                team={props.team}
+                setTeams={props.setTeams}
+                activePokemonSlot={props.activePokemonSlot}
+                setActivePokemonSlot={props.setActivePokemonSlot}
             />
-            <PokemonEditWindow />
+            <PokemonEditWindow 
+                activePokemon={props.team.pokemon.find(x => x.teamSlot == props.activeTeamSlot)}
+            />
             <OptionsWindow activeField={"pokemon"} />
         </>
     )

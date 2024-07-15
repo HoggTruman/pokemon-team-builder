@@ -16,32 +16,40 @@ function App(props) {
 
     const demoTeams = [
         {
+            id: 1,
             teamName:"team1",
             pokemon: [
                 {
-                    pokemonId: 1
+                    pokemonId: 1,
+                    teamSlot: 1
                 },
                 {
-                    pokemonId: 2
+                    pokemonId: 2,
+                    teamSlot: 2
                 },
             ]
         },
         {
+            id: 2,
             teamName:"team2",
             pokemon: [
                 {
-                    pokemonId: 10
+                    pokemonId: 10,
+                    teamSlot: 1
                 },
             ]
         },
         {
+            id: 3,
             teamName:"team3",
             pokemon: [
                 {
-                    pokemonId: 11
+                    pokemonId: 11,
+                    teamSlot: 1
                 },
                 {
-                    pokemonId: 22
+                    pokemonId: 22,
+                    teamSlot: 2
                 },
             ]
         },
@@ -49,6 +57,8 @@ function App(props) {
 
     const [page, setPage] = useState(defaultState.page);
     const [teams, setTeams] = useState(demoTeams);
+    const [activeTeamId, setActiveTeamId] = useState(0);
+    const [activePokemonSlot, setActivePokemonSlot] = useState(1); // 1-based indexing currently
 
     
   
@@ -60,8 +70,14 @@ function App(props) {
                 page={page}
                 setPage={setPage}
                 teams={teams}
+                setTeams={setTeams}
+                activeTeamId={activeTeamId}
+                setActiveTeamId={setActiveTeamId}
+                activePokemonSlot={activePokemonSlot}
+                setActivePokemonSlot={setActivePokemonSlot}
             />
             <ToastContainer />
+            <h1>{activePokemonSlot}</h1>
         </>
     )
 }

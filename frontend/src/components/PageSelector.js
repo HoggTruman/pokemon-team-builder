@@ -10,6 +10,9 @@ function PageSelector(props) {
             <TeamListPage 
                 setPage={props.setPage}
                 teams={props.teams}
+                setTeams={props.setTeams}
+                setActiveTeamId={props.setActiveTeamId}
+                setActivePokemonSlot={props.setActivePokemonSlot}
             />
         );
     }
@@ -17,7 +20,11 @@ function PageSelector(props) {
         return (
             <TeamEditPage
                 setPage={props.setPage}
-                teams={props.teams}
+                team={props.teams.find(x => x.id == props.activeTeamId)}
+                setTeams={props.setTeams}
+                activeTeamId={props.activeTeamId}
+                activePokemonSlot={props.activePokemonSlot}
+                setActivePokemonSlot={props.setActivePokemonSlot}
             />
         );
     }    
