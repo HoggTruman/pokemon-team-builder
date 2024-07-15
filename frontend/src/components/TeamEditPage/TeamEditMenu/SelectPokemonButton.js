@@ -3,13 +3,24 @@ import React from "react";
 import "./SelectPokemonButton.css";
 
 function SelectPokemonButton(props) {
+    function handleClick() {
+        props.setActivePokemonSlot(props.pokemon.teamSlot);
+    }
 
-    // maybe use actual button instead of div??
+    function handleClassName() {
+        let className = "selectPokemonButton";
+        if (props.pokemon.teamSlot == props.activePokemonSlot) {
+            className = className.concat(" ", " active");
+        }
+
+        return className;
+    }
+
 
     return (
-        <div
-            className="selectPokemonButton"
-            onClick={() => "setActivePokemonStateToThisPokemon"}
+        <button
+            className={handleClassName()}
+            onClick={handleClick}
         >
             <img
                 src=""
@@ -17,7 +28,7 @@ function SelectPokemonButton(props) {
                 className="teamEditMenuIcon"  
             />
             <p>pokemon name</p>
-        </div>
+        </button>
         
     )
 }

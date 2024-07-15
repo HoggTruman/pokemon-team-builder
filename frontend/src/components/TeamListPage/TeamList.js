@@ -2,29 +2,25 @@ import React from "react";
 import TeamInList from "./TeamInList";
 
 
-class TeamList extends React.Component {
-    constructor(props) {
-        super(props)
+function TeamList(props) {
 
-    }
 
-    render() {
-        const TEAMS = [
-            {},
-        ];
+    // Render
+    let teamRender = props.teams.map((team, teamIndex) => (
+        <TeamInList 
+            key={"TEAMID"}
+            team={team}
+            setPage={props.setPage}
+            setActiveTeamId={props.setActiveTeamId}
+            setActivePokemonSlot={props.setActivePokemonSlot}
+        />
+    ));
 
-        let teamRender = TEAMS.map((team, teamIndex) => (
-            <TeamInList 
-                key={"TEAMID"}
-            />
-        ));
-
-        return (
-            <div id="team-list">
-                {teamRender}
-            </div>
-        )
-    }
+    return (
+        <div id="teamList">
+            {teamRender}
+        </div>
+    );
 }
 
 

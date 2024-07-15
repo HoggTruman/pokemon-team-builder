@@ -2,29 +2,30 @@ import React from "react";
 import TeamList from "../components/TeamListPage/TeamList";
 
 
-class TeamListPage extends React.Component {
-    constructor(props) {
-        super(props)
+function TeamListPage(props) {
 
-    }
 
-    render() {
-        return (
-            <>
-                <h1>Teams</h1>
-                <h2>Select a team or create a new one</h2>
-                <button
-                    onClick={() => this.props.setPage("team_edit")}
-                >
-                    New Team
-                </button>
-                <button>Get teams from server/ save teams to server</button>
-                <TeamList
-                    
-                />
-            </>
-        )
-    }
+    return (
+        <>
+            <h1>Teams</h1>
+            <h2>Select a team or create a new one</h2>
+
+            <button
+                onClick={() => props.setPage("team_edit")}
+            >
+                New Team
+            </button>
+
+            <button>Get teams from server/ save teams to server</button>
+
+            <TeamList
+                setPage={props.setPage}
+                teams={props.teams}
+                setActiveTeamId={props.setActiveTeamId}
+                setActivePokemonSlot={props.setActivePokemonSlot}
+            />
+        </>
+    )
 }
 
 

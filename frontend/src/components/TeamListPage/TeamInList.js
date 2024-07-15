@@ -3,35 +3,44 @@ import React from "react";
 import "./TeamInList.css";
 
 
-class TeamInList extends React.Component {
-    constructor(props) {
-        super(props)
-
+function TeamInList(props) {
+    function handleClickTeamButton() {
+        props.setPage("team_edit");
+        props.setActiveTeamId(props.team.id);
+        props.setActivePokemonSlot(1);
     }
 
-    render() {
-        return (
-            <div 
-                className="teamInList"
-                key={this.props.id}
-            >
-                <div className="teamButton">
-                    <p>TEAMNAME</p>
-                    <p>pokemon icons??</p>
+
+
+
+    // Render
+    let icons = props.team.pokemon.map((pokemon, pokemonIndex) => (
+        <img src="" alt={pokemon.pokemonId + " "} />
+    ));
+
+    return (
+        <div 
+            className="teamInList"
+            key={props.id}
+        >
+            <button className="teamButton" onClick={handleClickTeamButton}>
+                <p>{props.team.teamName}</p>
+                <div id="teamInListIcons">
+                    {icons}
                 </div>
-                <button
-                    onClick={() => "edit name window"}
-                >
-                    change name
-                </button>
-                <button
-                    onClick={() => "confirm delete team"}
-                >
-                    delete
-                </button>
-            </div>
-        )
-    }
+            </button>
+            <button
+                onClick={() => "edit name window"}
+            >
+                edit name
+            </button>
+            <button
+                onClick={() => "confirm delete team"}
+            >
+                delete
+            </button>
+        </div>
+    )
 }
 
 
