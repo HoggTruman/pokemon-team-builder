@@ -2,9 +2,10 @@ import React from "react";
 import SelectPokemonButton from "./SelectPokemonButton";
 
 import "./TeamEditMenu.css";
+import createNewPokemon from "../../../models/pokemonFactory";
 
 function TeamEditMenu(props) {
-
+    
     function handleClickAddPokemonButton()
     {
         if (props.team.pokemon.length >= 6)
@@ -17,10 +18,7 @@ function TeamEditMenu(props) {
         props.setTeams(teams => {
             let team = teams.find(x => x.id == props.team.id);
             team.pokemon.push(
-                {
-                    pokemonId: 0,  // REPLACE THIS WITH A GENERIC POKEMON MODEL AND SET TEAMSLOT IN IT
-                    teamSlot: newTeamSlot
-                }
+                createNewPokemon(newTeamSlot)
             )
 
             return [...teams];
