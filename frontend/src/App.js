@@ -3,17 +3,14 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import PageSelector from "./components/PageSelector";
+import TopBar from "./components/TopBar/TopBar";
+import { TEAM_LIST_PAGE } from "./pages/constants/pageNames";
 
 
 import "./App.css";
-import TopBar from "./components/TopBar/TopBar";
+
 
 function App(props) {
-    const defaultState = {
-        page: "team_list",
-        teams: []
-    };
-
     const demoTeams = [
         {
             id: 1,
@@ -55,7 +52,7 @@ function App(props) {
         },
     ];
 
-    const [page, setPage] = useState(defaultState.page);
+    const [page, setPage] = useState(TEAM_LIST_PAGE);
     const [teams, setTeams] = useState(demoTeams);
     const [activeTeamId, setActiveTeamId] = useState(0);
 

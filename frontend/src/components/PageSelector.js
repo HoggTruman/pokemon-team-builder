@@ -1,11 +1,12 @@
 import React from "react";
 import TeamListPage from "../pages/TeamListPage";
 import TeamEditPage from "../pages/TeamEditPage";
+import { TEAM_EDIT_PAGE, TEAM_LIST_PAGE } from "../pages/constants/pageNames";
 
 function PageSelector(props) {
 
     // Render
-    if (props.page == "team_list") {
+    if (props.page == TEAM_LIST_PAGE) {
         return (
             <TeamListPage 
                 setPage={props.setPage}
@@ -15,7 +16,7 @@ function PageSelector(props) {
             />
         );
     }
-    else if (props.page == "team_edit") {
+    else if (props.page == TEAM_EDIT_PAGE) {
         return (
             <TeamEditPage
                 setPage={props.setPage}

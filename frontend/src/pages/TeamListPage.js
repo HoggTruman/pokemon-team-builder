@@ -1,6 +1,7 @@
 import React from "react";
 import TeamList from "../components/TeamListPage/TeamList";
 import createNewTeam from "../models/teamFactory";
+import { TEAM_EDIT_PAGE } from "./constants/pageNames";
 
 
 function TeamListPage(props) {
@@ -14,7 +15,7 @@ function TeamListPage(props) {
         })
         
         props.setActiveTeamId(newTeam.id);
-        props.setPage("team_edit");
+        props.setPage(TEAM_EDIT_PAGE);
     }
 
 
