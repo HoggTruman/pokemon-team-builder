@@ -12,7 +12,6 @@ function TeamInList(props) {
 
 
 
-
     // Render
     let icons = props.team.pokemon.map((pokemon, pokemonIndex) => (
         <img src="" alt={pokemon.pokemonId + " "} />

@@ -1,8 +1,21 @@
 import React from "react";
 import TeamList from "../components/TeamListPage/TeamList";
+import createNewTeam from "../models/teamFactory";
 
 
 function TeamListPage(props) {
+    function handleClickNewTeamButton() {
+        const newTeam = createNewTeam(Date.now());  // MAYBE NEED AN UPDATE TEAMS ENDPOINT THAT CHECKS IF EACH ID IS ALREADY IN THE DB AND CREATES/UPDATES ACCORDINGLY
+
+        props.setTeams(teams => {
+            teams.push(newTeam);
+            return [...teams];
+        })
+        
+        props.setActiveTeamId(newTeam.id);
+        props.setActivePokemonSlot(1);
+        props.setPage("team_edit");
+    }
 
 
     return (
@@ -11,7 +24,8 @@ function TeamListPage(props) {
             <h2>Select a team or create a new one</h2>
 
             <button
-                onClick={() => props.setPage("team_edit")}
+                id="newTeamButton"
+                onClick={handleClickNewTeamButton}
             >
                 New Team
             </button>

@@ -8,7 +8,7 @@ function TeamList(props) {
     // Render
     let teamRender = props.teams.map((team, teamIndex) => (
         <TeamInList 
-            key={"TEAMID"}
+            key={team.id}
             team={team}
             setPage={props.setPage}
             setActiveTeamId={props.setActiveTeamId}
