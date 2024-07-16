@@ -22,6 +22,18 @@ function TeamInList(props) {
     }
 
 
+    function handleClickRenameTeamButton() {
+        let newTeamName = prompt("New Team Name:", props.team.teamName);  // MAKE A CUSTOM PROMPT COMPONENT SINCE THIS WILL BE USEFUL FOR NEW TEAM AS WELL
+
+        if (newTeamName != null && newTeamName != "") {
+            props.setTeams(teams => {
+                props.team.teamName = newTeamName;
+                return [...teams];
+            })
+        }
+    }
+
+
 
     // Render
     let icons = props.team.pokemon.map((pokemon, pokemonIndex) => (
@@ -44,9 +56,10 @@ function TeamInList(props) {
             </button>
 
             <button
-                onClick={() => "edit name window"}
+                className="renameTeamButton"
+                onClick={handleClickRenameTeamButton}
             >
-                edit name
+                rename
             </button>
 
             <button
