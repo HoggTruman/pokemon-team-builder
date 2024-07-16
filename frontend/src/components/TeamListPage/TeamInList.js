@@ -7,7 +7,6 @@ function TeamInList(props) {
     function handleClickTeamButton() {
         props.setPage("team_edit");
         props.setActiveTeamId(props.team.id);
-        props.setActivePokemonSlot(1);
     }
 
 

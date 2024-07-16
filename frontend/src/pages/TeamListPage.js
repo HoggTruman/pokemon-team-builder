@@ -14,7 +14,6 @@ function TeamListPage(props) {
         })
         
         props.setActiveTeamId(newTeam.id);
-        props.setActivePokemonSlot(1);
         props.setPage("team_edit");
     }
 
@@ -38,7 +37,6 @@ function TeamListPage(props) {
                 teams={props.teams}
                 setTeams={props.setTeams}
                 setActiveTeamId={props.setActiveTeamId}
-                setActivePokemonSlot={props.setActivePokemonSlot}
             />
         </>
     )

@@ -12,7 +12,6 @@ function PageSelector(props) {
                 teams={props.teams}
                 setTeams={props.setTeams}
                 setActiveTeamId={props.setActiveTeamId}
-                setActivePokemonSlot={props.setActivePokemonSlot}
             />
         );
     }
@@ -23,8 +22,6 @@ function PageSelector(props) {
                 team={props.teams.find(x => x.id == props.activeTeamId)}
                 setTeams={props.setTeams}
                 activeTeamId={props.activeTeamId}
-                activePokemonSlot={props.activePokemonSlot}
-                setActivePokemonSlot={props.setActivePokemonSlot}
             />
         );
     }    
