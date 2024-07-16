@@ -11,6 +11,17 @@ function TeamInList(props) {
     }
 
 
+    function handleClickDeleteTeamButton() {
+        if (!confirm(`Are you sure you want to delete "${props.team.teamName}"`)) {
+            return;
+        }
+
+        props.setTeams(teams => {
+            return teams.filter(team => team.id != props.team.id);
+        });
+    }
+
+
 
     // Render
     let icons = props.team.pokemon.map((pokemon, pokemonIndex) => (
@@ -22,19 +33,25 @@ function TeamInList(props) {
             className="teamInList"
             key={props.id}
         >
-            <button className="teamButton" onClick={handleClickTeamButton}>
+            <button 
+                className="teamButton" 
+                onClick={handleClickTeamButton}
+            >
                 <p>{props.team.teamName}</p>
                 <div id="teamInListIcons">
                     {icons}
                 </div>
             </button>
+
             <button
                 onClick={() => "edit name window"}
             >
                 edit name
             </button>
+
             <button
-                onClick={() => "confirm delete team"}
+                className="deleteTeamButton"
+                onClick={handleClickDeleteTeamButton}
             >
                 delete
             </button>

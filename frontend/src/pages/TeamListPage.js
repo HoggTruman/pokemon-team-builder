@@ -5,6 +5,7 @@ import createNewTeam from "../models/teamFactory";
 
 function TeamListPage(props) {
     function handleClickNewTeamButton() {
+        // NEED A BETTER WAY TO MAKE GUIDS FOR TEAMS NOT OBTAINED FROM THE DB!!!!!!!!!!!!!!! NEEDS TO ENSURE IT WONT MATCH A TEAM ALREADY IN DB (NEEDS DIFFERENT FORMAT)
         const newTeam = createNewTeam(Date.now());  // MAYBE NEED AN UPDATE TEAMS ENDPOINT THAT CHECKS IF EACH ID IS ALREADY IN THE DB AND CREATES/UPDATES ACCORDINGLY
 
         props.setTeams(teams => {
@@ -35,6 +36,7 @@ function TeamListPage(props) {
             <TeamList
                 setPage={props.setPage}
                 teams={props.teams}
+                setTeams={props.setTeams}
                 setActiveTeamId={props.setActiveTeamId}
                 setActivePokemonSlot={props.setActivePokemonSlot}
             />
