@@ -1,8 +1,20 @@
 import React from "react";
 
 import "./DetailsSection.css";
+import { ABILITY_FIELD, ITEM_FIELD } from "./constants/fieldNames";
 
 function DetailsSection(props) {
+    function handleClickItemInput() {
+        props.setActiveField(ITEM_FIELD);
+    }
+
+    function handleClickAbilityInput() {
+        props.setActiveField(ABILITY_FIELD);
+    }
+
+
+
+    // Render
     return (
         <div id="detailsSection">
             <div className="row">
@@ -50,12 +62,22 @@ function DetailsSection(props) {
             <div className="row">
                 <div className="field">
                     <label htmlFor="itemInput" className="above">Item</label>
-                    <input id="itemInput" type="text" name="item"/>
+                    <input 
+                        id="itemInput" 
+                        type="text" 
+                        name="item"
+                        onClick={handleClickItemInput}
+                    />
                 </div>
 
                 <div className="field">
                     <label htmlFor="abilityInput" className="above">Ability</label>
-                    <input id="abilityInput" type="text" name="ability"/>
+                    <input 
+                        id="abilityInput" 
+                        type="text" 
+                        name="ability"
+                        onClick={handleClickAbilityInput}
+                    />
                 </div>
             </div>
         </div>

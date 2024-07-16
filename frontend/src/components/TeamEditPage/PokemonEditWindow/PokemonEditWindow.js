@@ -13,13 +13,21 @@ import MovesSection from "./MovesSection";
 function PokemonEditWindow(props) {
     return (
         <div id="pokemonEditWindow">
-            <PokemonSection />
+            <PokemonSection 
+                setActiveField={props.setActiveField}
+            />
 
-            <DetailsSection />
+            <DetailsSection 
+                setActiveField={props.setActiveField}
+            />
 
-            <MovesSection />
+            <MovesSection
+                setActiveField={props.setActiveField}
+            />
 
-            <StatsSection />
+            <StatsSection 
+                setActiveField={props.setActiveField}
+            />
         </div>
     )
 }
