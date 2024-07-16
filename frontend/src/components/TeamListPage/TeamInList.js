@@ -11,6 +11,28 @@ function TeamInList(props) {
     }
 
 
+    function handleClickDeleteTeamButton() {
+        if (!confirm(`Are you sure you want to delete "${props.team.teamName}"`)) {
+            return;
+        }
+
+        props.setTeams(teams => {
+            return teams.filter(team => team.id != props.team.id);
+        });
+    }
+
+
+    function handleClickRenameTeamButton() {
+        let newTeamName = prompt("New Team Name:", props.team.teamName);  // MAKE A CUSTOM PROMPT COMPONENT SINCE THIS WILL BE USEFUL FOR NEW TEAM AS WELL
+
+        if (newTeamName != null && newTeamName != "") {
+            props.setTeams(teams => {
+                props.team.teamName = newTeamName;
+                return [...teams];
+            })
+        }
+    }
+
 
 
     // Render
@@ -23,19 +45,26 @@ function TeamInList(props) {
             className="teamInList"
             key={props.id}
         >
-            <button className="teamButton" onClick={handleClickTeamButton}>
+            <button 
+                className="teamButton" 
+                onClick={handleClickTeamButton}
+            >
                 <p>{props.team.teamName}</p>
                 <div id="teamInListIcons">
                     {icons}
                 </div>
             </button>
+
             <button
-                onClick={() => "edit name window"}
+                className="renameTeamButton"
+                onClick={handleClickRenameTeamButton}
             >
-                edit name
+                rename
             </button>
+
             <button
-                onClick={() => "confirm delete team"}
+                className="deleteTeamButton"
+                onClick={handleClickDeleteTeamButton}
             >
                 delete
             </button>

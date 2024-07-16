@@ -8,8 +8,9 @@ function TeamList(props) {
     // Render
     let teamRender = props.teams.map((team, teamIndex) => (
         <TeamInList 
-            key={"TEAMID"}
+            key={team.id}
             team={team}
+            setTeams={props.setTeams}
             setPage={props.setPage}
             setActiveTeamId={props.setActiveTeamId}
             setActivePokemonSlot={props.setActivePokemonSlot}
@@ -18,7 +19,7 @@ function TeamList(props) {
 
     return (
         <div id="teamList">
-            {teamRender}
+            {teamRender.length !== 0? teamRender: "You have no teams, create a new one to get started!"}
         </div>
     );
 }

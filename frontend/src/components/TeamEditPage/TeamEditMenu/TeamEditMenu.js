@@ -2,9 +2,10 @@ import React from "react";
 import SelectPokemonButton from "./SelectPokemonButton";
 
 import "./TeamEditMenu.css";
+import createNewPokemon from "../../../models/pokemonFactory";
 
 function TeamEditMenu(props) {
-
+    
     function handleClickAddPokemonButton()
     {
         if (props.team.pokemon.length >= 6)
@@ -17,10 +18,7 @@ function TeamEditMenu(props) {
         props.setTeams(teams => {
             let team = teams.find(x => x.id == props.team.id);
             team.pokemon.push(
-                {
-                    pokemonId: 0,  // REPLACE THIS WITH A GENERIC POKEMON MODEL AND SET TEAMSLOT IN IT
-                    teamSlot: newTeamSlot
-                }
+                createNewPokemon(newTeamSlot)
             )
 
             return [...teams];
@@ -28,6 +26,7 @@ function TeamEditMenu(props) {
 
         props.setActivePokemonSlot(newTeamSlot);
     }
+
 
     function handleClickDeletePokemonButton() {
         if (props.team.pokemon.length == 1) {
@@ -37,12 +36,6 @@ function TeamEditMenu(props) {
         props.setTeams(teams => {
             let team = teams.find(x => x.id == props.team.id);
             team = deletePokemonFromTeam(team, props.activePokemonSlot);
-            // team.pokemon = team.pokemon.filter(pokemon => pokemon.teamSlot != props.activePokemonSlot);
-            // for (const pokemon of team.pokemon) {
-            //     if (pokemon.teamSlot > props.activePokemonSlot) {
-            //         pokemon.teamSlot -= 1;
-            //     }
-            // }
 
             return [...teams]
         })
@@ -107,11 +100,26 @@ function TeamEditMenu(props) {
 }
 
 
+
+
 // Component Logic (Separated for testing)
-export function deletePokemonFromTeam(team, activePokemonSlot) {
-    team.pokemon = team.pokemon.filter(pokemon => pokemon.teamSlot != activePokemonSlot);
+
+/**
+ * 
+ * @param {object} team 
+ * @param {int} deleteSlot 
+ * @returns A shallow copy of the modified team object
+ * 
+ * Note: this modifies the team passed in
+ */
+export function deletePokemonFromTeam(team, deleteSlot) {
+    if (team.pokemon.length == 1) {
+        return team;
+    }
+
+    team.pokemon = team.pokemon.filter(pokemon => pokemon.teamSlot != deleteSlot);
     for (const pokemon of team.pokemon) {
-        if (pokemon.teamSlot > activePokemonSlot) {
+        if (pokemon.teamSlot > deleteSlot) {
             pokemon.teamSlot -= 1;
         }
     }
