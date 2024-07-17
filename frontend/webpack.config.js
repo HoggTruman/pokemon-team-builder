@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/dist'),
     filename: "bundle.js",
-    assetModuleFilename: 'assets/[name][ext]',
+    assetModuleFilename: (pathData) => pathData.filename.replace('src/', ''),
     publicPath: '/dist/',
     clean: true
   },
