@@ -3,14 +3,14 @@ import React from "react";
 function AbilityOptionsRow(props) {
 
     return (
-        <tr>
-            <td>
+        <button className="row ability">
+            <div className="col name">
                 {"name"}
-            </td>
-            <td>
+            </div>
+            <div className="col effect">
                 {"effect"}
-            </td>
-        </tr>
+            </div>
+        </button>
     )
 }
 

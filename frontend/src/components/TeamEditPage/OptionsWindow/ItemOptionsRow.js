@@ -3,21 +3,21 @@ import React from "react";
 function ItemOptionsRow(props) {
 
     return (
-        <tr>
-            <td>
+        <button className="row item">
+            <div className="col icon">
                 <img
                     src=""
                     alt="icon"
                     className="optionsRowIcon"
                 />
-            </td>
-            <td>
+            </div>
+            <div className="col name">
                 {"name"}
-            </td>
-            <td>
+            </div>
+            <div className="col effect">
                 {"effect"}
-            </td>
-        </tr>
+            </div>
+        </button>
     )
 }
 

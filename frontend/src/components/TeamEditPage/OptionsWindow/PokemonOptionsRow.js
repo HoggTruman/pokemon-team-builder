@@ -1,47 +1,32 @@
 import React from "react";
 
+
 function PokemonOptionsRow(props) {
 
     return (
-        <tr>
-            <td>
+        <button className="row pokemon">
+            <div className="col icon">
                 <img
                     src=""
                     alt="icon"
                     className="optionsRowIcon"
                 />
-            </td>
-            <td>
-                {"name"}
-            </td>
-            <td>
+            </div>
+            <div className="col name">{"name"}</div>
+            <div className="col types">
                 {"type images"}
-            </td>
-            <td>
+            </div>
+            <div className="col abilities">
                 {"abilities"}
-            </td>
-            <td>
-                {"hp"}
-            </td>
-            <td>
-                {"atk"}
-            </td>
-            <td>
-                {"def"}
-            </td>
-            <td>
-                {"spatk"}
-            </td>
-            <td>
-                {"spdef"}
-            </td>
-            <td>
-                {"speed"}
-            </td>
-            <td>
-                {"total"}
-            </td>
-        </tr>
+            </div>
+            <div className="col stat">{"hp"}</div>
+            <div className="col stat">{"atk"}</div>
+            <div className="col stat">{"def"}</div>
+            <div className="col stat">{"spatk"}</div>
+            <div className="col stat">{"spdef"}</div>
+            <div className="col stat">{"speed"}</div>
+            <div className="col bst">{"total"}</div>
+        </button>
     )
 }
 

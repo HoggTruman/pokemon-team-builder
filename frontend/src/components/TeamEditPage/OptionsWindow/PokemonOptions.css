@@ -1,0 +1,27 @@
+#pokemonOptionsTable {
+    .row.pokemon {    
+        .col.icon {
+            width: 5%;
+        }
+    
+        .col.name {
+            width: 10%;
+        }
+    
+        .col.types {
+            width: 20%;
+        }
+    
+        .col.abilities {
+            width: 30%;
+        }
+    
+        .col.stat {
+            width: 5%;
+        }
+    
+        .col.bst {
+            width: 5%;
+        }
+    }
+}
