@@ -13,6 +13,7 @@ function PageSelector(props) {
                 teams={props.teams}
                 setTeams={props.setTeams}
                 setActiveTeamId={props.setActiveTeamId}
+                data={props.data}
             />
         );
     }
@@ -23,6 +24,7 @@ function PageSelector(props) {
                 team={props.teams.find(x => x.id == props.activeTeamId)}
                 setTeams={props.setTeams}
                 activeTeamId={props.activeTeamId}
+                data={props.data}
             />
         );
     }    

@@ -25,7 +25,8 @@ function TeamEditPage(props) {
                 setActiveField={setActiveField}
             />
             <OptionsWindow 
-                activeField={activeField} 
+                activeField={activeField}
+                data={props.data}
             />
             <h1>{activePokemonSlot}</h1>
         </>

@@ -9,7 +9,7 @@ function OptionsWindow(props) {
     let optionsTable;
 
     if (props.activeField == POKEMON_FIELD) {
-        optionsTable = <PokemonOptions pokemonList={[1,2,3,4,5,6,7,8,9]}/>;
+        optionsTable = <PokemonOptions pokemonList={props.data.pokemon}/>;
     } 
     else if (props.activeField == ITEM_FIELD) {
         optionsTable = <ItemOptions itemList={[1,2,3,4,5,6,7,8,9]}/>;

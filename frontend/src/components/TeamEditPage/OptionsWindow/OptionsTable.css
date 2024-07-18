@@ -1,16 +1,15 @@
 div.optionsTable {
     border: 1px solid black;
     overflow-y: scroll;
-    scrollbar-width: 200px;
     width: 800px;
-    height:200px;
+    height:300px;
     display: block;
 }
 
 div.optionsTable {
     .row {
-        width: 800px;
-        height: 40px;
+        width: 100%;
+        height: 50px;
         text-align: center;
     }
 
@@ -24,5 +23,7 @@ div.optionsTable {
 
     .row .col {
         display: inline-block;
+        margin: auto 0;
+        vertical-align: middle;
     }
 }

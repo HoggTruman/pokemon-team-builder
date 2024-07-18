@@ -1,4 +1,5 @@
 import React from "react";
+import { pokemonIcons, typeImages } from "../../../assets/assets";
 
 
 function PokemonOptionsRow(props) {
@@ -7,27 +8,49 @@ function PokemonOptionsRow(props) {
         <button className="row pokemon">
             <div className="col icon">
                 <img
-                    src=""
+                    src={pokemonIcons[props.pokemon.identifier]}
                     alt="icon"
-                    className="optionsRowIcon"
+                    className="pokemonIcon"
                 />
             </div>
-            <div className="col name">{"name"}</div>
+            <div className="col name">{props.pokemon.identifier}</div>
             <div className="col types">
-                {"type images"}
+                {
+                    props.pokemon.types.map(type => (
+                        <img
+                            key={type}
+                            src={typeImages[type]}
+                            alt={type}
+                        />
+                    ))
+                }
             </div>
             <div className="col abilities">
-                {"abilities"}
+                {
+                    props.pokemon.abilities.map((ability, index) => (
+                        <span key={index}>
+                            {ability.identifier}
+                        </span>
+                    ))
+                }
             </div>
-            <div className="col stat">{"hp"}</div>
-            <div className="col stat">{"atk"}</div>
-            <div className="col stat">{"def"}</div>
-            <div className="col stat">{"spatk"}</div>
-            <div className="col stat">{"spdef"}</div>
-            <div className="col stat">{"speed"}</div>
-            <div className="col bst">{"total"}</div>
+            <div className="col stat">{props.pokemon.baseStats.hp}</div>
+            <div className="col stat">{props.pokemon.baseStats.attack}</div>
+            <div className="col stat">{props.pokemon.baseStats.defense}</div>
+            <div className="col stat">{props.pokemon.baseStats.specialAttack}</div>
+            <div className="col stat">{props.pokemon.baseStats.specialDefense}</div>
+            <div className="col stat">{props.pokemon.baseStats.speed}</div>
+            <div className="col bst">{calcBST(props.pokemon.baseStats)}</div>
         </button>
     )
 }
+
+
+
+function calcBST(baseStats) {
+    return Object.values(baseStats).reduce((a, b) => a + b, 0);
+}
+
+
 
 export default PokemonOptionsRow;

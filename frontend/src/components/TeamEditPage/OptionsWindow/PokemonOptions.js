@@ -7,7 +7,7 @@ import "./PokemonOptions.css";
 function PokemonOptions(props) {
     let pokemonOptionsRows = props.pokemonList.map(pokemon => (
         <PokemonOptionsRow
-            key={"pokemon.id"}
+            key={pokemon.id}
             pokemon={pokemon}
         />
     ));

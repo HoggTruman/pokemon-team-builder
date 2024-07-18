@@ -8,6 +8,7 @@ import { TEAM_LIST_PAGE } from "./pages/constants/pageNames";
 
 
 import "./App.css";
+import { getAllPokemon } from "./api/pokemonAPI";
 
 
 function App(props) {
@@ -56,6 +57,9 @@ function App(props) {
     const [teams, setTeams] = useState(demoTeams);
     const [activeTeamId, setActiveTeamId] = useState(0);
 
+    // Fetch static data
+    const data = {};
+    data.pokemon = getAllPokemon();
     
   
     
@@ -69,6 +73,7 @@ function App(props) {
                 setTeams={setTeams}
                 activeTeamId={activeTeamId}
                 setActiveTeamId={setActiveTeamId}
+                data={data}
             />
             <ToastContainer />
         </>
