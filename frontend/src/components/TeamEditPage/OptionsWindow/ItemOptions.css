@@ -2,6 +2,10 @@
     .row.item {    
         .col.icon {
             width: 5%;
+
+            .itemIcon {
+                image-rendering: pixelated;
+            }
         }
     
         .col.name {

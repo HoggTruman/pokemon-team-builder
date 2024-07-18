@@ -9,6 +9,7 @@ import { TEAM_LIST_PAGE } from "./pages/constants/pageNames";
 
 import "./App.css";
 import { getAllPokemon } from "./api/pokemonAPI";
+import { getAllItems } from "./api/itemAPI";
 
 
 function App(props) {
@@ -60,6 +61,7 @@ function App(props) {
     // Fetch static data
     const data = {};
     data.pokemon = getAllPokemon();
+    data.items = getAllItems();
     
   
     
