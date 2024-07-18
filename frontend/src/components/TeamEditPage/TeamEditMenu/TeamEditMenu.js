@@ -22,7 +22,7 @@ function TeamEditMenu(props) {
             return {...team};
         });
 
-        props.setActivePokemonSlot(newTeamSlot);
+        props.setActiveTeamSlot(newTeamSlot);
     }
 
 
@@ -32,13 +32,13 @@ function TeamEditMenu(props) {
         }
         
         props.setTeamEdit(team => {
-            team = deletePokemonFromTeam(team, props.activePokemonSlot);
+            team = deletePokemonFromTeam(team, props.activeTeamSlot);
 
             return {...team};
         })
 
 
-        props.setActivePokemonSlot(slot => Math.max(1, slot - 1));
+        props.setActiveTeamSlot(slot => Math.max(1, slot - 1));
         
         // MAY BE BETTER TO MAKE EVERY TEAM HAVE 6 POKEMON IN DB BUT MARK EACH AS ACTIVE OR NOT, THIS WAY THEY HAVE A CONSISTENT ID TO USE AND EDITING TEAMS WONT REQUIRE DELETING
     }
@@ -51,8 +51,8 @@ function TeamEditMenu(props) {
         <SelectPokemonButton
             key={pokemon.id || `${pokemon.teamSlot}${Date.now()}`}  // Probably a better way to get a unique key for new teams
             pokemon={pokemon}
-            activePokemonSlot={props.activePokemonSlot}
-            setActivePokemonSlot={props.setActivePokemonSlot}
+            activeTeamSlot={props.activeTeamSlot}
+            setActiveTeamSlot={props.setActiveTeamSlot}
         />
     ));
 

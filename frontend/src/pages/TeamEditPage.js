@@ -46,27 +46,31 @@ function TeamEditPage(props) {
 
 
     const [activeField, setActiveField] = useState(POKEMON_FIELD);  // match name attribute of active element
-    const [activePokemonSlot, setActivePokemonSlot] = useState(1); // 1-based indexing currently
+    const [activeTeamSlot, setActiveTeamSlot] = useState(1); // 1-based indexing currently
     const [teamEdit, setTeamEdit] = useState(newTeamEdit)
 
+
+    // Render
     return (
         <>
             <TeamEditMenu
                 setPage={props.setPage}
                 teamEdit={teamEdit}
                 setTeamEdit={setTeamEdit}
-                activePokemonSlot={activePokemonSlot}
-                setActivePokemonSlot={setActivePokemonSlot}
+                activeTeamSlot={activeTeamSlot}
+                setActiveTeamSlot={setActiveTeamSlot}
             />
             <PokemonEditWindow 
-                activePokemon={props.team.pokemon.find(x => x.teamSlot == props.activeTeamSlot)}
+                activePokemon={teamEdit.pokemon.find(x => x.teamSlot == activeTeamSlot)}
                 setActiveField={setActiveField}
+                teamEdit={teamEdit}
+                setTeamEdit={setTeamEdit}
             />
             <OptionsWindow 
                 activeField={activeField}
                 data={props.data}
             />
-            <h1>{activePokemonSlot}</h1>
+            <h1>{activeTeamSlot}</h1>
         </>
     )
 }

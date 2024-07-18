@@ -4,12 +4,12 @@ import "./SelectPokemonButton.css";
 
 function SelectPokemonButton(props) {
     function handleClick() {
-        props.setActivePokemonSlot(props.pokemon.teamSlot);
+        props.setActiveTeamSlot(props.pokemon.teamSlot);
     }
 
     function handleClassName() {
         let className = "selectPokemonButton";
-        if (props.pokemon.teamSlot == props.activePokemonSlot) {
+        if (props.pokemon.teamSlot == props.activeTeamSlot) {
             className = className.concat(" ", " active");
         }
 
