@@ -9,20 +9,17 @@ function TeamEditMenu(props) {
     
     function handleClickAddPokemonButton()
     {
-        if (props.team.pokemon.length >= 6)
+        if (props.teamEdit.pokemon.length >= 6)
         {
             return;
         }
 
-        const newTeamSlot = props.team.pokemon.length + 1;
+        const newTeamSlot = props.teamEdit.pokemon.length + 1;
             
-        props.setTeams(teams => {
-            let team = teams.find(x => x.id == props.team.id);
-            team.pokemon.push(
-                createNewPokemon(newTeamSlot)
-            )
+        props.setTeamEdit(team => {
+            team.pokemon.push(createNewPokemon(newTeamSlot));
 
-            return [...teams];
+            return {...team};
         });
 
         props.setActivePokemonSlot(newTeamSlot);
@@ -30,15 +27,14 @@ function TeamEditMenu(props) {
 
 
     function handleClickDeletePokemonButton() {
-        if (props.team.pokemon.length == 1) {
+        if (props.teamEdit.pokemon.length == 1) {
             return;
         }
         
-        props.setTeams(teams => {
-            let team = teams.find(x => x.id == props.team.id);
+        props.setTeamEdit(team => {
             team = deletePokemonFromTeam(team, props.activePokemonSlot);
 
-            return [...teams]
+            return {...team};
         })
 
 
@@ -51,9 +47,9 @@ function TeamEditMenu(props) {
 
     // Render
 
-    let pokemonButtons = props.team.pokemon.map(pokemon => (
+    let pokemonButtons = props.teamEdit.pokemon.map(pokemon => (
         <SelectPokemonButton
-            key="pokemon.id?!?!??!?!"
+            key={pokemon.id || `${pokemon.teamSlot}${Date.now()}`}  // Probably a better way to get a unique key for new teams
             pokemon={pokemon}
             activePokemonSlot={props.activePokemonSlot}
             setActivePokemonSlot={props.setActivePokemonSlot}
@@ -76,7 +72,7 @@ function TeamEditMenu(props) {
     return (
         <div id="teamEditMenu">
             <button
-                onClick={() => props.setPage(TEAM_LIST_PAGE)}
+                onClick={() => props.setPage(TEAM_LIST_PAGE)}  // GIVE WARNING FOR UNSAVED CHANGES, ASK IF THEY WANT TO SAVE
             >
                 {"< Teams"}
             </button>
@@ -95,6 +91,11 @@ function TeamEditMenu(props) {
                     alt="del"
                 />
                 <p>delete current</p>
+            </button>
+            <button
+                id="saveTeamButton"
+            >
+                Save Changes
             </button>
         </div>
     )
