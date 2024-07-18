@@ -1,23 +1,26 @@
 import React from "react";
 import ItemOptionsRow from "./ItemOptionsRow";
 
+import "./OptionsTable.css";
+import "./ItemOptions.css";
+
 function ItemOptions(props) {
     let itemOptionsRows = props.itemList.map(item => (
         <ItemOptionsRow
             key={"item.id"}
             item={item}
         />
-    ))
+    ));
 
     return (
-        <table id="itemOptionsTable" className="optionsTable">
-            <tr className="optionsHeaders">
-                <th>{"(Icon)"}</th>
-                <th>Name</th>
-                <th>Effect</th>
-            </tr>
+        <div id="itemOptionsTable" className="optionsTable">
+            <div className="row item header">
+                <div className="col icon">{"(Icon)"}</div>
+                <div className="col name">Item</div>
+                <div className="col effect">Effect</div>
+            </div>
             { itemOptionsRows }
-        </table>
+        </div>
     );
 }
 

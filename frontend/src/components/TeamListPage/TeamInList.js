@@ -1,13 +1,15 @@
 import React from "react";
 
+import { TEAM_EDIT_PAGE } from "../../pages/constants/pageNames";
+
 import "./TeamInList.css";
+
 
 
 function TeamInList(props) {
     function handleClickTeamButton() {
-        props.setPage("team_edit");
+        props.setPage(TEAM_EDIT_PAGE);
         props.setActiveTeamId(props.team.id);
-        props.setActivePokemonSlot(1);
     }
 
 

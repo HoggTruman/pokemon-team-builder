@@ -1,0 +1,15 @@
+#itemOptionsTable {
+    .row.item {    
+        .col.icon {
+            width: 5%;
+        }
+    
+        .col.name {
+            width: 20%;
+        }
+    
+        .col.effect {
+            width: 75%;
+        }
+    }
+}

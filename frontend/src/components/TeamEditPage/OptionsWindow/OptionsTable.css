@@ -1,20 +1,29 @@
-table.optionsTable {
+div.optionsTable {
     border: 1px solid black;
-    overflow-y:scroll;
-    /* width: 1000px; */
-    height:100px;
-    display:block;
+    overflow-y: scroll;
+    width: 800px;
+    height:300px;
+    display: block;
 }
 
-table.optionsTable {
-    tr.optionsHeaders {
-        display: table-caption;
+div.optionsTable {
+    .row {
+        width: 100%;
+        height: 50px;
+        text-align: center;
+    }
+
+    .row.header {
+        height: 20px;
         position: sticky;
         top: 0;
         background-color: grey;
+        font-size: 14px;
     }
 
-    /* th, td {
-        padding: 0.1rem 0.2rem;
-    } */
+    .row .col {
+        display: inline-block;
+        margin: auto 0;
+        vertical-align: middle;
+    }
 }

@@ -3,6 +3,7 @@ import SelectPokemonButton from "./SelectPokemonButton";
 
 import "./TeamEditMenu.css";
 import createNewPokemon from "../../../models/pokemonFactory";
+import { TEAM_LIST_PAGE } from "../../../pages/constants/pageNames";
 
 function TeamEditMenu(props) {
     
@@ -75,7 +76,7 @@ function TeamEditMenu(props) {
     return (
         <div id="teamEditMenu">
             <button
-                onClick={() => props.setPage("team_list")}
+                onClick={() => props.setPage(TEAM_LIST_PAGE)}
             >
                 {"< Teams"}
             </button>

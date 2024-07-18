@@ -13,7 +13,6 @@ function TeamList(props) {
             setTeams={props.setTeams}
             setPage={props.setPage}
             setActiveTeamId={props.setActiveTeamId}
-            setActivePokemonSlot={props.setActivePokemonSlot}
         />
     ));
 

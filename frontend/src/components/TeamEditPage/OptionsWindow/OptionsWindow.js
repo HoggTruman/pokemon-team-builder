@@ -3,35 +3,34 @@ import PokemonOptions from "./PokemonOptions";
 import ItemOptions from "./ItemOptions";
 import AbilityOptions from "./AbilityOptions";
 import MoveOptions from "./MoveOptions";
+import { ABILITY_FIELD, ITEM_FIELD, MOVE1_FIELD, MOVE2_FIELD, MOVE3_FIELD, MOVE4_FIELD, POKEMON_FIELD } from "../PokemonEditWindow/constants/fieldNames";
 
 function OptionsWindow(props) {
     let optionsTable;
-    let header;
 
-    if (props.activeField == "pokemon") {
-        optionsTable = <PokemonOptions pokemonList={[1,2,3,4,5,6,7,8,9]}/>;
-        header = <p>Pokemon</p>;
+    if (props.activeField == POKEMON_FIELD) {
+        optionsTable = <PokemonOptions pokemonList={props.data.pokemon}/>;
     } 
-    else if (props.activeField == "item") {
+    else if (props.activeField == ITEM_FIELD) {
         optionsTable = <ItemOptions itemList={[1,2,3,4,5,6,7,8,9]}/>;
-        header = <p>Items</p>;
     }
-    else if (props.activeField == "ability") {
+    else if (props.activeField == ABILITY_FIELD) {
         optionsTable = <AbilityOptions abilityList={[1,2,3,4,5,6,7,8,9]}/>;
-        header = <p>Abilities</p>;
     }
-    else if (props.activeField == "move") {
-        optionsTable = <MoveOptions moveList={[1,2,3,4,5,6,7,8,9]}/>;
-        header = <p>Moves</p>;
+    else if (
+        props.activeField == MOVE1_FIELD ||
+        props.activeField == MOVE2_FIELD ||
+        props.activeField == MOVE3_FIELD ||
+        props.activeField == MOVE4_FIELD         
+    ) {
+        optionsTable = <MoveOptions moveList={[1,2,3,4,5,6,7,8,9]} activeField={props.activeField}/>;
     }
     else {
         optionsTable = null;
-        header = null;
     }
 
     return (
         <div id="OptionsWindow">
-            {header}
             {optionsTable}
         </div>
     );

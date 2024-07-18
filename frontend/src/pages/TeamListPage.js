@@ -1,6 +1,7 @@
 import React from "react";
 import TeamList from "../components/TeamListPage/TeamList";
 import createNewTeam from "../models/teamFactory";
+import { TEAM_EDIT_PAGE } from "./constants/pageNames";
 
 
 function TeamListPage(props) {
@@ -14,8 +15,7 @@ function TeamListPage(props) {
         })
         
         props.setActiveTeamId(newTeam.id);
-        props.setActivePokemonSlot(1);
-        props.setPage("team_edit");
+        props.setPage(TEAM_EDIT_PAGE);
     }
 
 
@@ -38,7 +38,6 @@ function TeamListPage(props) {
                 teams={props.teams}
                 setTeams={props.setTeams}
                 setActiveTeamId={props.setActiveTeamId}
-                setActivePokemonSlot={props.setActivePokemonSlot}
             />
         </>
     )
