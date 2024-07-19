@@ -67,6 +67,7 @@ function TeamEditPage(props) {
                 setActiveField={setActiveField}
                 teamEdit={teamEdit}
                 setTeamEdit={setTeamEdit}
+                data={props.data}
             />
             <OptionsWindow 
                 activeField={activeField}

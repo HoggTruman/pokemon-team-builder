@@ -18,6 +18,7 @@ function PokemonEditWindow(props) {
                 setActiveField={props.setActiveField}
                 teamEdit={props.teamEdit}
                 setTeamEdit={props.setTeamEdit}
+                data={props.data}
             />
 
             <DetailsSection 
