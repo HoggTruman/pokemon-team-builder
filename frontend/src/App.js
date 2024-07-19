@@ -61,9 +61,9 @@ function App(props) {
     // Fetch static data
     const data = {};
     data.pokemon = getAllPokemon();
-    data.item = getAllItems();
-    data.ability = [];
-    data.move = [];
+    data.items = getAllItems();
+    data.abilities = [];
+    data.moves = [];
     
   
     

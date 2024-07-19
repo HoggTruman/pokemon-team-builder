@@ -1,9 +1,10 @@
 import React from "react";
 import SelectPokemonButton from "./SelectPokemonButton";
+import { TEAM_LIST_PAGE } from "../../../pages/constants/pageNames";
+import createNewPokemonEdit from "../../../models/pokemonEditFactory";
 
 import "./TeamEditMenu.css";
-import createNewPokemon from "../../../models/pokemonFactory";
-import { TEAM_LIST_PAGE } from "../../../pages/constants/pageNames";
+
 
 function TeamEditMenu(props) {
     
@@ -17,7 +18,7 @@ function TeamEditMenu(props) {
         const newTeamSlot = props.teamEdit.pokemon.length + 1;
             
         props.setTeamEdit(team => {
-            team.pokemon.push(createNewPokemon(newTeamSlot));
+            team.pokemon.push(createNewPokemonEdit({ teamSlot: newTeamSlot }));
 
             return {...team};
         });

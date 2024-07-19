@@ -1,3 +1,5 @@
+// IS THIS NEEDED??
+
 function createNewPokemon(teamSlot = 1) {
     return (
         {
