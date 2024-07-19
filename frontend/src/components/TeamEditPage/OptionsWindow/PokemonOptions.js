@@ -15,7 +15,7 @@ function PokemonOptions(props) {
     return (
         <div id="pokemonOptionsTable" className="optionsTable">
             <div className="row pokemon header">
-                <div className="col icon">{"(Icon)"}</div>
+                <div className="col icon"></div>
                 <div className="col name">Pokemon</div>
                 <div className="col types">Types</div>
                 <div className="col abilities">Abilities</div>

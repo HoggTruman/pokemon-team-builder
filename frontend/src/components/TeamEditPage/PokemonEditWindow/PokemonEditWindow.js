@@ -14,7 +14,11 @@ function PokemonEditWindow(props) {
     return (
         <div id="pokemonEditWindow">
             <PokemonSection 
+                activePokemon={props.activePokemon}
                 setActiveField={props.setActiveField}
+                teamEdit={props.teamEdit}
+                setTeamEdit={props.setTeamEdit}
+                data={props.data}
             />
 
             <DetailsSection 

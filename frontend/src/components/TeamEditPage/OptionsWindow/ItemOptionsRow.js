@@ -1,4 +1,5 @@
 import React from "react";
+import { itemIcons } from "../../../assets/assets";
 
 function ItemOptionsRow(props) {
 
@@ -6,16 +7,16 @@ function ItemOptionsRow(props) {
         <button className="row item">
             <div className="col icon">
                 <img
-                    src=""
+                    src={itemIcons[props.item.identifier]}
                     alt="icon"
-                    className="optionsRowIcon"
+                    className="itemIcon"
                 />
             </div>
             <div className="col name">
-                {"name"}
+                {props.item.identifier}
             </div>
             <div className="col effect">
-                {"effect"}
+                {props.item.effect}
             </div>
         </button>
     )

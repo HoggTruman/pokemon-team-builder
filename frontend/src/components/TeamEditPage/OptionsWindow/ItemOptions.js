@@ -7,7 +7,7 @@ import "./ItemOptions.css";
 function ItemOptions(props) {
     let itemOptionsRows = props.itemList.map(item => (
         <ItemOptionsRow
-            key={"item.id"}
+            key={item.id}
             item={item}
         />
     ));
@@ -15,7 +15,7 @@ function ItemOptions(props) {
     return (
         <div id="itemOptionsTable" className="optionsTable">
             <div className="row item header">
-                <div className="col icon">{"(Icon)"}</div>
+                <div className="col icon"></div>
                 <div className="col name">Item</div>
                 <div className="col effect">Effect</div>
             </div>
