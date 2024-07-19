@@ -9,6 +9,7 @@ import createNewPokemonEdit from "../models/pokemonEditFactory";
 
 
 function TeamEditPage(props) {
+    // NEED TO HANDLE PROPER TYPE CONVERSIONS??? VALUE ATTRIBUTES USE STRINGS SO MAY GET WEIRDNESS
     const newTeamEdit = {
         id: props.team.id,
         teamName: props.team.teamName,
@@ -18,9 +19,9 @@ function TeamEditPage(props) {
             pokemonName: props.data.pokemon.find(x => x.id == pokemon.pokemonId)?.identifier || "",
             nickname: pokemon.nickname,
             level: pokemon.level,
-            genderId: pokemon.genderId,
+            genderId: pokemon.genderId,                                                                     // PAGE CURRENTLY USES IDENTIFIER INSTEAD OF ID
             shiny: pokemon.shiny,
-            teraPkmnTypeId: pokemon.teraPkmnTypeId,
+            teraPkmnTypeId: pokemon.teraPkmnTypeId || 1,
             itemName: props.data.items.find(x => x.id == pokemon.itemId)?.identifier || "",
             abilityName: props.data.abilities.find(x => x.id == pokemon.abilityId)?.identifier || "",
 
