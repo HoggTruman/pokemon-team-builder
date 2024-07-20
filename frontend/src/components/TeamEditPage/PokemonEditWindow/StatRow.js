@@ -30,7 +30,7 @@ function StatRow(props) {
                 <p>{props.statName}</p>
             </td>
             <td>
-                <p>{props.baseStat}</p>
+                <p>{props.baseStat || "?"}</p>
             </td>
             <td>
                 <p className="evValue">
@@ -68,7 +68,7 @@ function StatRow(props) {
                             props.activePokemon[props.ivKey],
                             props.natureMultiplier,
                             props.activePokemon.level
-                        )    
+                        ) || "?"
                     }
                 </p>
             </td>

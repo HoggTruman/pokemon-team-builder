@@ -44,7 +44,7 @@ function StatsSection(props) {
                         activePokemon={props.activePokemon}
                         remainingEVs={remainingEVs}
                         statName="HP"
-                        baseStat={activePokemonData.baseStats.hp}
+                        baseStat={activePokemonData?.baseStats.hp}
                         evKey={"hpEV"}
                         ivKey={"hpIV"}
                         natureMultiplier={1}
@@ -54,7 +54,7 @@ function StatsSection(props) {
                         activePokemon={props.activePokemon}
                         remainingEVs={remainingEVs}
                         statName="Attack"
-                        baseStat={activePokemonData.baseStats.attack}
+                        baseStat={activePokemonData?.baseStats.attack}
                         evKey={"attackEV"}
                         ivKey={"attackIV"}
                         natureMultiplier={activeNatureData.attackMultiplier}
@@ -64,7 +64,7 @@ function StatsSection(props) {
                         activePokemon={props.activePokemon}
                         remainingEVs={remainingEVs}
                         statName="Defense"
-                        baseStat={activePokemonData.baseStats.defense}
+                        baseStat={activePokemonData?.baseStats.defense}
                         evKey={"defenseEV"}
                         ivKey={"defenseIV"}
                         natureMultiplier={activeNatureData.defenseMultiplier}
@@ -74,7 +74,7 @@ function StatsSection(props) {
                         activePokemon={props.activePokemon}
                         remainingEVs={remainingEVs}
                         statName="Sp. Atk."
-                        baseStat={activePokemonData.baseStats.specialAttack}
+                        baseStat={activePokemonData?.baseStats.specialAttack}
                         evKey={"specialAttackEV"}
                         ivKey={"specialAttackIV"}
                         natureMultiplier={activeNatureData.specialAttackMultiplier}
@@ -84,7 +84,7 @@ function StatsSection(props) {
                         activePokemon={props.activePokemon}
                         remainingEVs={remainingEVs}
                         statName="Sp. Def."
-                        baseStat={activePokemonData.baseStats.specialDefense}
+                        baseStat={activePokemonData?.baseStats.specialDefense}
                         evKey={"specialDefenseEV"}
                         ivKey={"specialDefenseIV"}
                         natureMultiplier={activeNatureData.specialDefenseMultiplier}
@@ -94,7 +94,7 @@ function StatsSection(props) {
                         activePokemon={props.activePokemon}
                         remainingEVs={remainingEVs}
                         statName="Speed"
-                        baseStat={activePokemonData.baseStats.speed}
+                        baseStat={activePokemonData?.baseStats.speed}
                         evKey={"speedEV"}
                         ivKey={"speedIV"}
                         natureMultiplier={activeNatureData.speedMultiplier}
