@@ -2,6 +2,7 @@ namespace api.DTOs.Nature;
 
 public class NatureDTO
 {
+    public int Id { get; set; }
     public string Identifier { get; set; } = "";
 
     public double AttackMultiplier { get; set; }
