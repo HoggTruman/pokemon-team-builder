@@ -53,6 +53,8 @@ function TeamEditPage(props) {
     const [activeTeamSlot, setActiveTeamSlot] = useState(1); // 1-based indexing currently
     const [teamEdit, setTeamEdit] = useState(newTeamEdit)
 
+    let activePokemon = teamEdit.pokemon.find(x => x.teamSlot == activeTeamSlot);
+
 
     // Render
     return (
@@ -65,14 +67,16 @@ function TeamEditPage(props) {
                 setActiveTeamSlot={setActiveTeamSlot}
             />
             <PokemonEditWindow 
-                activePokemon={teamEdit.pokemon.find(x => x.teamSlot == activeTeamSlot)}
+                activePokemon={activePokemon}
                 setActiveField={setActiveField}
                 teamEdit={teamEdit}
                 setTeamEdit={setTeamEdit}
                 data={props.data}
             />
-            <OptionsWindow 
+            <OptionsWindow
+                activePokemon={activePokemon}
                 activeField={activeField}
+                setTeamEdit={setTeamEdit}
                 data={props.data}
             />
             <h1>{activeTeamSlot}</h1>

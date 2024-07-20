@@ -9,10 +9,22 @@ function OptionsWindow(props) {
     let optionsTable;
 
     if (props.activeField == POKEMON_FIELD) {
-        optionsTable = <PokemonOptions pokemonList={props.data.pokemon}/>;
+        optionsTable = (
+            <PokemonOptions 
+                pokemonList={filterListByInput(props.data.pokemon, props.activePokemon.pokemonName)}
+                setTeamEdit={props.setTeamEdit}
+                activePokemon={props.activePokemon}
+            />
+        );
     } 
     else if (props.activeField == ITEM_FIELD) {
-        optionsTable = <ItemOptions itemList={props.data.items}/>;
+        optionsTable = (
+            <ItemOptions 
+                itemList={filterListByInput(props.data.items, props.activePokemon.itemName)}
+                setTeamEdit={props.setTeamEdit}
+                activePokemon={props.activePokemon}
+            />
+        );
     }
     else if (props.activeField == ABILITY_FIELD) {
         optionsTable = <AbilityOptions abilityList={[1,2,3,4,5,6,7,8,9]}/>;
@@ -35,5 +47,13 @@ function OptionsWindow(props) {
         </div>
     );
 }
+
+function filterListByInput(list, input) {
+    const cleanInput = input.toLowerCase().trim();
+
+    return list.filter(x => x.identifier.includes(cleanInput));
+}
+
+
 
 export default OptionsWindow;

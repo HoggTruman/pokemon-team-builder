@@ -4,7 +4,10 @@ import { itemIcons } from "../../../assets/assets";
 function ItemOptionsRow(props) {
 
     return (
-        <button className="row item">
+        <button 
+            className="row item"
+            onClick={props.handleClick}
+        >
             <div className="col icon">
                 <img
                     src={itemIcons[props.item.identifier]}

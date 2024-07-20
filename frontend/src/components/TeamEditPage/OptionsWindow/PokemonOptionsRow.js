@@ -5,7 +5,10 @@ import { pokemonIcons, typeImages } from "../../../assets/assets";
 function PokemonOptionsRow(props) {
 
     return (
-        <button className="row pokemon">
+        <button 
+            className="row pokemon"
+            onClick={props.handleClick}
+        >
             <div className="col icon">
                 <img
                     src={pokemonIcons[props.pokemon.identifier]}
