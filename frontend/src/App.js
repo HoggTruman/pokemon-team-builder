@@ -6,10 +6,17 @@ import PageSelector from "./components/PageSelector";
 import TopBar from "./components/TopBar/TopBar";
 import { TEAM_LIST_PAGE } from "./pages/constants/pageNames";
 
-
-import "./App.css";
 import { getAllPokemon } from "./api/pokemonAPI";
 import { getAllItems } from "./api/itemAPI";
+import { getAllAbilities } from "./api/abilityAPI";
+import { getAllTypes } from "./api/typeAPI";
+import { getAllNatures } from "./api/natureAPI";
+import { getAllMoves } from "./api/moveAPI";
+
+
+import "./App.css";
+
+
 
 
 function App(props) {
@@ -20,7 +27,8 @@ function App(props) {
             pokemon: [
                 {
                     pokemonId: 1,
-                    teamSlot: 1
+                    teamSlot: 1,
+                    genderId: "female"
                 },
                 {
                     pokemonId: 2,
@@ -62,8 +70,10 @@ function App(props) {
     const data = {};
     data.pokemon = getAllPokemon();
     data.items = getAllItems();
-    data.abilities = [];
-    data.moves = [];
+    data.abilities = getAllAbilities();
+    data.moves = getAllMoves();
+    data.types = getAllTypes();
+    data.natures = getAllNatures();
     
   
     

@@ -9,6 +9,7 @@ import createNewPokemonEdit from "../models/pokemonEditFactory";
 
 
 function TeamEditPage(props) {
+    // NEED TO HANDLE PROPER TYPE CONVERSIONS??? VALUE ATTRIBUTES USE STRINGS SO MAY GET WEIRDNESS
     const newTeamEdit = {
         id: props.team.id,
         teamName: props.team.teamName,
@@ -18,9 +19,9 @@ function TeamEditPage(props) {
             pokemonName: props.data.pokemon.find(x => x.id == pokemon.pokemonId)?.identifier || "",
             nickname: pokemon.nickname,
             level: pokemon.level,
-            genderId: pokemon.genderId,
+            genderId: pokemon.genderId || "auto",                                                  // PAGE CURRENTLY USES IDENTIFIER INSTEAD OF ID
             shiny: pokemon.shiny,
-            teraPkmnTypeId: pokemon.teraPkmnTypeId,
+            teraPkmnTypeId: pokemon.teraPkmnTypeId || 1,
             itemName: props.data.items.find(x => x.id == pokemon.itemId)?.identifier || "",
             abilityName: props.data.abilities.find(x => x.id == pokemon.abilityId)?.identifier || "",
 
@@ -29,7 +30,8 @@ function TeamEditPage(props) {
             move3Name: props.data.moves.find(x => x.id == pokemon.move3Id)?.identifier || "",
             move4Name: props.data.moves.find(x => x.id == pokemon.move4Id)?.identifier || "",
 
-            natureId: pokemon.natureId,
+            natureId: pokemon.natureId || 1,
+
             hpEV: pokemon.hpEV,
             attackEV: pokemon.attackEV,
             defenseEV: pokemon.defenseEV,
@@ -51,6 +53,8 @@ function TeamEditPage(props) {
     const [activeTeamSlot, setActiveTeamSlot] = useState(1); // 1-based indexing currently
     const [teamEdit, setTeamEdit] = useState(newTeamEdit)
 
+    let activePokemon = teamEdit.pokemon.find(x => x.teamSlot == activeTeamSlot);
+
 
     // Render
     return (
@@ -63,14 +67,16 @@ function TeamEditPage(props) {
                 setActiveTeamSlot={setActiveTeamSlot}
             />
             <PokemonEditWindow 
-                activePokemon={teamEdit.pokemon.find(x => x.teamSlot == activeTeamSlot)}
+                activePokemon={activePokemon}
                 setActiveField={setActiveField}
                 teamEdit={teamEdit}
                 setTeamEdit={setTeamEdit}
                 data={props.data}
             />
-            <OptionsWindow 
+            <OptionsWindow
+                activePokemon={activePokemon}
                 activeField={activeField}
+                setTeamEdit={setTeamEdit}
                 data={props.data}
             />
             <h1>{activeTeamSlot}</h1>

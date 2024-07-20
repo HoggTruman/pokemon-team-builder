@@ -5,12 +5,25 @@ import "./OptionsTable.css";
 import "./PokemonOptions.css";
 
 function PokemonOptions(props) {
+    function handleClickOptionRow(identifier) {
+        props.setTeamEdit(team => {
+            props.activePokemon.pokemonName = identifier;
+            return {...team};
+        })
+    }
+
+    // Render
     let pokemonOptionsRows = props.pokemonList.map(pokemon => (
         <PokemonOptionsRow
             key={pokemon.id}
             pokemon={pokemon}
+            handleClick={() => handleClickOptionRow(pokemon.identifier)}
         />
     ));
+
+    if (pokemonOptionsRows.length === 0) {
+        pokemonOptionsRows = <div className="noMatches">No Pokemon Found</div>
+    }
 
     return (
         <div id="pokemonOptionsTable" className="optionsTable">

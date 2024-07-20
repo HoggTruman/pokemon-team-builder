@@ -4,6 +4,7 @@ namespace api.DTOs.Move
 {
     public class GetMoveDTO
     {
+        public int Id { get; set; }
         public string Identifier { get; set; } = "";
         public int? Power { get; set; }
         [JsonPropertyName("pp")]

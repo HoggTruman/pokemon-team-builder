@@ -10,6 +10,7 @@ public static class NatureMappers
     {
         return new NatureDTO
         {
+            Id = natureModel.Id,
             Identifier = natureModel.Identifier,
             AttackMultiplier = natureModel.AttackMultiplier,
             DefenseMultiplier = natureModel.DefenseMultiplier,

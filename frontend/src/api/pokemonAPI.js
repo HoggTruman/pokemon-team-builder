@@ -219,7 +219,32 @@ export function getAllPokemon() {
                   "specialDefense": 35,
                   "speed": 56
                 }
-              },
+            },
+            {
+                "id": 493,
+                "identifier": "arceus",
+                "speciesId": 493,
+                "types": [
+                    "normal"
+                ],
+                "genders": [
+                    "genderless"
+                ],
+                "abilities": [
+                {
+                    "identifier": "multitype",
+                    "flavorText": "Changes the Pokémon's type to match the plate it holds. "
+                }
+                ],
+                "baseStats": {
+                    "hp": 120,
+                    "attack": 120,
+                    "defense": 120,
+                    "specialAttack": 120,
+                    "specialDefense": 120,
+                    "speed": 120
+                }
+            },
     ]
 
     return pokemon;
