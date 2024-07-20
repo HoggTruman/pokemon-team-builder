@@ -19,7 +19,7 @@ function TeamEditPage(props) {
             pokemonName: props.data.pokemon.find(x => x.id == pokemon.pokemonId)?.identifier || "",
             nickname: pokemon.nickname,
             level: pokemon.level,
-            genderId: pokemon.genderId,                                                                     // PAGE CURRENTLY USES IDENTIFIER INSTEAD OF ID
+            genderId: pokemon.genderId || "auto",                                                  // PAGE CURRENTLY USES IDENTIFIER INSTEAD OF ID
             shiny: pokemon.shiny,
             teraPkmnTypeId: pokemon.teraPkmnTypeId || 1,
             itemName: props.data.items.find(x => x.id == pokemon.itemId)?.identifier || "",

@@ -109,9 +109,19 @@ function DetailsSection(props) {
                     <select 
                         id="genderSelect" 
                         name="gender" 
-                        value={props.activePokemon.genderId || activePokemonData?.genders[0]}
+                        value= {
+                            activePokemonData?.genders.includes(props.activePokemon.genderId)?  
+                            props.activePokemon.genderId : 
+                            "auto"
+                        }
                         onChange={e => handleChangeGender(e)}
-                    >        
+                    > 
+                        <option 
+                            key="auto"
+                            value="auto"
+                        >
+                            auto
+                        </option>
                         {genderOptions}
                     </select>
                 </div>
