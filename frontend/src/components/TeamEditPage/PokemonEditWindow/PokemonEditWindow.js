@@ -30,7 +30,11 @@ function PokemonEditWindow(props) {
             />
 
             <MovesSection
+                activePokemon={props.activePokemon}
                 setActiveField={props.setActiveField}
+                teamEdit={props.teamEdit}
+                setTeamEdit={props.setTeamEdit}
+                data={props.data}
             />
 
             <StatsSection 
