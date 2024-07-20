@@ -10,10 +10,12 @@ import { getAllPokemon } from "./api/pokemonAPI";
 import { getAllItems } from "./api/itemAPI";
 import { getAllAbilities } from "./api/abilityAPI";
 import { getAllTypes } from "./api/typeAPI";
+import { getAllNatures } from "./api/natureAPI";
+import { getAllMoves } from "./api/moveAPI";
 
 
 import "./App.css";
-import { getAllNatures } from "./api/natureAPI";
+
 
 
 
@@ -69,7 +71,7 @@ function App(props) {
     data.pokemon = getAllPokemon();
     data.items = getAllItems();
     data.abilities = getAllAbilities();
-    data.moves = [];
+    data.moves = getAllMoves();
     data.types = getAllTypes();
     data.natures = getAllNatures();
     
