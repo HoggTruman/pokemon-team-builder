@@ -13,6 +13,7 @@ import { getAllTypes } from "./api/typeAPI";
 
 
 import "./App.css";
+import { getAllNatures } from "./api/natureAPI";
 
 
 
@@ -70,6 +71,7 @@ function App(props) {
     data.abilities = getAllAbilities();
     data.moves = [];
     data.types = getAllTypes();
+    data.natures = getAllNatures();
     
   
     

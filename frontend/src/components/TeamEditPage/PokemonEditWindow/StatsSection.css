@@ -1,5 +1,20 @@
 #statsSection {
     display: inline-block;
     vertical-align: top;
+    width: 500px;
     border: 1px solid indigo;
+}
+
+#statsSection {
+    #remainingEVs.warning {
+        color: red;
+
+        span {
+            font-weight: bold;
+        }
+    }
+
+    .evSlider {
+        width: 275px;
+    }
 }

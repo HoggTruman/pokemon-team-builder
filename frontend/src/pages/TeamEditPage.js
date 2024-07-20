@@ -30,7 +30,8 @@ function TeamEditPage(props) {
             move3Name: props.data.moves.find(x => x.id == pokemon.move3Id)?.identifier || "",
             move4Name: props.data.moves.find(x => x.id == pokemon.move4Id)?.identifier || "",
 
-            natureId: pokemon.natureId,
+            natureId: pokemon.natureId || 1,
+
             hpEV: pokemon.hpEV,
             attackEV: pokemon.attackEV,
             defenseEV: pokemon.defenseEV,
