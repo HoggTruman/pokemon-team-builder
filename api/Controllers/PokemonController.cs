@@ -1,3 +1,4 @@
+using api.DTOs.Pokemon;
 using api.Interfaces.Repository;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,8 @@ namespace api.Controllers
 
 
         [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<PokemonDTO>))]
         public IActionResult GetAll()
         {
             var pokemon = _repository.GetAll().Select(x => x.ToPokemonDTO());
@@ -27,6 +30,9 @@ namespace api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(PokemonDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetById([FromRoute] int id)
         {
             var pokemon = _repository.GetById(id);

@@ -1,3 +1,4 @@
+using api.DTOs.Item;
 using api.Interfaces.Repository;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,8 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<ItemDTO>))]
     public IActionResult GetAll()
     {
         var items = _repository.GetAll().Select(x => x.ToItemDTO());
@@ -24,6 +27,9 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(ItemDTO))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetById([FromRoute] int id)
     {
         var item = _repository.GetById(id);

@@ -25,6 +25,9 @@ public class TeamController : ControllerBase
 
     [HttpGet]
     [Authorize]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<GetUserTeamsDTO>))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetTeams()
     {
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
@@ -41,6 +44,10 @@ public class TeamController : ControllerBase
 
     [HttpGet("{id:int}")]
     [Authorize]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetUserTeamDTO))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetTeamById([FromRoute] int id)
     {
         var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
@@ -62,6 +69,10 @@ public class TeamController : ControllerBase
 
     [HttpPost]
     [Authorize]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetUserTeamDTO))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> CreateTeam([FromBody] CreateUpdateTeamDTO createTeamDTO)
     {
         if (!ModelState.IsValid)
@@ -81,6 +92,11 @@ public class TeamController : ControllerBase
 
     [HttpPut("{id:int}")]
     [Authorize]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetUserTeamDTO))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateTeam([FromRoute] int id, [FromBody] CreateUpdateTeamDTO updateTeamDTO)
     {
         if (!ModelState.IsValid)
@@ -103,6 +119,11 @@ public class TeamController : ControllerBase
 
     [HttpDelete("{id:int}")]
     [Authorize]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteTeam([FromRoute] int id)
     {
         if (!ModelState.IsValid)

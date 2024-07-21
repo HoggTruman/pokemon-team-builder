@@ -1,3 +1,4 @@
+using api.DTOs.Nature;
 using api.Interfaces.Repository;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,8 @@ namespace api.Controllers
 
 
         [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<NatureDTO>))]
         public IActionResult GetAll()
         {
             var natures = _repository.GetAll().Select(x => x.ToNatureDTO());
@@ -28,6 +31,9 @@ namespace api.Controllers
 
 
         [HttpGet("{id:int}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(NatureDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetById(int id)
         {
             var nature = _repository.GetById(id);

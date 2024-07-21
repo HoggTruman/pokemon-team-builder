@@ -1,3 +1,4 @@
+using api.DTOs.PkmnType;
 using api.Interfaces.Repository;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,8 @@ public class PkmnTypeController : ControllerBase
     }
 
     [HttpGet]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<PkmnTypeDTO>))]
     public IActionResult GetAll()
     {
         var pkmnTypes = _repository.GetAll().Select(x => x.ToPkmnTypeDTO());
@@ -24,6 +27,9 @@ public class PkmnTypeController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(PkmnTypeDTO))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetById([FromRoute] int id)
     {
         var pkmnType = _repository.GetById(id);
