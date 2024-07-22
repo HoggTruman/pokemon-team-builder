@@ -6,7 +6,7 @@ function createNewPokemonEdit({
     level = 100,
     genderId = null,
     shiny = false,
-    teraPkmnTypeId = null,
+    teraPkmnTypeId = 1,
     itemName = "",
     abilityName = "",
 
@@ -15,7 +15,7 @@ function createNewPokemonEdit({
     move3Name = "",
     move4Name = "",
 
-    natureId = null,
+    natureId = 1,
     hpEV = 0,
     attackEV = 0,
     defenseEV = 0,
