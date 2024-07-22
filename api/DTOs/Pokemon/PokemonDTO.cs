@@ -15,7 +15,9 @@ namespace api.DTOs.Pokemon
         [JsonPropertyName("genders")]
         public List<string> PokemonGenders { get; set; } = [];
         [JsonPropertyName("abilities")]
-        public List<PokemonAbilityDTO> PokemonAbilities { get; set; } = [];
+        public List<int> PokemonAbilityIds { get; set; } = [];
+        [JsonPropertyName("moves")]
+        public List<int> PokemonMoveIds { get; set; } = [];
 
         public BaseStatsDTO BaseStats { get; set; } = new BaseStatsDTO();
 
