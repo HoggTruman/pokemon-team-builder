@@ -6,10 +6,20 @@ import "./AbilityOptions.css";
 
 
 function AbilityOptions(props) {
+    function handleClickOptionRow(identifier) {
+        props.setTeamEdit(team => {
+            props.activePokemon.abilityName = identifier;
+            return {...team};
+        })
+    }
+
+
+
     let abilityOptionsRows = props.abilityList.map(ability => (
         <AbilityOptionsRow
-            key={"ability.id"}
+            key={ability.id}
             ability={ability}
+            handleClick={() => handleClickOptionRow(ability.identifier)}
         />
     ));
 

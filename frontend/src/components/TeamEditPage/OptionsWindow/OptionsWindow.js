@@ -27,7 +27,17 @@ function OptionsWindow(props) {
         );
     }
     else if (props.activeField == ABILITY_FIELD) {
-        optionsTable = <AbilityOptions abilityList={[1,2,3,4,5,6,7,8,9]}/>;
+        const abilities = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName)
+            ?.abilities.map(abilityId => props.data.abilities.find(x => x.id == abilityId))
+            || [];
+
+        optionsTable = (
+            <AbilityOptions 
+                abilityList={filterListByInput(abilities, props.activePokemon.abilityName)}
+                setTeamEdit={props.setTeamEdit}
+                activePokemon={props.activePokemon}
+            />
+        );
     }
     else if (
         props.activeField == MOVE1_FIELD ||
