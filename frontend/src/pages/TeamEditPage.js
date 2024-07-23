@@ -65,6 +65,7 @@ function TeamEditPage(props) {
                 setTeamEdit={setTeamEdit}
                 activeTeamSlot={activeTeamSlot}
                 setActiveTeamSlot={setActiveTeamSlot}
+                data={props.data}
             />
             <PokemonEditWindow 
                 activePokemon={activePokemon}
