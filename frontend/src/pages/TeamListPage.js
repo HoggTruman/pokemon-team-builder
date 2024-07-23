@@ -38,6 +38,7 @@ function TeamListPage(props) {
                 teams={props.teams}
                 setTeams={props.setTeams}
                 setActiveTeamId={props.setActiveTeamId}
+                data={props.data}
             />
         </>
     )

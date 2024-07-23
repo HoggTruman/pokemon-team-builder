@@ -26,13 +26,35 @@ function App(props) {
             teamName:"team1",
             pokemon: [
                 {
-                    pokemonId: 1,
+                    id: 1,
+                    pokemonId: 6,
                     teamSlot: 1,
                     genderId: "female"
                 },
                 {
-                    pokemonId: 2,
+                    id: 2,
+                    pokemonId: 6,
                     teamSlot: 2
+                },
+                {
+                    id: 3,
+                    pokemonId: 3,
+                    teamSlot: 3
+                },
+                {
+                    id: 6,
+                    pokemonId: 6,
+                    teamSlot: 4
+                },
+                {
+                    id: 9,
+                    pokemonId: 9,
+                    teamSlot: 5
+                },
+                {
+                    id: 12,
+                    pokemonId: 12,
+                    teamSlot: 6
                 },
             ]
         },
@@ -41,6 +63,7 @@ function App(props) {
             teamName:"team2",
             pokemon: [
                 {
+                    id: 10,
                     pokemonId: 10,
                     teamSlot: 1
                 },
@@ -51,10 +74,12 @@ function App(props) {
             teamName:"team3",
             pokemon: [
                 {
+                    id: 11,
                     pokemonId: 11,
                     teamSlot: 1
                 },
                 {
+                    id: 22,
                     pokemonId: 22,
                     teamSlot: 2
                 },
