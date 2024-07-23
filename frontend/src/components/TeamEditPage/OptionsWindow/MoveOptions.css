@@ -19,5 +19,9 @@
         .col.effect {
             width: 55%;
         }
+
+        img {
+            image-rendering: pixelated;
+        }
     }
 }

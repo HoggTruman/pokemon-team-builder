@@ -5,6 +5,8 @@ import AbilityOptions from "./AbilityOptions";
 import MoveOptions from "./MoveOptions";
 import { ABILITY_FIELD, ITEM_FIELD, MOVE1_FIELD, MOVE2_FIELD, MOVE3_FIELD, MOVE4_FIELD, POKEMON_FIELD } from "../PokemonEditWindow/constants/fieldNames";
 
+
+
 function OptionsWindow(props) {
     let optionsTable;
 
@@ -27,7 +29,17 @@ function OptionsWindow(props) {
         );
     }
     else if (props.activeField == ABILITY_FIELD) {
-        optionsTable = <AbilityOptions abilityList={[1,2,3,4,5,6,7,8,9]}/>;
+        const abilities = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName)
+            ?.abilities.map(abilityId => props.data.abilities.find(x => x.id == abilityId))
+            || [];
+
+        optionsTable = (
+            <AbilityOptions 
+                abilityList={filterListByInput(abilities, props.activePokemon.abilityName)}
+                setTeamEdit={props.setTeamEdit}
+                activePokemon={props.activePokemon}
+            />
+        );
     }
     else if (
         props.activeField == MOVE1_FIELD ||
@@ -35,7 +47,26 @@ function OptionsWindow(props) {
         props.activeField == MOVE3_FIELD ||
         props.activeField == MOVE4_FIELD         
     ) {
-        optionsTable = <MoveOptions moveList={[1,2,3,4,5,6,7,8,9]} activeField={props.activeField}/>;
+        let moves = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName)
+        ?.moves.map(moveId => props.data.moves.find(x => x.id == moveId))
+        || [];
+
+        let currentMoves = [
+            props.activePokemon.move1Name, 
+            props.activePokemon.move2Name, 
+            props.activePokemon.move3Name, 
+            props.activePokemon.move4Name
+        ]
+
+
+        optionsTable = (
+            <MoveOptions 
+                moveList={filterMovesList(moves, props.activeField, currentMoves)}
+                activeField={props.activeField}
+                setTeamEdit={props.setTeamEdit}
+                activePokemon={props.activePokemon}
+            />
+        );
     }
     else {
         optionsTable = null;
@@ -52,6 +83,35 @@ function filterListByInput(list, input) {
     const cleanInput = input.toLowerCase().trim();
 
     return list.filter(x => x.identifier.includes(cleanInput));
+}
+
+
+// Filters options by current input + removes already selected moves from options
+function filterMovesList(list, activeField, currentMoves) {
+    let cleanInput;
+    const cleanCurrentMoves = currentMoves.map(x => x.toLowerCase().trim());
+
+    if (activeField == MOVE1_FIELD) {
+        cleanInput = cleanCurrentMoves[0];
+        cleanCurrentMoves.splice(0, 1);
+    }
+    else if (activeField == MOVE2_FIELD) {
+        cleanInput = cleanCurrentMoves[1];
+        cleanCurrentMoves.splice(1, 1);
+    }
+    else if (activeField == MOVE3_FIELD) {
+        cleanInput = cleanCurrentMoves[2];
+        cleanCurrentMoves.splice(2, 1);
+    }
+    else if (activeField == MOVE4_FIELD) {
+        cleanInput = cleanCurrentMoves[3];
+        cleanCurrentMoves.splice(3, 1);
+    }
+
+    return list
+        .filter(x => x.identifier.includes(cleanInput) &&
+            cleanCurrentMoves.includes(x.identifier) === false)
+        .sort((a, b) => a.identifier > b.identifier? 1 : 0);
 }
 
 

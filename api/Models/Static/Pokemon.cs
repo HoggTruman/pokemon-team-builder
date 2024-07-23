@@ -21,8 +21,8 @@ public class Pokemon
     public List<Ability> Abilities { get; } = [];
     public List<PokemonAbility> PokemonAbilities { get; } = [];
 
-    public BaseStats BaseStats { get; set; } = default!;
-
     public List<Move> Moves { get; } = [];
+    public List<PokemonMove> PokemonMoves { get; } = [];
 
+    public BaseStats BaseStats { get; set; } = default!;
 }

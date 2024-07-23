@@ -1,3 +1,4 @@
+using api.DTOs.Ability;
 using api.Interfaces.Repository;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,8 @@ namespace api.Controllers
 
 
         [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<AbilityDTO>))]
         public IActionResult GetAll()
         {
             var abilities = _repository.GetAll().Select(x => x.ToAbilityDTO());
@@ -28,6 +31,9 @@ namespace api.Controllers
 
 
         [HttpGet("{id:int}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(AbilityDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetById(int id)
         {
             var ability = _repository.GetById(id);

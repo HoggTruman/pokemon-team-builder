@@ -47,19 +47,29 @@ function TeamEditMenu(props) {
 
 
     // Render
-
     let pokemonButtons = props.teamEdit.pokemon.map(pokemon => (
         <SelectPokemonButton
-            key={pokemon.id || `${pokemon.teamSlot}${Date.now()}`}  // Probably a better way to get a unique key for new teams
-            pokemon={pokemon}
+            key={pokemon.id || `${pokemon.teamSlot}${Date.now()}`} // Probably a better way to get a unique key for new teams
+            pokemon={pokemon} //{props.teamEdit.pokemon.find(x => x.teamSlot == teamSlot)}
             activeTeamSlot={props.activeTeamSlot}
             setActiveTeamSlot={props.setActiveTeamSlot}
+            data={props.data}
         />
-    ));
+    ))
+
+    // let pokemonButtons = props.teamEdit.pokemon.map(pokemon => (
+    //     <SelectPokemonButton
+    //         key={pokemon.id || `${pokemon.teamSlot}${Date.now()}`}  // Probably a better way to get a unique key for new teams
+    //         pokemon={pokemon}
+    //         activeTeamSlot={props.activeTeamSlot}
+    //         setActiveTeamSlot={props.setActiveTeamSlot}
+    //     />
+    // ));
 
     let addPokemonButton = (
         <button
             id="addPokemonButton"
+            className="menuButton"
             onClick={handleClickAddPokemonButton}
         >
             <img
@@ -73,6 +83,7 @@ function TeamEditMenu(props) {
     return (
         <div id="teamEditMenu">
             <button
+                className="menuButton back"
                 onClick={() => props.setPage(TEAM_LIST_PAGE)}  // GIVE WARNING FOR UNSAVED CHANGES, ASK IF THEY WANT TO SAVE
             >
                 {"< Teams"}
@@ -85,6 +96,7 @@ function TeamEditMenu(props) {
 
             <button 
                 id="deletePokemonButton"
+                className="menuButton"
                 onClick={handleClickDeletePokemonButton}
             >
                 <img
@@ -95,6 +107,7 @@ function TeamEditMenu(props) {
             </button>
             <button
                 id="saveTeamButton"
+                className="menuButton"
             >
                 Save Changes
             </button>

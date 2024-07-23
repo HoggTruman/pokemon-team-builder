@@ -26,6 +26,10 @@ public class AccountController : ControllerBase
 
 
     [HttpPost("login")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(AuthorizedUserDTO))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
     {
         if (!ModelState.IsValid)
@@ -56,6 +60,9 @@ public class AccountController : ControllerBase
 
 
     [HttpPost("register")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(AuthorizedUserDTO))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
     {
         if (!ModelState.IsValid)

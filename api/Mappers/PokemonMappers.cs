@@ -24,9 +24,13 @@ public static class PokemonMappers
                 .Order()
                 .ToList(),
 
-            PokemonAbilities = pokemonModel.PokemonAbilities
+            PokemonAbilityIds = pokemonModel.PokemonAbilities
                 .OrderBy(x => x.Slot)
-                .Select(x => x.ToPokemonAbilityDTO())
+                .Select(x => x.AbilityId)
+                .ToList(),
+
+            PokemonMoveIds = pokemonModel.PokemonMoves
+                .Select(x => x.MoveId)
                 .ToList(),
 
             BaseStats = pokemonModel.BaseStats.ToBaseStatsDTO() 

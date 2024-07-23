@@ -24,6 +24,7 @@ public class PokemonRepository : IPokemonRepository
             .Include(x => x.BaseStats)
             .Include(x => x.PokemonAbilities)
                 .ThenInclude(x => x.Ability)
+            .Include(x => x.PokemonMoves)
             .Include(x => x.Genders)
             .AsNoTracking()
             .ToList();
@@ -39,6 +40,7 @@ public class PokemonRepository : IPokemonRepository
             .Include(x => x.BaseStats)
             .Include(x => x.PokemonAbilities)
                 .ThenInclude(x => x.Ability)
+            .Include(x => x.PokemonMoves)
             .Include(x => x.Genders)
             .AsNoTracking()
             .FirstOrDefault(x => x.Id == id);
