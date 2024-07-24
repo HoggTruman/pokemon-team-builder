@@ -120,14 +120,16 @@ function StatsSection(props) {
                 onChange={e => handleNatureSelectChange(e)}
             >
                 {
-                    props.data.natures.map(nature => (
-                        <option
-                            key={nature.identifier}
-                            value={nature.id}
-                        >
-                            {nature.identifier}    
-                        </option>
-                    ))
+                    props.data.natures
+                        .sort((a, b) => a.identifier > b.identifier? 1 : 0)
+                        .map(nature => (
+                            <option
+                                key={nature.identifier}
+                                value={nature.id}
+                            >
+                                {nature.identifier}    
+                            </option>
+                        ))
                 }
             </select>
 
