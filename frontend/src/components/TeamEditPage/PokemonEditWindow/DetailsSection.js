@@ -27,7 +27,7 @@ function DetailsSection(props) {
 
     function handleChangeGender(e) {
         props.setTeamEdit(team => {
-            props.activePokemon.genderId = e.target.value;
+            props.activePokemon.gender = e.target.value;
             return {...team};
         });
     }
@@ -71,7 +71,7 @@ function DetailsSection(props) {
         return (
             <option 
                 key={gender.identifier}
-                value={gender.id}
+                value={gender.identifier}
             >
                 {gender.identifier}
             </option>
@@ -114,8 +114,8 @@ function DetailsSection(props) {
                         id="genderSelect" 
                         name="gender" 
                         value= {
-                            activePokemonData?.genders.includes(props.activePokemon.genderId)?  
-                            props.activePokemon.genderId : 
+                            activePokemonData?.genders.includes(props.activePokemon.gender)?  
+                            props.activePokemon.gender: 
                             "auto"
                         }
                         onChange={e => handleChangeGender(e)}

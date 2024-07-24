@@ -2,7 +2,6 @@ import React from "react";
 import { calcStat } from "../../../utility/calcStat";
 
 function StatRow(props) {
-    // MAYBE USE RANGE FOR EVs INSTEAD AND CONTROL MAX BASED ON REMAINING EVs
     function onChangeEVRange(e) {
         props.setTeamEdit(team => {
             props.activePokemon[props.evKey] = e.target.value;
@@ -64,7 +63,7 @@ function StatRow(props) {
                         calcStat(
                             props.statName, 
                             props.baseStat, 
-                            props.activePokemon[props.evKey],
+                            Number(props.activePokemon[props.evKey]),
                             props.activePokemon[props.ivKey],
                             props.natureMultiplier,
                             props.activePokemon.level
