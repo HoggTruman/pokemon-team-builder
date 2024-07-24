@@ -7,7 +7,7 @@ function StatsSection(props) {
     const MAX_EVS = 508;
 
     const activePokemonData = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName);
-    const activeNatureData = props.data.natures.find(x => x.id == props.activePokemon.natureId);
+    const activeNatureData = props.data.natures.find(x => x.id === Number(props.activePokemon.natureId));
 
     let remainingEVs = (MAX_EVS 
         - props.activePokemon.hpEV 

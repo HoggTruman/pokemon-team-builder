@@ -58,7 +58,6 @@ function PokemonSection(props) {
         <div id="pokemonSection">
             <img 
                 src={getPokemonImage(props.activePokemon.pokemonName, props.activePokemon.shiny)}
-                alt={""}
                 id={"pokemonimg"}
             />
             <div

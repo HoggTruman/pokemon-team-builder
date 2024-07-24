@@ -1,14 +1,16 @@
 import createNewPokemon from "./pokemonFactory";
 
 
-function createNewTeam(id = null, teamName = "new team") {
+function createNewTeam({
+    id = null, 
+    teamName = "new team",
+    pokemon = [createNewPokemon()]
+}={}) {
     return (
         {
             id: id,
             teamName: teamName,
-            pokemon: [
-                createNewPokemon()
-            ]
+            pokemon: pokemon
         }
     );
 }

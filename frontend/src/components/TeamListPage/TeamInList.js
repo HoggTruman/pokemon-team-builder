@@ -1,9 +1,10 @@
 import React from "react";
 
 import { TEAM_EDIT_PAGE } from "../../pages/constants/pageNames";
+import { pokemonIcons } from "../../assets/assets";
 
 import "./TeamInList.css";
-import { pokemonIcons } from "../../assets/assets";
+
 
 
 
