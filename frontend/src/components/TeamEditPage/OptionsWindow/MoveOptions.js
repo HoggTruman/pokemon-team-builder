@@ -29,6 +29,8 @@ function MoveOptions(props) {
         })
     }
 
+
+    // Render
     let moveOptionsRows = props.moveList.map(move => (
         <MoveOptionsRow
             key={move.id}
@@ -36,6 +38,10 @@ function MoveOptions(props) {
             handleClick={() => handleClickOptionRow(move.identifier)}
         />
     ))
+
+    if (moveOptionsRows.length === 0) {
+        moveOptionsRows = <div className="noMatches">No Moves Found</div>
+    }
 
     return (
         <div id="moveOptionsTable" className="optionsTable">

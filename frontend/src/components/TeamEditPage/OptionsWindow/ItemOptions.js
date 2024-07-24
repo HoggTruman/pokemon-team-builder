@@ -21,6 +21,10 @@ function ItemOptions(props) {
         />
     ));
 
+    if (itemOptionsRows.length === 0) {
+        itemOptionsRows = <div className="noMatches">No Items Found</div>
+    }
+
     return (
         <div id="itemOptionsTable" className="optionsTable">
             <div className="row item header">
