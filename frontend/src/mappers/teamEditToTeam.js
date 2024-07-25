@@ -18,14 +18,14 @@ export function teamEditToTeam(teamEdit, data) {
         return 100;
     }
 
-    function getGenderId(genderIdentifier, pokemonData) {
+    function getGenderId(gender, pokemonData) {
         let genderId;
 
-        if (genderEdit == "auto") {
+        if (gender == "auto") {
             genderId = pokemonData?.genders[0].id;
         }
         else {
-            genderId = data.genders.find(x => x.identifier == genderIdentifier)?.id;
+            genderId = data.genders.find(x => x.identifier == gender)?.id;
         }
         
         return genderId;
@@ -37,7 +37,7 @@ export function teamEditToTeam(teamEdit, data) {
 
     function getAbilityId(abilityName, pokemonData) {
         const abilityId = data.items.find(x => x.identifier == abilityName.toLowerCase().trim())?.id;
-        if (pokemonData.abilities.includes(abilityId)) {
+        if (pokemonData?.abilities.includes(abilityId)) {
             return abilityId;
         }
 
@@ -46,7 +46,7 @@ export function teamEditToTeam(teamEdit, data) {
 
     function getMoveId(moveName, pokemonData) {
         const moveId = data.items.find(x => x.identifier == moveName.toLowerCase().trim())?.id;
-        if (pokemonData.moves.includes(moveId)) {
+        if (pokemonData?.moves.includes(moveId)) {
             return moveId;
         }
 
@@ -76,19 +76,19 @@ export function teamEditToTeam(teamEdit, data) {
             id: pokemonEdit.id,
             teamSlot: pokemonEdit.teamSlot,
             pokemonId: pokemonData?.id,
-            nickname: pokemonEdit.nickname,
+            nickname: pokemonEdit.nickname === ""? null: pokemonEdit.nickname,
             level: convertLevel(pokemonEdit.level),
-            genderId: getGenderId(pokemonEdit.gender),
+            genderId: getGenderId(pokemonEdit.gender, pokemonData),
 
             shiny: pokemonEdit.shiny,
             teraPkmnTypeId: Number(pokemonEdit.teraPkmnTypeId),
             itemId: getItemId(pokemonEdit.itemName),
-            abilityId: getAbilityId(pokemonEdit.abilityName),
+            abilityId: getAbilityId(pokemonEdit.abilityName, pokemonData),
 
-            move1Id: getMoveId(pokemonEdit.move1Name),  // need other checking for duplicate moves?? maybe handle validation elsewhere
-            move2Id: getMoveId(pokemonEdit.move2Name),
-            move3Id: getMoveId(pokemonEdit.move3Name),
-            move4Id: getMoveId(pokemonEdit.move4Name),
+            move1Id: getMoveId(pokemonEdit.move1Name, pokemonData),  // need other checking for duplicate moves?? maybe handle validation elsewhere
+            move2Id: getMoveId(pokemonEdit.move2Name, pokemonData),
+            move3Id: getMoveId(pokemonEdit.move3Name, pokemonData),
+            move4Id: getMoveId(pokemonEdit.move4Name, pokemonData),
 
             natureId: Number(pokemonEdit.natureId),
 

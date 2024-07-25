@@ -46,6 +46,18 @@ function TeamEditMenu(props) {
     }
 
 
+    function handleClickSaveButton() {
+        props.saveChanges();
+    }
+
+
+    function handleClickBackButton() {
+        if (props.teamHasUnsavedChanges() === false || confirm("You have unsaved changes, are you sure you want to go back?")) {
+            props.setPage(TEAM_LIST_PAGE);
+        }
+    }
+
+
 
     // Render
     let pokemonButtons = props.teamEdit.pokemon.map(pokemon => (
@@ -76,7 +88,7 @@ function TeamEditMenu(props) {
         <div id="teamEditMenu">
             <button
                 className="menuButton back"
-                onClick={() => props.setPage(TEAM_LIST_PAGE)}  // GIVE WARNING FOR UNSAVED CHANGES, ASK IF THEY WANT TO SAVE
+                onClick={handleClickBackButton}  // GIVE WARNING FOR UNSAVED CHANGES, ASK IF THEY WANT TO SAVE
             >
                 {"< Teams"}
             </button>
@@ -89,6 +101,7 @@ function TeamEditMenu(props) {
             <button 
                 id="deletePokemonButton"
                 className="menuButton"
+                disabled={props.teamEdit.pokemon.length == 1}
                 onClick={handleClickDeletePokemonButton}
             >
                 <img
@@ -97,9 +110,12 @@ function TeamEditMenu(props) {
                 />
                 <p>delete current</p>
             </button>
+
             <button
                 id="saveTeamButton"
                 className="menuButton"
+                disabled={props.teamHasUnsavedChanges() === false}
+                onClick={handleClickSaveButton}
             >
                 Save Changes
             </button>
