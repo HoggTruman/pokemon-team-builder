@@ -32,6 +32,10 @@ function TeamEditPage(props) {
 
     function teamHasUnsavedChanges() {
         const modifiedTeam = teamEditToTeam(teamEdit, props.data);
+        // console.log("original: ");
+        // console.log(props.team);
+        // console.log("new: ")
+        // console.log(modifiedTeam);
         return deepEqual(modifiedTeam, props.team, {strict: true}) === false;
     }
 

@@ -1,5 +1,5 @@
 function createNewPokemonEdit({
-    id = null,
+    id = -Date.now(),
     teamSlot = 1,
     pokemonName = "",
     nickname = "",
@@ -32,7 +32,7 @@ function createNewPokemonEdit({
 }={}) {
     return (
         {
-            id: id || `${teamSlot}${Date.now()}` ,
+            id: id,
             teamSlot: teamSlot,
             pokemonName: pokemonName,
             nickname: nickname,
