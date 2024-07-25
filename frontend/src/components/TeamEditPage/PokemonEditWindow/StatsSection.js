@@ -7,7 +7,7 @@ function StatsSection(props) {
     const MAX_EVS = 508;
 
     const activePokemonData = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName);
-    const activeNatureData = props.data.natures.find(x => x.id == props.activePokemon.natureId);
+    const activeNatureData = props.data.natures.find(x => x.id === Number(props.activePokemon.natureId));
 
     let remainingEVs = (MAX_EVS 
         - props.activePokemon.hpEV 
@@ -120,14 +120,16 @@ function StatsSection(props) {
                 onChange={e => handleNatureSelectChange(e)}
             >
                 {
-                    props.data.natures.map(nature => (
-                        <option
-                            key={nature.identifier}
-                            value={nature.id}
-                        >
-                            {nature.identifier}    
-                        </option>
-                    ))
+                    props.data.natures
+                        .sort((a, b) => a.identifier > b.identifier? 1 : 0)
+                        .map(nature => (
+                            <option
+                                key={nature.identifier}
+                                value={nature.id}
+                            >
+                                {nature.identifier}    
+                            </option>
+                        ))
                 }
             </select>
 

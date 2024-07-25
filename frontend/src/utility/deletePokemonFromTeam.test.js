@@ -1,4 +1,4 @@
-import { deletePokemonFromTeam } from "./TeamEditMenu";
+import { deletePokemonFromTeam } from "./deletePokemonFromTeam";
 
 
 describe("deletePokemonFromTeam Tests", () => {

@@ -1,8 +1,10 @@
 import React from "react";
 
 import { TEAM_EDIT_PAGE } from "../../pages/constants/pageNames";
+import { pokemonIcons } from "../../assets/assets";
 
 import "./TeamInList.css";
+
 
 
 
@@ -36,10 +38,25 @@ function TeamInList(props) {
     }
 
 
+    function getIcon(pokemonId) {
+        const pokemon = props.data.pokemon.find(x => x.id == pokemonId);
+        const identifier = pokemon?.identifier || "_unknown";
+        return pokemonIcons[identifier]
+    }
+
+
 
     // Render
-    let icons = props.team.pokemon.map((pokemon, pokemonIndex) => (
-        <img src="" alt={pokemon.pokemonId + " "} />
+    let icons = props.team.pokemon.map(pokemon => (
+        <div
+            key={pokemon.id} 
+            className="iconFrame"
+        >
+            <img 
+                src={getIcon(pokemon.pokemonId)}
+                className="icon"
+            />
+        </div>
     ));
 
     return (
@@ -52,7 +69,8 @@ function TeamInList(props) {
                 onClick={handleClickTeamButton}
             >
                 <p>{props.team.teamName}</p>
-                <div id="teamInListIcons">
+                <div className="teamIcons">
+                    <span className="iconHelper"></span>
                     {icons}
                 </div>
             </button>

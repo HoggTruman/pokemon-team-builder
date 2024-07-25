@@ -27,7 +27,7 @@ function DetailsSection(props) {
 
     function handleChangeGender(e) {
         props.setTeamEdit(team => {
-            props.activePokemon.genderId = e.target.value;
+            props.activePokemon.gender = e.target.value;
             return {...team};
         });
     }
@@ -63,16 +63,20 @@ function DetailsSection(props) {
 
 
     // Render
-    const activePokemonData = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName); // should be higher up and passed as props since it is used in all sections???
+    const activePokemonData = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName);
     
-    let genderOptions = activePokemonData?.genders.map(gender => (
-        <option 
-            key={gender}
-            value={gender}
-        >
-                {gender}
-        </option>
-    ));
+    let genderOptions = activePokemonData?.genders.map(genderIdentifier => {
+        const gender = props.data.genders.find(x => x.identifier == genderIdentifier);
+
+        return (
+            <option 
+                key={gender.identifier}
+                value={gender.identifier}
+            >
+                {gender.identifier}
+            </option>
+        )
+    });
 
     let teraTypeOptions = props.data.types
         .filter(x => x.id < 10000)
@@ -110,8 +114,8 @@ function DetailsSection(props) {
                         id="genderSelect" 
                         name="gender" 
                         value= {
-                            activePokemonData?.genders.includes(props.activePokemon.genderId)?  
-                            props.activePokemon.genderId : 
+                            activePokemonData?.genders.includes(props.activePokemon.gender)?  
+                            props.activePokemon.gender: 
                             "auto"
                         }
                         onChange={e => handleChangeGender(e)}

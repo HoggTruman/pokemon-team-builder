@@ -1,10 +1,10 @@
-import createNewPokemon from "./pokemonFactory";
+import createNewPokemonEdit from "./pokemonEditFactory";
 
 
-function createNewTeam({
+function createNewTeamEdit({
     id = null, 
     teamName = "new team",
-    pokemon = [createNewPokemon()]
+    pokemon = [createNewPokemonEdit()]
 }={}) {
     return (
         {
@@ -16,5 +16,5 @@ function createNewTeam({
 }
 
 
-export default createNewTeam;
+export default createNewTeamEdit;
 

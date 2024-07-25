@@ -14,7 +14,7 @@ function AbilityOptions(props) {
     }
 
 
-
+    // Render
     let abilityOptionsRows = props.abilityList.map(ability => (
         <AbilityOptionsRow
             key={ability.id}
@@ -22,6 +22,10 @@ function AbilityOptions(props) {
             handleClick={() => handleClickOptionRow(ability.identifier)}
         />
     ));
+
+    if (abilityOptionsRows.length === 0) {
+        abilityOptionsRows = <div className="noMatches">No Abilities Found</div>
+    }
 
     return (
         <div id="abilityOptionsTable" className="optionsTable">
