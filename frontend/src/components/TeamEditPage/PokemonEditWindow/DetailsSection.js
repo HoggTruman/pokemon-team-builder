@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./DetailsSection.css";
 import { ABILITY_FIELD, ITEM_FIELD } from "./constants/fieldNames";
@@ -63,10 +63,12 @@ function DetailsSection(props) {
 
 
     // Render
-    const activePokemonData = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName);
+    const activePokemonData = props.data.pokemon.find(
+        x => x.identifier == props.activePokemon.pokemonName.toLowerCase().trim()
+    );
     
-    let genderOptions = activePokemonData?.genders.map(genderIdentifier => {
-        const gender = props.data.genders.find(x => x.identifier == genderIdentifier);
+    let genderOptions = activePokemonData?.genders.map(genderId => {
+        const gender = props.data.genders.find(x => x.id == genderId);
 
         return (
             <option 
@@ -77,6 +79,15 @@ function DetailsSection(props) {
             </option>
         )
     });
+
+    function genderSelectValue() {
+        const activeGenderId = props.data.genders.find(x => x.identifier == props.activePokemon.gender)?.id;
+        const newGender = activePokemonData?.genders.includes(activeGenderId)?
+            props.activePokemon.gender:
+            "auto"  
+
+        return newGender;
+    }
 
     let teraTypeOptions = props.data.types
         .filter(x => x.id < 10000)
@@ -89,6 +100,15 @@ function DetailsSection(props) {
             {type.identifier}
         </option>
     ))
+
+    useEffect(() => {
+        // Trigger gender change when pokemon name is changed
+        const genderSelectElement = document.getElementById("genderSelect");
+        const fakeEvent = {target: { value: genderSelectElement.value}};
+
+        handleChangeGender(fakeEvent);
+
+        }, [props.activePokemon.pokemonName])
 
 
 
@@ -109,15 +129,11 @@ function DetailsSection(props) {
                 </div>
 
                 <div className="field">
-                    <label htmlFor="genderInput" className="side">Gender</label>
+                    <label htmlFor="genderSelect" className="side">Gender</label>
                     <select 
                         id="genderSelect" 
                         name="gender" 
-                        value= {
-                            activePokemonData?.genders.includes(props.activePokemon.gender)?  
-                            props.activePokemon.gender: 
-                            "auto"
-                        }
+                        value= {genderSelectValue()}
                         onChange={e => handleChangeGender(e)}
                     > 
                         <option 

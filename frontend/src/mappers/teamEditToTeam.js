@@ -22,7 +22,7 @@ export function teamEditToTeam(teamEdit, data) {
         let genderId;
 
         if (gender == "auto") {
-            genderId = pokemonData?.genders[0].id;
+            genderId = pokemonData?.genders[0] || null;
         }
         else {
             genderId = data.genders.find(x => x.identifier == gender)?.id;
