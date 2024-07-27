@@ -1,7 +1,8 @@
 import React from "react";
 import TeamListPage from "../pages/TeamListPage";
 import TeamEditPage from "../pages/TeamEditPage";
-import { TEAM_EDIT_PAGE, TEAM_LIST_PAGE } from "../pages/constants/pageNames";
+import { ACCOUNT_PAGE, TEAM_EDIT_PAGE, TEAM_LIST_PAGE } from "../pages/constants/pageNames";
+import AccountPage from "../pages/AccountPage";
 
 function PageSelector(props) {
 
@@ -27,7 +28,14 @@ function PageSelector(props) {
                 data={props.data}
             />
         );
-    }    
+    }
+    else if (props.page == ACCOUNT_PAGE) {
+        return (
+            <AccountPage
+                setPage={props.setPage}
+            />
+        )
+    }
 }
 
 export default PageSelector;

@@ -112,7 +112,10 @@ function App() {
     return (
         <>
             <UserProvider>
-                <TopBar />
+                <TopBar 
+                    page={page}
+                    setPage={setPage}
+                />
                 <PageSelector 
                     page={page}
                     setPage={setPage}
