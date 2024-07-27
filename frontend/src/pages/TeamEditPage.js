@@ -5,6 +5,7 @@ import OptionsWindow from "../components/TeamEditPage/OptionsWindow/OptionsWindo
 import { POKEMON_FIELD } from "../components/TeamEditPage/PokemonEditWindow/constants/fieldNames";
 import { teamToTeamEdit } from "../mappers/teamToTeamEdit";
 import { teamEditToTeam } from "../mappers/teamEditToTeam";
+import TeamNameBar from "../components/TeamEditPage/TeamNameBar/TeamNameBar";
 var deepEqual = require('deep-equal')
 
 
@@ -45,6 +46,10 @@ function TeamEditPage(props) {
     // Render
     return (
         <>
+            <TeamNameBar
+                teamEdit={teamEdit}
+                setTeamEdit={setTeamEdit}
+            />
             <TeamEditMenu
                 setPage={props.setPage}
                 teamEdit={teamEdit}
