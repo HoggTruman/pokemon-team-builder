@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -6,26 +6,22 @@ import PageSelector from "./components/PageSelector";
 import TopBar from "./components/TopBar/TopBar";
 import { TEAM_LIST_PAGE } from "./pages/constants/pageNames";
 
-import { getAllPokemon } from "./api/pokemonAPI";
-import { getAllItems } from "./api/itemAPI";
-import { getAllAbilities } from "./api/abilityAPI";
-import { getAllTypes } from "./api/typeAPI";
-import { getAllNatures } from "./api/natureAPI";
-import { getAllMoves } from "./api/moveAPI";
-import { getAllGenders } from "./api/genderAPI";
 
 import createNewPokemon from "./models/pokemonFactory";
 import createNewTeam from "./models/teamFactory";
-
+import { fetchStaticData } from "./services/fetchStaticData";
 
 import "./App.css";
 
 
 
+// Fetch static data
+const staticData = await fetchStaticData()
 
 
 
-function App(props) {
+// App
+function App() {
     const demoTeams = [
         createNewTeam({
             id: 1,
@@ -98,15 +94,17 @@ function App(props) {
     const [activeTeamId, setActiveTeamId] = useState(0);
 
     // Fetch static data
-    const data = {};
-    data.pokemon = getAllPokemon();
-    data.items = getAllItems();
-    data.abilities = getAllAbilities();
-    data.moves = getAllMoves();
-    data.types = getAllTypes();
-    data.natures = getAllNatures();
-    data.genders = getAllGenders();
-    
+    const data = staticData;
+
+    // useEffect(() => {
+    //     async function fetchData() {
+    //          use to fetch teams?? 
+    //         const teams = await newGetAllAbilities();
+    //         
+    //     }
+
+    //     fetchData();
+    // }, []);
   
     
     return (

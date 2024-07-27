@@ -81,6 +81,18 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
+
+// Add CORS
+const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins, builder => {
+        builder.WithOrigins("http://localhost:4000");
+    });
+});
+
+
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -167,6 +179,8 @@ else
     }
 
     app.UseHttpsRedirection();
+
+    app.UseCors(MyAllowSpecificOrigins);
 
     app.UseAuthentication();
     app.UseAuthorization();
