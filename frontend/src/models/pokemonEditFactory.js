@@ -1,10 +1,10 @@
 function createNewPokemonEdit({
-    id = null,
+    id = -Date.now(),
     teamSlot = 1,
     pokemonName = "",
     nickname = "",
     level = 100,
-    genderId = null,
+    gender = "auto",
     shiny = false,
     teraPkmnTypeId = 1,
     itemName = "",
@@ -32,12 +32,12 @@ function createNewPokemonEdit({
 }={}) {
     return (
         {
-            id: id || `${teamSlot}${Date.now()}` ,
+            id: id,
             teamSlot: teamSlot,
             pokemonName: pokemonName,
             nickname: nickname,
             level: level,
-            genderId: genderId,
+            gender: gender,
             shiny: shiny,
             teraPkmnTypeId: teraPkmnTypeId,
             itemName: itemName,

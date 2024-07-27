@@ -5,6 +5,7 @@ import OptionsWindow from "../components/TeamEditPage/OptionsWindow/OptionsWindo
 import { POKEMON_FIELD } from "../components/TeamEditPage/PokemonEditWindow/constants/fieldNames";
 import { teamToTeamEdit } from "../mappers/teamToTeamEdit";
 import { teamEditToTeam } from "../mappers/teamEditToTeam";
+import TeamNameBar from "../components/TeamEditPage/TeamNameBar/TeamNameBar";
 var deepEqual = require('deep-equal')
 
 
@@ -32,6 +33,10 @@ function TeamEditPage(props) {
 
     function teamHasUnsavedChanges() {
         const modifiedTeam = teamEditToTeam(teamEdit, props.data);
+        // console.log("original: ");
+        // console.log(props.team);
+        // console.log("new: ")
+        // console.log(modifiedTeam);
         return deepEqual(modifiedTeam, props.team, {strict: true}) === false;
     }
 
@@ -41,6 +46,10 @@ function TeamEditPage(props) {
     // Render
     return (
         <>
+            <TeamNameBar
+                teamEdit={teamEdit}
+                setTeamEdit={setTeamEdit}
+            />
             <TeamEditMenu
                 setPage={props.setPage}
                 teamEdit={teamEdit}

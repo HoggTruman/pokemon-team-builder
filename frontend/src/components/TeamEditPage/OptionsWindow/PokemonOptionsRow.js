@@ -30,9 +30,9 @@ function PokemonOptionsRow(props) {
             </div>
             <div className="col abilities">
                 {
-                    props.pokemon.abilities.map((ability, index) => (
-                        <span key={index}>
-                            {ability.identifier}
+                    props.pokemon.abilities.map(abilityId => (
+                        <span key={abilityId}>
+                            {props.data.abilities.find(x => x.id == abilityId)?.identifier}
                         </span>
                     ))
                 }

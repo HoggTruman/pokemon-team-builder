@@ -13,7 +13,7 @@ namespace api.DTOs.Pokemon
         [JsonPropertyName("types")]
         public List<string> PokemonPkmnTypes { get; set; } = [];
         [JsonPropertyName("genders")]
-        public List<string> PokemonGenders { get; set; } = [];
+        public List<int> PokemonGenderIds { get; set; } = [];
         [JsonPropertyName("abilities")]
         public List<int> PokemonAbilityIds { get; set; } = [];
         [JsonPropertyName("moves")]

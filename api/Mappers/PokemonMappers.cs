@@ -19,8 +19,8 @@ public static class PokemonMappers
                 .Select(x => x.PkmnType.Identifier)
                 .ToList(),
 
-            PokemonGenders = pokemonModel.Genders
-                .Select(x => x.Identifier)
+            PokemonGenderIds = pokemonModel.Genders
+                .Select(x => x.Id)
                 .Order()
                 .ToList(),
 

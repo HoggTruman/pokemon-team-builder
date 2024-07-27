@@ -18,6 +18,7 @@ function PokemonOptions(props) {
             key={pokemon.id}
             pokemon={pokemon}
             handleClick={() => handleClickOptionRow(pokemon.identifier)}
+            data={props.data}
         />
     ));
 

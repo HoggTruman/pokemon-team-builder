@@ -1,7 +1,7 @@
 // IS THIS NEEDED??
 
 function createNewPokemon({
-    id = null,
+    id = -Date.now(),
     teamSlot = 1,
     pokemonId = null,
     nickname = null,
