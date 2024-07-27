@@ -16,6 +16,7 @@ function OptionsWindow(props) {
                 pokemonList={filterListByInput(props.data.pokemon, props.activePokemon.pokemonName)}
                 setTeamEdit={props.setTeamEdit}
                 activePokemon={props.activePokemon}
+                data={props.data}
             />
         );
     } 
