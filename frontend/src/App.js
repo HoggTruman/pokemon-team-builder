@@ -10,8 +10,10 @@ import { TEAM_LIST_PAGE } from "./pages/constants/pageNames";
 import createNewPokemon from "./models/pokemonFactory";
 import createNewTeam from "./models/teamFactory";
 import { fetchStaticData } from "./services/fetchStaticData";
+import { UserProvider } from "./context/userContext";
 
 import "./App.css";
+
 
 
 
@@ -109,16 +111,21 @@ function App() {
     
     return (
         <>
-            <TopBar />
-            <PageSelector 
-                page={page}
-                setPage={setPage}
-                teams={teams}
-                setTeams={setTeams}
-                activeTeamId={activeTeamId}
-                setActiveTeamId={setActiveTeamId}
-                data={data}
-            />
+            <UserProvider>
+                <TopBar 
+                    page={page}
+                    setPage={setPage}
+                />
+                <PageSelector 
+                    page={page}
+                    setPage={setPage}
+                    teams={teams}
+                    setTeams={setTeams}
+                    activeTeamId={activeTeamId}
+                    setActiveTeamId={setActiveTeamId}
+                    data={data}
+                />
+            </UserProvider>
             <ToastContainer />
         </>
     )

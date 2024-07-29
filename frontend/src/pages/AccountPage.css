@@ -1,0 +1,43 @@
+#AccountPage {
+    border: 1px solid black;
+}
+
+#AccountPage {
+    #loginSection {
+        display: inline-block;
+        margin: 10px 50px;
+
+        h2 {
+            text-align: center;
+            margin: 10px 0 50px 0;
+        }
+
+        input{
+            display: block;
+        }
+
+        #loginSubmit {
+            margin: 0 auto;
+        }
+    }
+
+    #registerSection {
+        display: inline-block;
+        margin: 10px 50px;
+
+        h2 {
+            text-align: center;
+            margin: 10px 0 50px 0;
+        }
+
+        input{
+            display: block;
+        }
+
+        #registerSubmit {
+            margin: 0 auto;
+        }
+
+
+    }
+}

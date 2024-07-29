@@ -1,34 +1,53 @@
 import React from "react";
+import { userContext } from "../../context/userContext";
+import { ACCOUNT_PAGE, TEAM_LIST_PAGE } from "../../pages/constants/pageNames";
 
-class AccountButtons extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+function AccountButtons(props) {
+    const { isLoggedIn, userName, logout } = userContext();
 
-    render() {
-        const SIGNEDIN = false;
 
-        const signedOutButtons = (
-            <>
-                <button>Register</button>
-                <button>Log In</button>
-            </>
-        );
-
-        const signedInButtons = (
-            <>
-                <button>Log Out</button>
-            </>
-        );
-
+        
+    // Render 
+    // Buttons shown on account page
+    if (props.page === ACCOUNT_PAGE) {
         return (
-            <div id="accountButtons">
-                {
-                    SIGNEDIN? signedInButtons: signedOutButtons
-                }
-            </div>
+            <button
+                onClick={() => props.setPage(TEAM_LIST_PAGE)}
+            >
+                Back To Teams
+            </button>
         )
     }
+
+
+    // buttons shown on other pages
+    const loggedOutButtons = (
+            <button
+                onClick={() => props.setPage(ACCOUNT_PAGE)}
+            >
+                Register / Log In
+            </button>
+    );
+
+    const loggedInButtons = (
+        <>
+            <p>{userName}</p>
+            <button
+                onClick={logout}
+            >
+                Log Out
+            </button>
+        </>
+    );
+
+    return (
+        <div id="accountButtons">
+            {
+                isLoggedIn()? loggedInButtons: loggedOutButtons
+            }
+        </div>
+    )
+
 }
 
 export default AccountButtons;

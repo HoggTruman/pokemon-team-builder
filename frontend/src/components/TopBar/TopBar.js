@@ -1,20 +1,21 @@
 import React from "react";
-import "./TopBar.css"
 import AccountButtons from "./AccountButtons";
 
-class TopBar extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+import "./TopBar.css"
 
-    render() {
-        return (
-            <div id="topbar">
-                <h1>Team Builder</h1>
-                <AccountButtons />
-            </div>
-        ) 
-    }
+
+function TopBar(props)  {
+
+    return (
+        <div id="topbar">
+            <h1>Team Builder</h1>
+            <AccountButtons
+                page={props.page}
+                setPage={props.setPage}
+            />
+        </div>
+    ) 
+
 }
 
 export default TopBar;

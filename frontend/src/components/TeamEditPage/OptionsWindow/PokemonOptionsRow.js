@@ -13,6 +13,7 @@ function PokemonOptionsRow(props) {
                 <img
                     src={pokemonIcons[props.pokemon.identifier]}
                     alt="icon"
+                    loading="lazy"
                     className="pokemonIcon"
                 />
             </div>
@@ -23,6 +24,7 @@ function PokemonOptionsRow(props) {
                         <img
                             key={type}
                             src={typeImages[type]}
+                            loading="lazy"
                             alt={type}
                         />
                     ))
