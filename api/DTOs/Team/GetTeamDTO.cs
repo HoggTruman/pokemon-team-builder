@@ -4,7 +4,7 @@ using api.DTOs.UserPokemon;
 
 namespace api.DTOs.Team;
 
-public class GetUserTeamDTO
+public class GetTeamDTO
 {
     public int Id { get; set; }
     public string TeamName { get; set; } = "";

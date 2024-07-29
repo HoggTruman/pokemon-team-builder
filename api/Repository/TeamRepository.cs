@@ -15,11 +15,11 @@ public class TeamRepository : ITeamRepository
     }
 
 
-    // used for team select page so no need to include pokemon at this point
     // by the time this method is called, we assume the user is valid so can just return an empty list if no entries are found
     public List<Team> GetTeams(string userId)
     {
         var teams = _context.Team
+            .Include(x => x.UserPokemon)
             .Where(x => x.AppUserId == userId)
             .ToList();
 
