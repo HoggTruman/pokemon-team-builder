@@ -3,8 +3,10 @@ import TeamListPage from "../pages/TeamListPage";
 import TeamEditPage from "../pages/TeamEditPage";
 import { ACCOUNT_PAGE, TEAM_EDIT_PAGE, TEAM_LIST_PAGE } from "../pages/constants/pageNames";
 import AccountPage from "../pages/AccountPage";
+import { userContext } from "../context/userContext";
 
 function PageSelector(props) {
+    const { isLoggedIn } = userContext();
 
     // Render
     if (props.page == TEAM_LIST_PAGE) {
@@ -29,7 +31,7 @@ function PageSelector(props) {
             />
         );
     }
-    else if (props.page == ACCOUNT_PAGE) {
+    else if (props.page == ACCOUNT_PAGE && isLoggedIn() === false) {
         return (
             <AccountPage
                 setPage={props.setPage}

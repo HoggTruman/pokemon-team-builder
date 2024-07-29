@@ -88,7 +88,7 @@ const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options => 
 {
     options.AddPolicy(name: MyAllowSpecificOrigins, builder => {
-        builder.WithOrigins("http://localhost:4000");
+        builder.WithOrigins("http://localhost:4000").AllowAnyMethod().AllowAnyHeader();
     });
 });
 

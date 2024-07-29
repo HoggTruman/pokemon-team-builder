@@ -19,6 +19,7 @@ export async function loginAPI(userName, password) {
     } 
     catch (error) {
         console.error(error)
+        return error;
     }
 }
 
@@ -26,12 +27,12 @@ export async function loginAPI(userName, password) {
 export async function registerAPI(userName, password, confirmPassword) {
     try {
         const response = await axios.post(
-            API.concat("/", "login"),
+            API.concat("/", "register"),
             {
                 userName: userName,
                 password: password,
                 confirmPassword: confirmPassword
-            }, 
+            },            
             {
                 validateStatus: status => status === 200,
             }
@@ -41,5 +42,6 @@ export async function registerAPI(userName, password, confirmPassword) {
     } 
     catch (error) {
         console.error(error)
+        return error;
     }
 }

@@ -13,7 +13,7 @@ export function UserProvider(props) {
         const storageToken = localStorage.getItem("token");
         const storageUserName = localStorage.getItem("userName");
 
-        if (token && userName) {
+        if (storageToken && storageUserName) {
             setToken(storageToken);
             setUserName(storageUserName);
         }
@@ -23,28 +23,26 @@ export function UserProvider(props) {
 
     async function login(userName, password) {
         const loginData = await loginAPI(userName, password);
-        if (loginData) {
+        if (loginData?.userName && loginData?.token) {
             localStorage.setItem("token", loginData.token);
             setToken(loginData.token);
 
             localStorage.setItem("userName", loginData.userName);
             setUserName(loginData.userName);
-            return "SUCCESS";
         }
-        return "FAIL";
+        return loginData;
     }
 
     async function register(userName, password, confirmPassword) {
         const registerData = await registerAPI(userName, password, confirmPassword);
-        if (registerData) {
+        if (registerData?.userName && registerData?.token) {
             localStorage.setItem("token", registerData.token);
             setToken(registerData.token);
 
             localStorage.setItem("userName", registerData.userName);
             setUserName(registerData.userName);
-            return "SUCCESS";
         }
-        return "FAIL";
+        return registerData;
     }
 
     function logout() {
