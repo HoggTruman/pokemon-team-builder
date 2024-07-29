@@ -13,6 +13,7 @@ function ItemOptionsRow(props) {
                     src={itemIcons[props.item.identifier]}
                     alt="icon"
                     className="itemIcon"
+                    loading="lazy"
                 />
             </div>
             <div className="col name">
