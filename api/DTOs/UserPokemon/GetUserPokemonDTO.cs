@@ -24,7 +24,7 @@ public class GetUserPokemonDTO
 
     public bool Shiny { get; set; }
 
-    public int? TeraPkmnTypeId { get; set; }
+    public int TeraPkmnTypeId { get; set; }
 
     public int? ItemId { get; set; }
 
@@ -35,7 +35,7 @@ public class GetUserPokemonDTO
     public int? Move3Id { get; set; }
     public int? Move4Id { get; set; }
 
-    public int? NatureId { get; set; }
+    public int NatureId { get; set; }
 
 
     [JsonPropertyName("hpEV")]
