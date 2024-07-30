@@ -14,4 +14,6 @@ public interface ITeamRepository
     Team? UpdateTeamById(int id, CreateUpdateTeamDTO updateTeamDTO, string userId);
 
     Team? DeleteTeamById(int id, string userId);
+
+    List<Team> CreateUpdateTeams(List<CreateUpdateTeamsDTO> teams, string userId);
 }

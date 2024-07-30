@@ -23,7 +23,7 @@ public class TeamController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpGet("~/api/teams")]
     [Authorize]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<GetTeamDTO>))]
@@ -141,5 +141,31 @@ public class TeamController : ControllerBase
             return NotFound();
 
         return NoContent();
+    }
+
+
+    [HttpPost("~/api/teams")]
+    [Authorize]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<GetTeamDTO>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> CreateUpdateTeams([FromBody] List<CreateUpdateTeamsDTO> teamDTOs)
+    {
+        /*  Since we can't know the database id of a new team ahead of the request,
+            we can not guarantee idempotency. Therefore, POST is used rather than PUT
+        */
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+        var appUser = await _userManager.FindByNameAsync(userName);
+
+        if (appUser == null)
+            return Unauthorized();
+
+        var teams = _repository.CreateUpdateTeams(teamDTOs, appUser.Id);
+
+        return Ok(teams.Select(x => x.ToGetTeamDTO()));
     }
 }
