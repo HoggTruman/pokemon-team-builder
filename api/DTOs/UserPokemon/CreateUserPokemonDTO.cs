@@ -20,8 +20,8 @@ public class CreateUserPokemonDTO : IValidatableObject
     [Range(1, 100, ErrorMessage = "{0} must be between {1} and {2}")]
     public int Level { get; set; } = 100;
 
-    [DefaultValue(null)]
-    public int? GenderId { get; set; }
+    [DefaultValue(4)]
+    public int GenderId { get; set; } = 4;
 
     [DefaultValue(false)]
     public bool Shiny { get; set; }

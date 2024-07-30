@@ -28,8 +28,8 @@ public class UserPokemon
     public int Level { get; set; } = 100;
 
     [ForeignKey("Gender")]
-    public int? GenderId { get; set; }
-    public Gender? Gender { get; set; } = null!;
+    public int GenderId { get; set; } = 4;
+    public Gender Gender { get; set; } = null!;
 
     public bool Shiny { get; set; }
 

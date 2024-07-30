@@ -20,7 +20,7 @@ public class GetUserPokemonDTO
     [Range(1, 100, ErrorMessage = "{0} must be between {1} and {2}")]
     public int Level { get; set; }
 
-    public int? GenderId { get; set; }
+    public int GenderId { get; set; }
 
     public bool Shiny { get; set; }
 

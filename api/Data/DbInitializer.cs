@@ -17,7 +17,7 @@ public class DbInitializer : IDbInitializer
         _scopeFactory = scopeFactory;
     }
 
-    private const string SeedDir = @"Data\WriteData\";
+    private const string SeedDir = @"Data\SeedData\";
 
 
 
