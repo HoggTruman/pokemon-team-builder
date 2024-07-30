@@ -1,13 +1,14 @@
 import axios from "axios";
 
-const API = "http://localhost:5110/api/team"
+const TEAM_API = "http://localhost:5110/api/team";
+const TEAMS_API = "http://localhost:5110/api/team";
 
 
 
 
-export async function getAllTeams(token) {
+export async function getAllTeamsAPI(token) {
     try {
-        const response = await axios.get(API,
+        const response = await axios.get(TEAMS_API,
             {
                 validateStatus: status => status === 200,
                 headers: {
@@ -24,9 +25,9 @@ export async function getAllTeams(token) {
 }
 
 
-export async function createTeam(team, token) {
+export async function createTeamAPI(team, token) {
     try {
-        const response = await axios.post(API, team,
+        const response = await axios.post(TEAM_API, team,
             {
                 validateStatus: status => status === 200,
                 headers: {
@@ -43,9 +44,9 @@ export async function createTeam(team, token) {
 }
 
 
-export async function getTeamById(id, token) {
+export async function getTeamByIdAPI(id, token) {
     try {
-        const response = await axios.post(API.concat('/', id),
+        const response = await axios.post(TEAM_API.concat('/', id),
             {
                 validateStatus: status => status === 200,
                 headers: {
@@ -62,9 +63,9 @@ export async function getTeamById(id, token) {
 }
 
 
-export async function UpdateTeamById(id, team, token) {
+export async function updateTeamByIdAPI(id, team, token) {
     try {
-        const response = await axios.put(API.concat('/', id), team,
+        const response = await axios.put(TEAM_API.concat('/', id), team,
             {
                 validateStatus: status => status === 200,
                 headers: {
@@ -81,9 +82,9 @@ export async function UpdateTeamById(id, team, token) {
 }
 
 
-export async function deleteTeamById(id, token) {
+export async function deleteTeamByIdAPI(id, token) {
     try {
-        const response = await axios.delete(API.concat('/', id),
+        const response = await axios.delete(TEAM_API.concat('/', id),
             {
                 validateStatus: status => status === 200,
                 headers: {
