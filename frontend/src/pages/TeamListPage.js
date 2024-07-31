@@ -15,6 +15,7 @@ function TeamListPage(props) {
         if (isLoggedIn() === false) {
             alert("Log in to access the server");
             props.setPage(ACCOUNT_PAGE);
+            return;
         }
 
 
@@ -46,6 +47,7 @@ function TeamListPage(props) {
         if (isLoggedIn() === false) {
             alert("Log in to access the server");
             props.setPage(ACCOUNT_PAGE);
+            return;
         }
 
         const serverTeams = await createUpdateTeamsAPI(props.teams, token);

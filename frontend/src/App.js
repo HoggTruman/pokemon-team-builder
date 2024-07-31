@@ -73,6 +73,7 @@ function App() {
                 <TopBar 
                     page={page}
                     setPage={setPage}
+                    setTeams={setTeams}
                 />
                 <PageSelector 
                     page={page}

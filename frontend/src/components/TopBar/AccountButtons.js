@@ -1,9 +1,27 @@
 import React from "react";
 import { userContext } from "../../context/userContext";
-import { ACCOUNT_PAGE, TEAM_LIST_PAGE } from "../../pages/constants/pageNames";
+import { ACCOUNT_PAGE, TEAM_EDIT_PAGE, TEAM_LIST_PAGE } from "../../pages/constants/pageNames";
 
 function AccountButtons(props) {
     const { isLoggedIn, userName, logout } = userContext();
+
+    function handleClickLogout() {
+        if (props.page === TEAM_EDIT_PAGE || props.page === ACCOUNT_PAGE) {
+            return;
+        }
+
+        logout();
+        props.setTeams(teams => {
+            return teams.filter(team => team.id < 0);
+        })
+    }
+
+    function handleClickLoginRegister() {
+        if (props.page === TEAM_EDIT_PAGE || props.page === ACCOUNT_PAGE) {
+            return;
+        }
+        props.setPage(ACCOUNT_PAGE);
+    }
 
 
         
@@ -23,7 +41,8 @@ function AccountButtons(props) {
     // buttons shown on other pages
     const loggedOutButtons = (
             <button
-                onClick={() => props.setPage(ACCOUNT_PAGE)}
+                onClick={handleClickLoginRegister}
+                disabled={props.page === TEAM_EDIT_PAGE}
             >
                 Register / Log In
             </button>
@@ -33,7 +52,8 @@ function AccountButtons(props) {
         <>
             <p>{userName}</p>
             <button
-                onClick={logout}
+                onClick={handleClickLogout}
+                disabled={props.page === TEAM_EDIT_PAGE}
             >
                 Log Out
             </button>
