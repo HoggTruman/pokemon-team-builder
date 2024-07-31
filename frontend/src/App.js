@@ -26,7 +26,7 @@ const staticData = await fetchStaticData()
 function App() {
     const demoTeams = [
         createNewTeam({
-            id: 1,
+            id: -1,
             teamName:"team1",
             pokemon: [
                 createNewPokemon({
@@ -63,7 +63,7 @@ function App() {
             ]
         }),
         createNewTeam({
-            id: 2,
+            id: -2,
             teamName:"team2",
             pokemon: [
                 createNewPokemon({
@@ -74,7 +74,7 @@ function App() {
             ]
         }),
         createNewTeam({
-            id: 3,
+            id: -3,
             teamName:"team3",
             pokemon: [
                 createNewPokemon({

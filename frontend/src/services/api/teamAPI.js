@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const TEAM_API = "http://localhost:5110/api/team";
-const TEAMS_API = "http://localhost:5110/api/team";
+const TEAMS_API = "http://localhost:5110/api/teams";
 
 
 
