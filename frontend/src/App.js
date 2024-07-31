@@ -13,6 +13,7 @@ import { fetchStaticData } from "./services/fetchStaticData";
 import { UserProvider } from "./context/userContext";
 
 import "./App.css";
+import { getLocalStorageTeams, setLocalStorageTeams } from "./utility/teamStorage";
 
 
 
@@ -50,21 +51,17 @@ function App() {
     ];
 
     const [page, setPage] = useState(TEAM_LIST_PAGE);
-    const [teams, setTeams] = useState(demoTeams);
+    const [teams, setTeams] = useState(getLocalStorageTeams() || []);
     const [activeTeamId, setActiveTeamId] = useState(0);
 
     // Fetch static data
     const data = staticData;
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //          use to fetch teams?? 
-    //         const teams = await newGetAllAbilities();
-    //         
-    //     }
-
-    //     fetchData();
-    // }, []);
+    // Update local storage
+    useEffect(() => {
+        const localTeams = teams.filter(team => team.id < 0);
+        setLocalStorageTeams(localTeams);
+    }, [teams]);
   
     
     return (
