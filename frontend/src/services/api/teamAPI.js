@@ -50,7 +50,7 @@ export async function createTeamAPI(team, token) {
     try {
         const response = await axios.post(TEAM_API, team,
             {
-                validateStatus: status => status === 200,
+                validateStatus: status => status === 201,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -107,7 +107,7 @@ export async function deleteTeamByIdAPI(id, token) {
     try {
         const response = await axios.delete(TEAM_API.concat('/', id),
             {
-                validateStatus: status => status === 200,
+                validateStatus: status => status === 204,
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
