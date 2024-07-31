@@ -8,7 +8,7 @@ export function teamToTeamEdit(team, data) {
         pokemonName: data.pokemon.find(x => x.id == pokemon.pokemonId)?.identifier || "",
         nickname: pokemon.nickname || "",
         level: pokemon.level,
-        gender: data.genders.find(x => x.id == pokemon.genderId)?.identifier || "auto",
+        genderId: pokemon.genderId || "4",
         shiny: pokemon.shiny,
         teraPkmnTypeId: String(pokemon.teraPkmnTypeId) || "1",
         itemName: data.items.find(x => x.id == pokemon.itemId)?.identifier || "",
