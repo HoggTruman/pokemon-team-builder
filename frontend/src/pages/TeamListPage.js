@@ -3,7 +3,8 @@ import TeamList from "../components/TeamListPage/TeamList";
 import createNewTeam from "../models/teamFactory";
 import { ACCOUNT_PAGE, TEAM_EDIT_PAGE } from "./constants/pageNames";
 import { userContext } from "../context/userContext";
-import { getAllTeamsAPI } from "../services/api/teamAPI";
+import { createUpdateTeamsAPI, getAllTeamsAPI } from "../services/api/teamAPI";
+import { generateLocalTeamId } from "../utility/generateLocalTeamId";
 
 
 function TeamListPage(props) {
@@ -12,40 +13,56 @@ function TeamListPage(props) {
     async function handleClickGetTeamsButton() {
         // This button is needed so that changes arent overwritten on refresh? (if you loaded teams with page load)
         if (isLoggedIn() === false) {
+            alert("Log in to access the server");
             props.setPage(ACCOUNT_PAGE);
+        }
+
+
+        // Warn the user about current server teams being overwritten (if there are any present)
+        if (
+            props.teams.filter(team => team.id > 0).length > 0 &&
+            confirm("Warning: Server teams will be overwritten. Continue?") === false
+        ) {
+            return;
         }
 
         const serverTeams = await getAllTeamsAPI(token);
 
-        if (serverTeams === undefined || confirm("Warning: Changes not saved to teams on server will be lost. Continue?") === false) {
-            return;
+        if (serverTeams === undefined) {
+            return alert("Failed to retrieve teams from server. Please try again");
         }
 
         props.setTeams(teams => {
             // replace only the server teams, not local teams
             const localTeams = teams.filter(team => team.id < 0);
+            const newTeams = localTeams.concat(serverTeams);
 
-            return localTeams.concat(serverTeams);
+            return newTeams;
         })
     }
 
 
     async function handleClickSaveTeamsButton() {
-        for(const team of props.teams) {
-            if (team.id > 0) {
-                // const result = await updateTeamByIdAPI(team.id, team, token);
-            }
-            else if (team.id < 0) {
-                // const result = await createTeamAPI(team, token);
-            }
+        if (isLoggedIn() === false) {
+            alert("Log in to access the server");
+            props.setPage(ACCOUNT_PAGE);
         }
+
+        const serverTeams = await createUpdateTeamsAPI(props.teams, token);
+
+        if (serverTeams === undefined) {
+            return alert("Save failed. Please try again");
+        }
+
+        alert("Save Successful");
+        props.setTeams(teams => serverTeams);
     }
 
 
 
 
     function handleClickNewTeamButton() {
-        const newTeam = createNewTeam({id: -Date.now()});  // Use negative id for new teams/pokemon
+        const newTeam = createNewTeam({id: generateLocalTeamId(props.teams)});  // Use negative id for new teams/pokemon
 
         props.setTeams(teams => {
             teams.push(newTeam);
@@ -88,7 +105,7 @@ function TeamListPage(props) {
             </button>
 
             <h2>
-                {`Teams On Server (${serverTeams.length})`}
+                {`Server Teams (${serverTeams.length})`}
             </h2>
             <TeamList
                 setPage={props.setPage}

@@ -25,6 +25,27 @@ export async function getAllTeamsAPI(token) {
 }
 
 
+export async function createUpdateTeamsAPI(teams, token) {
+    try {
+        const response = await axios.post(TEAMS_API, teams,
+            {
+                validateStatus: status => status === 200,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        return response.data;
+    } 
+    catch (error) {
+        console.error(error)
+    }
+}
+
+
+
+
 export async function createTeamAPI(team, token) {
     try {
         const response = await axios.post(TEAM_API, team,
