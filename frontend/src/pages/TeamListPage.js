@@ -3,7 +3,7 @@ import TeamList from "../components/TeamListPage/TeamList";
 import createNewTeam from "../models/teamFactory";
 import { ACCOUNT_PAGE, TEAM_EDIT_PAGE } from "./constants/pageNames";
 import { userContext } from "../context/userContext";
-import { createUpdateTeamsAPI, getAllTeamsAPI } from "../services/api/teamAPI";
+import { createTeamsAPI, getAllTeamsAPI } from "../services/api/teamAPI";
 import { generateLocalTeamId } from "../utility/generateLocalTeamId";
 
 
@@ -43,14 +43,16 @@ function TeamListPage(props) {
     }
 
 
-    async function handleClickSaveTeamsButton() {
+    async function handleClickSaveLocalTeamsButton() {
         if (isLoggedIn() === false) {
             alert("Log in to access the server");
             props.setPage(ACCOUNT_PAGE);
             return;
         }
 
-        const serverTeams = await createUpdateTeamsAPI(props.teams, token);
+        const localTeams = props.teams.filter(team => team.id < 0);
+
+        const serverTeams = await createTeamsAPI(localTeams, token);
 
         if (serverTeams === undefined) {
             return alert("Save failed. Please try again");
@@ -101,9 +103,9 @@ function TeamListPage(props) {
 
             <button
                 id="saveTeamsButton"
-                onClick={handleClickSaveTeamsButton}
+                onClick={handleClickSaveLocalTeamsButton}
             >
-                Save teams to server
+                Save local teams to server
             </button>
 
             <h2>

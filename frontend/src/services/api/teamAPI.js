@@ -25,7 +25,7 @@ export async function getAllTeamsAPI(token) {
 }
 
 
-export async function createUpdateTeamsAPI(teams, token) {
+export async function createTeamsAPI(teams, token) {
     try {
         const response = await axios.post(TEAMS_API, teams,
             {
