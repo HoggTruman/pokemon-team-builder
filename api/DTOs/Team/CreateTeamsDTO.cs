@@ -4,8 +4,9 @@ using api.DTOs.UserPokemon;
 
 namespace api.DTOs.Team;
 
-public class CreateUpdateTeamsDTO : IValidatableObject
+public class CreateTeamsDTO : IValidatableObject
 {
+    [Range(int.MinValue, -1)]
     public int Id { get; set; }
     public string TeamName { get; set; } = "";
 

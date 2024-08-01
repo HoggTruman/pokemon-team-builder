@@ -622,101 +622,48 @@ public class TeamRepositoryTests
 
 
     [Fact]
-    public void CreateUpdateTeams_WithValidInput_ReturnsTeams()
+    public void CreateTeams_WithValidInput_ReturnsTeams()
     {
         // Arrange
-        Team testTeam1 = new()
-        {            
-            AppUserId = TestUser1Id,
-            TeamName = "TestTeam1"
-        };
-
-        Team testTeam2 = new()
-        {            
-            AppUserId = TestUser1Id,
-            TeamName = "TestTeam2"
-        };
-
-
-        UserPokemon testUserPokemon1 = new()
-        {
-            TeamId = testTeam1.Id,
-            Nickname = "TestUserPokemon1"
-        };
-
-        UserPokemon testUserPokemon2 = new()
-        {
-            TeamId = testTeam2.Id,
-            Nickname = "TestUserPokemon2"
-        };
-
-        testTeam1.UserPokemon.Add(testUserPokemon1);
-        testTeam2.UserPokemon.Add(testUserPokemon2);
-
-
-        List<Team> testTeams = [
-            testTeam1,
-            testTeam2
-        ];
-
-
-        _testDbContext.Team.AddRange(testTeams);
-        _testDbContext.SaveChanges();
-
         var teamRepository = new TeamRepository(_testDbContext);
 
 
         // Act
-        CreateUserPokemonDTO userPokemon1DTO = new()
+        CreateUserPokemonDTO team1PokemonDTO = new()
         {
-            Nickname = "UpdatedTestUserPokemon1"
+            Nickname = "team1UserPokemon"
         };
 
-        CreateUserPokemonDTO userPokemon2DTO = new()
-        {
-            Nickname = "UpdatedTestUserPokemon2"
-        };
-
-        CreateUserPokemonDTO newTeamuserPokemonDTO = new()
-        {
-            Nickname = "NewTeamUserPokemon"
-        };
-
-
-        CreateUpdateTeamsDTO team1DTO = new()
-        {
-            Id = testTeam1.Id,
-            TeamName = "UpdatedTestTeam1",
-            UserPokemon = [userPokemon1DTO]
-        };
-
-        CreateUpdateTeamsDTO team2DTO = new()
-        {
-            Id = testTeam2.Id,
-            TeamName = "UpdatedTestTeam2",
-            UserPokemon = [userPokemon2DTO]
-        };
-
-        CreateUpdateTeamsDTO newTeamDTO = new()
+        CreateTeamsDTO team1DTO = new()
         {
             Id = -1,
-            TeamName = "NewTeam",
-            UserPokemon = [newTeamuserPokemonDTO]
+            TeamName = "TestTeam1",
+            UserPokemon = [team1PokemonDTO]
+        };
+
+        CreateUserPokemonDTO team2PokemonDTO = new()
+        {
+            Nickname = "team2UserPokemon"
+        };
+
+        CreateTeamsDTO team2DTO = new()
+        {
+            Id = -2,
+            TeamName = "TestTeam2",
+            UserPokemon = [team2PokemonDTO]
         };
 
 
-        List<CreateUpdateTeamsDTO> teamDTOs = [
-            newTeamDTO,
+        List<CreateTeamsDTO> teamDTOs = [
             team1DTO,
             team2DTO,
         ];
 
-
-        var result = teamRepository.CreateUpdateTeams(teamDTOs, TestUser1Id);
+        
+        var result = teamRepository.CreateTeams(teamDTOs, TestUser1Id);
         var dbQueryResult = _testDbContext.Team.ToList();
-        var team1Result = dbQueryResult.FirstOrDefault(x => x.Id == testTeam1.Id);
-        var team2Result = dbQueryResult.FirstOrDefault(x => x.Id == testTeam2.Id);
-        var newTeamResult = dbQueryResult.FirstOrDefault(x => x.TeamName == newTeamDTO.TeamName);
+        var team1Result = dbQueryResult.FirstOrDefault(x => x.TeamName == team1DTO.TeamName);
+        var team2Result = dbQueryResult.FirstOrDefault(x => x.TeamName == team2DTO.TeamName);
 
 
 
@@ -729,63 +676,66 @@ public class TeamRepositoryTests
         team1Result.Should().NotBeNull();
         Assert.Equal(team1DTO.TeamName, team1Result?.TeamName);
         Assert.Equal(team1DTO.UserPokemon.Count, team1Result?.UserPokemon.Count);
-        Assert.Equal(userPokemon1DTO.Nickname, team1Result?.UserPokemon[0].Nickname);
+        Assert.Equal(team1PokemonDTO.Nickname, team1Result?.UserPokemon[0].Nickname);
+        Assert.True(team1Result?.Id >= 1);
 
         team2Result.Should().NotBeNull();
         Assert.Equal(team2DTO.TeamName, team2Result?.TeamName);
         Assert.Equal(team2DTO.UserPokemon.Count, team2Result?.UserPokemon.Count);
-        Assert.Equal(userPokemon2DTO.Nickname, team2Result?.UserPokemon[0].Nickname);
-
-        newTeamResult.Should().NotBeNull();
-        Assert.True(newTeamResult?.Id >= 1);
-        Assert.Equal(newTeamDTO.UserPokemon.Count, newTeamDTO?.UserPokemon.Count);
-        Assert.Equal(newTeamuserPokemonDTO.Nickname, newTeamDTO?.UserPokemon[0].Nickname);
+        Assert.Equal(team2PokemonDTO.Nickname, team2Result?.UserPokemon[0].Nickname);
+        Assert.True(team2Result?.Id >= 1);
     }
 
 
     [Fact]
-    public void CreateUpdateTeams_WithoutUserIdMatch_DoesntAffectTeam()
+    public void CreateUpdateTeams_WithEmptyList_ReturnsEmptyList()
     {
         // Arrange
-        Team testTeam1 = new()
-        {            
-            AppUserId = TestUser1Id,
-            TeamName = "TestTeam1"
-        };
-
-        List<Team> testTeams = [
-            testTeam1,
-        ];
-
-
-        _testDbContext.Team.AddRange(testTeams);
-        _testDbContext.SaveChanges();
-
         var teamRepository = new TeamRepository(_testDbContext);
 
 
         // Act
-        CreateUpdateTeamsDTO team1DTO = new()
-        {
-            Id = testTeam1.Id,
-            TeamName = "UpdatedTestTeam1",
-        };
-
-
-        List<CreateUpdateTeamsDTO> teamDTOs = [
-            team1DTO,
-        ];
-
-
-        var result = teamRepository.CreateUpdateTeams(teamDTOs, TestUser2Id);
-        var team1QueryResult = _testDbContext.Team.FirstOrDefault(x => x.Id == testTeam1.Id);
-
-
+        List<CreateTeamsDTO> teamDTOs = [];
+        var result = teamRepository.CreateTeams(teamDTOs, TestUser2Id);
 
         // Assert
         result.Should().BeEquivalentTo(new List<Team>());
-
-        team1QueryResult.Should().NotBeNull();
-        Assert.Equal(testTeam1.TeamName, team1QueryResult?.TeamName);
     }
+
+
+    [Fact]
+    public void CreateTeams_WithUserPokemon_AddsUserPokemonToDb()
+    {
+        // Arrange
+        var teamRepository = new TeamRepository(_testDbContext);
+
+
+        // Act
+        CreateUserPokemonDTO team1PokemonDTO = new()
+        {
+            Nickname = "team1UserPokemon"
+        };
+
+        CreateTeamsDTO team1DTO = new()
+        {
+            Id = -1,
+            TeamName = "TestTeam1",
+            UserPokemon = [team1PokemonDTO]
+        };
+
+
+        List<CreateTeamsDTO> teamDTOs = [team1DTO];
+
+        
+        var result = teamRepository.CreateTeams(teamDTOs, TestUser1Id);
+        var dbQueryResult = _testDbContext.UserPokemon.ToList();
+
+        // Assert
+        result.Should().NotBeNull();
+        dbQueryResult.Should().NotBeNull();
+
+        dbQueryResult.Count.Should().Be(team1DTO.UserPokemon.Count);
+        Assert.Equal(team1PokemonDTO.Nickname, dbQueryResult[0].Nickname);
+    }
+
 }

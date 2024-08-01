@@ -150,11 +150,8 @@ public class TeamController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<GetTeamDTO>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> CreateUpdateTeams([FromBody] List<CreateUpdateTeamsDTO> teamDTOs)
+    public async Task<IActionResult> CreateTeams([FromBody] List<CreateTeamsDTO> teamDTOs)
     {
-        /*  Since we can't know the database id of a new team ahead of the request,
-            we can not guarantee idempotency. Therefore, POST is used rather than PUT
-        */
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
@@ -164,7 +161,7 @@ public class TeamController : ControllerBase
         if (appUser == null)
             return Unauthorized();
 
-        var teams = _repository.CreateUpdateTeams(teamDTOs, appUser.Id);
+        var teams = _repository.CreateTeams(teamDTOs, appUser.Id);
 
         return Ok(teams.Select(x => x.ToGetTeamDTO()));
     }

@@ -468,13 +468,13 @@ public class TeamControllerTests
     {
         // Arrange 
         AppUser testAppUser = new();
-        List<CreateUpdateTeamsDTO> teamDTOs = new();
+        List<CreateTeamsDTO> teamDTOs = new();
 
 
         _mockUserManager.Setup(x => x.FindByNameAsync(TestGivenName))
             .Returns(Task.FromResult<AppUser?>(testAppUser)); 
 
-        _repositoryStub.Setup(x => x.CreateUpdateTeams(teamDTOs, testAppUser.Id))
+        _repositoryStub.Setup(x => x.CreateTeams(teamDTOs, testAppUser.Id))
             .Returns(new List<Team>());
 
         var teamController = new TeamController(_repositoryStub.Object, _mockUserManager.Object);
@@ -482,23 +482,23 @@ public class TeamControllerTests
 
 
         // Act
-        var result = await teamController.CreateUpdateTeams(teamDTOs);
+        var result = await teamController.CreateTeams(teamDTOs);
         var statusCodeResult = (IStatusCodeActionResult)result;
 
 
         // Assert 
-        _repositoryStub.Verify(x => x.CreateUpdateTeams(teamDTOs, testAppUser.Id), Times.Once());
+        _repositoryStub.Verify(x => x.CreateTeams(teamDTOs, testAppUser.Id), Times.Once());
         result.Should().NotBeNull();
         statusCodeResult.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 
 
     [Fact]
-    public async void CreateUpdateTeams_WithInvalidModelState_ReturnsBadRequest()
+    public async void CreateTeams_WithInvalidModelState_ReturnsBadRequest()
     {
         // Arrange 
         AppUser testAppUser = new();
-        List<CreateUpdateTeamsDTO> teamDTOs = new();
+        List<CreateTeamsDTO> teamDTOs = new();
 
 
         _mockUserManager.Setup(x => x.FindByNameAsync(TestGivenName))
@@ -510,12 +510,12 @@ public class TeamControllerTests
 
 
         // Act
-        var result = await teamController.CreateUpdateTeams(teamDTOs);
+        var result = await teamController.CreateTeams(teamDTOs);
         var statusCodeResult = (IStatusCodeActionResult)result;
 
 
         // Assert 
-        _repositoryStub.Verify(x => x.CreateUpdateTeams(teamDTOs, testAppUser.Id), Times.Never());
+        _repositoryStub.Verify(x => x.CreateTeams(teamDTOs, testAppUser.Id), Times.Never());
         result.Should().NotBeNull();
         statusCodeResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
     }
@@ -525,7 +525,7 @@ public class TeamControllerTests
     public async void CreateUpdateTeams_WithInvalidUser_ReturnsUnauthorized()
     {
         // Arrange 
-        List<CreateUpdateTeamsDTO> teamDTOs = new();
+        List<CreateTeamsDTO> teamDTOs = new();
 
 
         _mockUserManager.Setup(x => x.FindByNameAsync(TestGivenName))
@@ -536,12 +536,12 @@ public class TeamControllerTests
 
 
         // Act
-        var result = await teamController.CreateUpdateTeams(teamDTOs);
+        var result = await teamController.CreateTeams(teamDTOs);
         var statusCodeResult = (IStatusCodeActionResult)result;
 
 
         // Assert 
-        _repositoryStub.Verify(x => x.CreateUpdateTeams(teamDTOs, It.IsAny<string>()), Times.Never());
+        _repositoryStub.Verify(x => x.CreateTeams(teamDTOs, It.IsAny<string>()), Times.Never());
         result.Should().NotBeNull();
         statusCodeResult.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
     }

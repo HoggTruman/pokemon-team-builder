@@ -103,12 +103,12 @@ public class TeamRepository : ITeamRepository
     }
 
 
-    public List<Team> CreateUpdateTeams(List<CreateUpdateTeamsDTO> teamDTOs, string userId)
+    public List<Team> CreateTeams(List<CreateTeamsDTO> teamDTOs, string userId) 
     {
-        foreach (CreateUpdateTeamsDTO teamDTO in teamDTOs) {
-            // Negative Id corresponds to a new team (not currently in DB)
-            if (teamDTO.Id < 0) 
-            {
+        List<Team> teams = [];
+
+        foreach (CreateTeamsDTO teamDTO in teamDTOs) 
+        {
                 var team = new Team
                 {
                     AppUserId = userId,
@@ -117,41 +117,15 @@ public class TeamRepository : ITeamRepository
 
                 var userPokemon = teamDTO.UserPokemon.Select(x => x.ToUserPokemon()).ToList();
                 userPokemon.ForEach(x => x.TeamId = team.Id);
-
                 team.UserPokemon = userPokemon;
 
                 _context.Team.Add(team);
-            }
-            // Positive Id corresponds to a team that exists in the DB
-            else if (teamDTO.Id > 0) 
-            {
-                var team = _context.Team
-                    .Include(x => x.UserPokemon)
-                    .FirstOrDefault(x => x.AppUserId == userId && x.Id == teamDTO.Id);
-
-                if (team == null)
-                {
-                    continue;
-                }
-
-                team.TeamName = teamDTO.TeamName;
-
-                _context.UserPokemon.RemoveRange(team.UserPokemon);
-
-                var newUserPokemon = teamDTO.UserPokemon.Select(x => x.ToUserPokemon()).ToList();
-                newUserPokemon.ForEach(x => x.TeamId = team.Id);
-
-                team.UserPokemon = newUserPokemon;
-            }
+                teams.Add(team);
         }
 
         _context.SaveChanges();
 
-        var teams = _context.Team
-            .Include(x => x.UserPokemon)
-            .Where(x => x.AppUserId == userId)
-            .ToList();
-
         return teams;
     }
+
 }
