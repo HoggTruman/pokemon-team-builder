@@ -13,7 +13,7 @@ var deepEqual = require('deep-equal')
 
 function TeamEditPage(props) {
     const [activeField, setActiveField] = useState(POKEMON_FIELD);  // matches name attribute of active input element
-    const [activeTeamSlot, setActiveTeamSlot] = useState(1); // 1-based indexing
+    const [activeTeamSlot, setActiveTeamSlot] = useState(1);
     const [teamEdit, setTeamEdit] = useState(teamToTeamEdit(props.team, props.data)) // A model used for more convenient editing the team on the page
 
     let activePokemon = teamEdit.pokemon.find(x => x.teamSlot == activeTeamSlot);
@@ -24,19 +24,14 @@ function TeamEditPage(props) {
         // ANY FURTHER CHECKING FOR DUPLICATE MOVES, INVALID DATA ETC...
 
         props.setTeams(teams => {
-            teams = teams.map(team => team.id === modifiedTeam.id? modifiedTeam: team);
-
-            return [...teams];
+            const newTeams = teams.map(team => team.id === modifiedTeam.id? modifiedTeam: team);
+            return newTeams;
         })
     }
 
 
     function teamHasUnsavedChanges() {
         const modifiedTeam = teamEditToTeam(teamEdit, props.data);
-        // console.log("original: ");
-        // console.log(props.team);
-        // console.log("new: ")
-        // console.log(modifiedTeam);
         return deepEqual(modifiedTeam, props.team, {strict: true}) === false;
     }
 

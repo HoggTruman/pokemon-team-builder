@@ -51,7 +51,8 @@ function App() {
     ];
 
     const [page, setPage] = useState(TEAM_LIST_PAGE);
-    const [teams, setTeams] = useState(getLocalStorageTeams() || []);
+    const [serverTeams, setServerTeams] = useState([]);
+    const [localTeams, setLocalTeams] = useState(getLocalStorageTeams() || [])
     const [activeTeamId, setActiveTeamId] = useState(0);
 
     // Fetch static data
@@ -59,9 +60,8 @@ function App() {
 
     // Update local storage
     useEffect(() => {
-        const localTeams = teams.filter(team => team.id < 0);
         setLocalStorageTeams(localTeams);
-    }, [teams]);
+    }, [localTeams]);
   
     
     return (
@@ -70,13 +70,15 @@ function App() {
                 <TopBar 
                     page={page}
                     setPage={setPage}
-                    setTeams={setTeams}
+                    setServerTeams={setServerTeams}
                 />
                 <PageSelector 
                     page={page}
                     setPage={setPage}
-                    teams={teams}
-                    setTeams={setTeams}
+                    serverTeams={serverTeams}
+                    setServerTeams={setServerTeams}
+                    localTeams={localTeams}
+                    setLocalTeams={setLocalTeams}
                     activeTeamId={activeTeamId}
                     setActiveTeamId={setActiveTeamId}
                     data={data}

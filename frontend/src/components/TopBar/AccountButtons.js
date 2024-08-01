@@ -11,9 +11,7 @@ function AccountButtons(props) {
         }
 
         logout();
-        props.setTeams(teams => {
-            return teams.filter(team => team.id < 0);
-        })
+        props.setServerTeams(teams => []);
     }
 
     function handleClickLoginRegister() {

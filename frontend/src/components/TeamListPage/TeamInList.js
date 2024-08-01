@@ -38,8 +38,8 @@ function TeamInList(props) {
     }
 
 
-    function handleClickRenameTeamButton() {
-        let newTeamName = prompt("New Team Name:", props.team.teamName);  // MAKE A CUSTOM PROMPT COMPONENT SINCE THIS WILL BE USEFUL FOR NEW TEAM AS WELL
+    function handleClickRenameTeamButton() {            /// SHOULD PROBABLY BE REMOVED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        let newTeamName = prompt("New Team Name:", props.team.teamName); 
 
         if (newTeamName != null && newTeamName != "") {
             props.setTeams(teams => {
