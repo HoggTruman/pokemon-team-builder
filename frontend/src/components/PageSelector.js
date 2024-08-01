@@ -46,6 +46,7 @@ function PageSelector(props) {
         return (
             <AccountPage
                 setPage={props.setPage}
+                setServerTeams={props.setServerTeams}
             />
         )
     }
