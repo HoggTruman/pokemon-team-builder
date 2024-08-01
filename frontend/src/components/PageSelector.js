@@ -30,7 +30,6 @@ function PageSelector(props) {
         else if (props.activeTeamId < 0) {
             activeTeam = props.localTeams.find(x => x.id == props.activeTeamId)
         }
-        console.log(props.localTeams)
 
 
         return (
