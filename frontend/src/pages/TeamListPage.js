@@ -18,15 +18,6 @@ function TeamListPage(props) {
             return;
         }
 
-
-        // Warn the user about current server teams being overwritten (if there are any present)
-        if (
-            props.serverTeams.length > 0 &&
-            confirm("Warning: Server teams will be overwritten. Continue?") === false
-        ) {
-            return;
-        }
-
         const newServerTeams = await getAllTeamsAPI(token);
 
         if (newServerTeams === undefined) {
@@ -41,6 +32,10 @@ function TeamListPage(props) {
         if (isLoggedIn() === false) {
             alert("Log in to access the server");
             props.setPage(ACCOUNT_PAGE);
+            return;
+        }
+
+        if (props.localTeams.length === 0) {
             return;
         }
 
@@ -104,6 +99,15 @@ function TeamListPage(props) {
                 setActiveTeamId={props.setActiveTeamId}
                 data={props.data}
             />
+            <div>
+                {
+                    props.serverTeams.length === 0? 
+                        isLoggedIn()?
+                            "Get your teams from the server, or save a local team!":
+                            "Log in to retrieve your teams from the server!": 
+                        ""
+                }
+            </div>
 
             <h2>
                 {`Local Teams (${props.localTeams.length})`}
@@ -115,6 +119,15 @@ function TeamListPage(props) {
                 setActiveTeamId={props.setActiveTeamId}
                 data={props.data}
             />
+            <div>
+                {
+                    props.localTeams.length === 0? 
+                        isLoggedIn()?
+                            "All your teams are saved to the server!":
+                            "Create a new team to get started!": 
+                        ""
+                }
+            </div>
         </>
     )
 }
