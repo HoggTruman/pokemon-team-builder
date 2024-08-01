@@ -1,12 +1,72 @@
 import React from "react";
 import TeamList from "../components/TeamListPage/TeamList";
 import createNewTeam from "../models/teamFactory";
-import { TEAM_EDIT_PAGE } from "./constants/pageNames";
+import { ACCOUNT_PAGE, TEAM_EDIT_PAGE } from "./constants/pageNames";
+import { userContext } from "../context/userContext";
+import { createTeamsAPI, getAllTeamsAPI } from "../services/api/teamAPI";
+import { generateLocalTeamId } from "../utility/generateLocalTeamId";
 
 
 function TeamListPage(props) {
+    const { token, isLoggedIn } = userContext();
+
+    async function handleClickGetTeamsButton() {
+        // This button is needed so that changes arent overwritten on refresh? (if you loaded teams with page load)
+        if (isLoggedIn() === false) {
+            alert("Log in to access the server");
+            props.setPage(ACCOUNT_PAGE);
+            return;
+        }
+
+
+        // Warn the user about current server teams being overwritten (if there are any present)
+        if (
+            props.teams.filter(team => team.id > 0).length > 0 &&
+            confirm("Warning: Server teams will be overwritten. Continue?") === false
+        ) {
+            return;
+        }
+
+        const serverTeams = await getAllTeamsAPI(token);
+
+        if (serverTeams === undefined) {
+            return alert("Failed to retrieve teams from server. Please try again");
+        }
+
+        props.setTeams(teams => {
+            // replace only the server teams, not local teams
+            const localTeams = teams.filter(team => team.id < 0);
+            const newTeams = localTeams.concat(serverTeams);
+
+            return newTeams;
+        })
+    }
+
+
+    async function handleClickSaveLocalTeamsButton() {
+        if (isLoggedIn() === false) {
+            alert("Log in to access the server");
+            props.setPage(ACCOUNT_PAGE);
+            return;
+        }
+
+        const localTeams = props.teams.filter(team => team.id < 0);
+
+        const serverTeams = await createTeamsAPI(localTeams, token);
+
+        if (serverTeams === undefined) {
+            return alert("Save failed. Please try again");
+        }
+
+        alert("Save Successful");
+        props.setTeams(teams => serverTeams);
+    }
+
+
+
+
     function handleClickNewTeamButton() {
-        const newTeam = createNewTeam({id: -Date.now()});  // Use negative id for new teams/pokemon
+        const newTeam = createNewTeam({id: generateLocalTeamId(props.teams)});  // Use negative id for new teams/pokemon
 
         props.setTeams(teams => {
             teams.push(newTeam);
@@ -16,6 +76,10 @@ function TeamListPage(props) {
         props.setActiveTeamId(newTeam.id);
         props.setPage(TEAM_EDIT_PAGE);
     }
+
+    // Render 
+    const serverTeams = props.teams.filter(team => team.id > 0);
+    const localTeams = props.teams.filter(team => team.id < 0);
 
 
     return (
@@ -30,11 +94,37 @@ function TeamListPage(props) {
                 New Team
             </button>
 
-            <button>Get teams from server/ save teams to server</button>
+            <button
+                id="getTeamsButton"
+                onClick={handleClickGetTeamsButton}
+            >
+                Get teams from server
+            </button>
 
+            <button
+                id="saveTeamsButton"
+                onClick={handleClickSaveLocalTeamsButton}
+            >
+                Save local teams to server
+            </button>
+
+            <h2>
+                {`Server Teams (${serverTeams.length})`}
+            </h2>
             <TeamList
                 setPage={props.setPage}
-                teams={props.teams}
+                teams={serverTeams}
+                setTeams={props.setTeams}
+                setActiveTeamId={props.setActiveTeamId}
+                data={props.data}
+            />
+
+            <h2>
+                {`Local Teams (${localTeams.length})`}
+            </h2>
+            <TeamList
+                setPage={props.setPage}
+                teams={localTeams}
                 setTeams={props.setTeams}
                 setActiveTeamId={props.setActiveTeamId}
                 data={props.data}

@@ -15,11 +15,11 @@ public class TeamRepository : ITeamRepository
     }
 
 
-    // used for team select page so no need to include pokemon at this point
     // by the time this method is called, we assume the user is valid so can just return an empty list if no entries are found
     public List<Team> GetTeams(string userId)
     {
         var teams = _context.Team
+            .Include(x => x.UserPokemon)
             .Where(x => x.AppUserId == userId)
             .ToList();
 
@@ -101,4 +101,31 @@ public class TeamRepository : ITeamRepository
 
         return team;
     }
+
+
+    public List<Team> CreateTeams(List<CreateTeamsDTO> teamDTOs, string userId) 
+    {
+        List<Team> teams = [];
+
+        foreach (CreateTeamsDTO teamDTO in teamDTOs) 
+        {
+                var team = new Team
+                {
+                    AppUserId = userId,
+                    TeamName = teamDTO.TeamName,
+                };
+
+                var userPokemon = teamDTO.UserPokemon.Select(x => x.ToUserPokemon()).ToList();
+                userPokemon.ForEach(x => x.TeamId = team.Id);
+                team.UserPokemon = userPokemon;
+
+                _context.Team.Add(team);
+                teams.Add(team);
+        }
+
+        _context.SaveChanges();
+
+        return teams;
+    }
+
 }

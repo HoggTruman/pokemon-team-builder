@@ -28,14 +28,14 @@ public class UserPokemon
     public int Level { get; set; } = 100;
 
     [ForeignKey("Gender")]
-    public int? GenderId { get; set; }
-    public Gender? Gender { get; set; } = null!;
+    public int GenderId { get; set; } = 4;
+    public Gender Gender { get; set; } = null!;
 
     public bool Shiny { get; set; }
 
     [ForeignKey("TeraPkmnType")]
-    public int? TeraPkmnTypeId { get; set; }
-    public PkmnType? TeraPkmnType { get; set; } = null!;
+    public int TeraPkmnTypeId { get; set; } = 1;
+    public PkmnType TeraPkmnType { get; set; } = null!;
 
 
     [ForeignKey("Item")]
@@ -65,8 +65,8 @@ public class UserPokemon
 
 
     [ForeignKey("Nature")]
-    public int? NatureId { get; set; }
-    public Nature? Nature { get; set; } = null!;
+    public int NatureId { get; set; } = 1;
+    public Nature Nature { get; set; } = null!;
 
 
     public int HPEV { get; set; }

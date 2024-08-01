@@ -13,6 +13,7 @@ import { fetchStaticData } from "./services/fetchStaticData";
 import { UserProvider } from "./context/userContext";
 
 import "./App.css";
+import { getLocalStorageTeams, setLocalStorageTeams } from "./utility/teamStorage";
 
 
 
@@ -26,7 +27,7 @@ const staticData = await fetchStaticData()
 function App() {
     const demoTeams = [
         createNewTeam({
-            id: 1,
+            id: -1,
             teamName:"team1",
             pokemon: [
                 createNewPokemon({
@@ -37,7 +38,7 @@ function App() {
                 }),
                 createNewPokemon({
                     id: 2,
-                    pokemonId: 6,
+                    pokemonId: 9,
                     teamSlot: 2
                 }),
                 createNewPokemon({
@@ -45,68 +46,22 @@ function App() {
                     pokemonId: 3,
                     teamSlot: 3
                 }),
-                createNewPokemon({
-                    id: 6,
-                    pokemonId: 6,
-                    teamSlot: 4
-                }),
-                createNewPokemon({
-                    id: 9,
-                    pokemonId: 9,
-                    teamSlot: 5
-                }),
-                createNewPokemon({
-                    id: 12,
-                    pokemonId: 12,
-                    teamSlot: 6
-                }),
             ]
-        }),
-        createNewTeam({
-            id: 2,
-            teamName:"team2",
-            pokemon: [
-                createNewPokemon({
-                    id: 10,
-                    pokemonId: 10,
-                    teamSlot: 1
-                }),
-            ]
-        }),
-        createNewTeam({
-            id: 3,
-            teamName:"team3",
-            pokemon: [
-                createNewPokemon({
-                    id: 11,
-                    pokemonId: 11,
-                    teamSlot: 1
-                }),
-                createNewPokemon({
-                    id: 22,
-                    pokemonId: 22,
-                    teamSlot: 2
-                }),
-            ]
-        }),
+        })
     ];
 
     const [page, setPage] = useState(TEAM_LIST_PAGE);
-    const [teams, setTeams] = useState(demoTeams);
+    const [teams, setTeams] = useState(getLocalStorageTeams() || []);
     const [activeTeamId, setActiveTeamId] = useState(0);
 
     // Fetch static data
     const data = staticData;
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //          use to fetch teams?? 
-    //         const teams = await newGetAllAbilities();
-    //         
-    //     }
-
-    //     fetchData();
-    // }, []);
+    // Update local storage
+    useEffect(() => {
+        const localTeams = teams.filter(team => team.id < 0);
+        setLocalStorageTeams(localTeams);
+    }, [teams]);
   
     
     return (
@@ -115,6 +70,7 @@ function App() {
                 <TopBar 
                     page={page}
                     setPage={setPage}
+                    setTeams={setTeams}
                 />
                 <PageSelector 
                     page={page}

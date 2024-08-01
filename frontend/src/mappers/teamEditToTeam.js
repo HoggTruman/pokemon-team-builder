@@ -18,19 +18,6 @@ export function teamEditToTeam(teamEdit, data) {
         return 100;
     }
 
-    function getGenderId(gender, pokemonData) {
-        let genderId;
-
-        if (gender == "auto") {
-            genderId = pokemonData?.genders[0] || null;
-        }
-        else {
-            genderId = data.genders.find(x => x.identifier == gender)?.id;
-        }
-        
-        return genderId;
-    }
-
     function getItemId(itemName) {
         return data.items.find(x => x.identifier == itemName.toLowerCase().trim())?.id;
     }
@@ -78,7 +65,7 @@ export function teamEditToTeam(teamEdit, data) {
             pokemonId: pokemonData?.id,
             nickname: pokemonEdit.nickname === ""? null: pokemonEdit.nickname,
             level: convertLevel(pokemonEdit.level),
-            genderId: getGenderId(pokemonEdit.gender, pokemonData),
+            genderId: Number(pokemonEdit.genderId),
 
             shiny: pokemonEdit.shiny,
             teraPkmnTypeId: Number(pokemonEdit.teraPkmnTypeId),

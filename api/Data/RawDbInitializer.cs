@@ -166,9 +166,12 @@ public class RawDbInitializer : IDbInitializer
         {
             var abilityRecords = new List<Ability>();
 
+            var config = new CsvHelper.Configuration.CsvConfiguration(CultureInfo.InvariantCulture);    
+            config.MissingFieldFound = null;
+
             // Add Main series Ability name and Id
             using (var reader = new StreamReader(SeedDir + @"abilities.csv"))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            using (var csv = new CsvReader(reader, config))
             {
                 csv.Context.RegisterClassMap<AbilityCSVMap>();
 

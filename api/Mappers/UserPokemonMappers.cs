@@ -23,35 +23,31 @@ public static class UserPokemonMappers
             ItemId = userPokemonModel.ItemId,
             AbilityId = userPokemonModel.AbilityId,
 
-            Moves = new List<int?>
-            {
-                userPokemonModel.Move1Id,
-                userPokemonModel.Move2Id,
-                userPokemonModel.Move3Id,
-                userPokemonModel.Move4Id,
-            },
+
+            Move1Id = userPokemonModel.Move1Id,
+            Move2Id = userPokemonModel.Move2Id,
+            Move3Id = userPokemonModel.Move3Id,
+            Move4Id = userPokemonModel.Move4Id,
+
 
             NatureId = userPokemonModel.NatureId,
 
-            EV = new EffortValuesDTO
-            {
-                HP = userPokemonModel.HPEV,
-                Attack = userPokemonModel.AttackEV,
-                Defense = userPokemonModel.DefenseEV,
-                SpecialAttack = userPokemonModel.SpecialAttackEV,
-                SpecialDefense = userPokemonModel.SpecialDefenseEV,
-                Speed = userPokemonModel.SpeedEV
-            },
 
-            IV = new IndividualValuesDTO
-            {
-                HP = userPokemonModel.HPIV,
-                Attack = userPokemonModel.AttackIV,
-                Defense = userPokemonModel.DefenseIV,
-                SpecialAttack = userPokemonModel.SpecialAttackIV,
-                SpecialDefense = userPokemonModel.SpecialDefenseIV,
-                Speed = userPokemonModel.SpeedIV
-            }
+            HPEV = userPokemonModel.HPEV,
+            AttackEV = userPokemonModel.AttackEV,
+            DefenseEV = userPokemonModel.DefenseEV,
+            SpecialAttackEV = userPokemonModel.SpecialAttackEV,
+            SpecialDefenseEV = userPokemonModel.SpecialDefenseEV,
+            SpeedEV = userPokemonModel.SpeedEV,
+
+
+
+            HPIV = userPokemonModel.HPIV,
+            AttackIV = userPokemonModel.AttackIV,
+            DefenseIV = userPokemonModel.DefenseIV,
+            SpecialAttackIV = userPokemonModel.SpecialAttackIV,
+            SpecialDefenseIV = userPokemonModel.SpecialDefenseIV,
+            SpeedIV = userPokemonModel.SpeedIV
         };
     }
 

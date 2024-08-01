@@ -20,14 +20,14 @@ public class CreateUserPokemonDTO : IValidatableObject
     [Range(1, 100, ErrorMessage = "{0} must be between {1} and {2}")]
     public int Level { get; set; } = 100;
 
-    [DefaultValue(null)]
-    public int? GenderId { get; set; }
+    [DefaultValue(4)]
+    public int GenderId { get; set; } = 4;
 
     [DefaultValue(false)]
     public bool Shiny { get; set; }
 
-    [DefaultValue(null)]
-    public int? TeraPkmnTypeId { get; set; }
+    [DefaultValue(1)]
+    public int TeraPkmnTypeId { get; set; } = 1;
 
     [DefaultValue(null)]
     public int? ItemId { get; set; }
@@ -51,8 +51,8 @@ public class CreateUserPokemonDTO : IValidatableObject
 
 
 
-    [DefaultValue(null)]
-    public int? NatureId { get; set; }
+    [DefaultValue(1)]
+    public int NatureId { get; set; } = 1;
 
 
 

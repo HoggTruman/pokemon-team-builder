@@ -7,13 +7,18 @@ import { TEAM_LIST_PAGE } from "./constants/pageNames";
 
 
 function AccountPage(props) {
-    const { login, register } = userContext();
+    const { login, register, isLoggedIn} = userContext();
 
 
     
 
     async function handleSubmitLogin(e) {
         e.preventDefault();
+        if (isLoggedIn()) {
+            return;
+        }
+            
+
         const data = new FormData(e.target);  
         const formData = Object.fromEntries(data.entries());
 
@@ -45,6 +50,12 @@ function AccountPage(props) {
 
     async function handleSubmitRegister(e) {
         e.preventDefault();
+        if (isLoggedIn()) {
+            return;
+        }
+
+
+
         const data = new FormData(e.target);  
         const formData = Object.fromEntries(data.entries());
 

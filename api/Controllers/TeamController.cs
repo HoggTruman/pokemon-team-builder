@@ -23,10 +23,10 @@ public class TeamController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpGet("~/api/teams")]
     [Authorize]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<GetUserTeamsDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<GetTeamDTO>))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetTeams()
     {
@@ -38,14 +38,14 @@ public class TeamController : ControllerBase
 
         var teams = _repository.GetTeams(appUser.Id);
 
-        return Ok(teams.Select(x => x.ToGetUserTeamsDTO()));
+        return Ok(teams.Select(x => x.ToGetTeamDTO()));
     }
 
 
     [HttpGet("{id:int}")]
     [Authorize]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetUserTeamDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetTeamDTO))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetTeamById([FromRoute] int id)
@@ -63,14 +63,14 @@ public class TeamController : ControllerBase
             return NotFound();
         }
 
-        return Ok(team.ToGetUserTeamDTO());
+        return Ok(team.ToGetTeamDTO());
     }
 
 
     [HttpPost]
     [Authorize]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetUserTeamDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetTeamDTO))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> CreateTeam([FromBody] CreateUpdateTeamDTO createTeamDTO)
@@ -86,14 +86,14 @@ public class TeamController : ControllerBase
         
         var team = _repository.CreateTeam(createTeamDTO, appUser.Id);
 
-        return CreatedAtAction(nameof(GetTeamById), new { id = team.Id }, team.ToGetUserTeamDTO());
+        return CreatedAtAction(nameof(GetTeamById), new { id = team.Id }, team.ToGetTeamDTO());
     }
 
 
     [HttpPut("{id:int}")]
     [Authorize]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetUserTeamDTO))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(GetTeamDTO))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -113,7 +113,7 @@ public class TeamController : ControllerBase
         if (team == null)
             return NotFound();
 
-        return Ok(team.ToGetUserTeamDTO());
+        return Ok(team.ToGetTeamDTO());
     }
 
 
@@ -141,5 +141,28 @@ public class TeamController : ControllerBase
             return NotFound();
 
         return NoContent();
+    }
+
+
+    [HttpPost("~/api/teams")]
+    [Authorize]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type=typeof(IEnumerable<GetTeamDTO>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> CreateTeams([FromBody] List<CreateTeamsDTO> teamDTOs)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var userName = User.FindFirstValue(ClaimTypes.GivenName)!;
+        var appUser = await _userManager.FindByNameAsync(userName);
+
+        if (appUser == null)
+            return Unauthorized();
+
+        var teams = _repository.CreateTeams(teamDTOs, appUser.Id);
+
+        return Ok(teams.Select(x => x.ToGetTeamDTO()));
     }
 }

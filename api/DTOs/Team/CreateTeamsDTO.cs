@@ -4,8 +4,10 @@ using api.DTOs.UserPokemon;
 
 namespace api.DTOs.Team;
 
-public class CreateUpdateTeamDTO : IValidatableObject
+public class CreateTeamsDTO : IValidatableObject
 {
+    [Range(int.MinValue, -1)]
+    public int Id { get; set; }
     public string TeamName { get; set; } = "";
 
     [MaxLength(6, ErrorMessage = "A team can not have more than 6 pokemon")]

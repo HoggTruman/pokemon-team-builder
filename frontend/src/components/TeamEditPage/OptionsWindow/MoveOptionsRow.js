@@ -13,12 +13,14 @@ function MoveOptionsRow(props) {
                 <img
                     src={typeImages[props.move.type]}
                     alt={props.move.type}
+                    loading="lazy"
                 />
             </div>
             <div className="col category">
                 <img
                     src={damageCategoryImages[props.move.damageClass]}
                     alt={props.move.damageClass}
+                    loading="lazy"
                 />
             </div>
             <div className="col stat">{props.move.power || "-"}</div>

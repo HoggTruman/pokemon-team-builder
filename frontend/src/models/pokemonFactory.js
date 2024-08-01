@@ -6,7 +6,7 @@ function createNewPokemon({
     pokemonId = null,
     nickname = null,
     level = 100,
-    genderId = null,
+    genderId = 4,
     shiny = false,
     teraPkmnTypeId = 1,
     itemId = null,

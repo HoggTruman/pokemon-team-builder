@@ -6,18 +6,9 @@ namespace api.Mappers;
 
 public static class TeamMappers
 {
-    public static GetUserTeamsDTO ToGetUserTeamsDTO(this Team teamModel)
+    public static GetTeamDTO ToGetTeamDTO(this Team teamModel)
     {
-        return new GetUserTeamsDTO
-        {
-            Id = teamModel.Id,
-            TeamName = teamModel.TeamName
-        };
-    }
-
-    public static GetUserTeamDTO ToGetUserTeamDTO(this Team teamModel)
-    {
-        return new GetUserTeamDTO
+        return new GetTeamDTO
         {
             Id = teamModel.Id,
             TeamName = teamModel.TeamName,

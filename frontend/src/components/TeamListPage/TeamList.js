@@ -6,7 +6,7 @@ function TeamList(props) {
 
 
     // Render
-    let teamRender = props.teams.map((team, teamIndex) => (
+    let teamRender = props.teams.map(team => (
         <TeamInList 
             key={team.id}
             team={team}

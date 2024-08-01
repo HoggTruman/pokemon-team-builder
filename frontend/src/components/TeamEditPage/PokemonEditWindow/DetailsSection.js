@@ -27,7 +27,7 @@ function DetailsSection(props) {
 
     function handleChangeGender(e) {
         props.setTeamEdit(team => {
-            props.activePokemon.gender = e.target.value;
+            props.activePokemon.genderId = e.target.value;
             return {...team};
         });
     }
@@ -64,7 +64,7 @@ function DetailsSection(props) {
 
     // Render
     const activePokemonData = props.data.pokemon.find(
-        x => x.identifier == props.activePokemon.pokemonName.toLowerCase().trim()
+        x => x.identifier == props.activePokemon.pokemonName.toLowerCase().trim()  // breaks for pokemon with form identifier
     );
     
     let genderOptions = activePokemonData?.genders.map(genderId => {
@@ -73,7 +73,7 @@ function DetailsSection(props) {
         return (
             <option 
                 key={gender.identifier}
-                value={gender.identifier}
+                value={gender.id}
             >
                 {gender.identifier}
             </option>
@@ -81,12 +81,11 @@ function DetailsSection(props) {
     });
 
     function genderSelectValue() {
-        const activeGenderId = props.data.genders.find(x => x.identifier == props.activePokemon.gender)?.id;
-        const newGender = activePokemonData?.genders.includes(activeGenderId)?
-            props.activePokemon.gender:
-            "auto"  
+        const newGenderId = activePokemonData?.genders.includes(Number(props.activePokemon.genderId))?
+            props.activePokemon.genderId:
+            "4" 
 
-        return newGender;
+        return newGenderId;
     }
 
     let teraTypeOptions = props.data.types
@@ -137,8 +136,8 @@ function DetailsSection(props) {
                         onChange={e => handleChangeGender(e)}
                     > 
                         <option 
-                            key="auto"
-                            value="auto"
+                            key="4"
+                            value="4"
                         >
                             auto
                         </option>

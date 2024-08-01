@@ -12,6 +12,7 @@ function TopBar(props)  {
             <AccountButtons
                 page={props.page}
                 setPage={props.setPage}
+                setTeams={props.setTeams}
             />
         </div>
     ) 

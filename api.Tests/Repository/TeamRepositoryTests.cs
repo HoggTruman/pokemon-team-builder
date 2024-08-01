@@ -617,4 +617,125 @@ public class TeamRepositoryTests
         dbQueryResult.Should().NotBeNull();
         Assert.Equal(testTeam.TeamName, dbQueryResult?.TeamName);
     }
+
+
+
+
+    [Fact]
+    public void CreateTeams_WithValidInput_ReturnsTeams()
+    {
+        // Arrange
+        var teamRepository = new TeamRepository(_testDbContext);
+
+
+        // Act
+        CreateUserPokemonDTO team1PokemonDTO = new()
+        {
+            Nickname = "team1UserPokemon"
+        };
+
+        CreateTeamsDTO team1DTO = new()
+        {
+            Id = -1,
+            TeamName = "TestTeam1",
+            UserPokemon = [team1PokemonDTO]
+        };
+
+        CreateUserPokemonDTO team2PokemonDTO = new()
+        {
+            Nickname = "team2UserPokemon"
+        };
+
+        CreateTeamsDTO team2DTO = new()
+        {
+            Id = -2,
+            TeamName = "TestTeam2",
+            UserPokemon = [team2PokemonDTO]
+        };
+
+
+        List<CreateTeamsDTO> teamDTOs = [
+            team1DTO,
+            team2DTO,
+        ];
+
+        
+        var result = teamRepository.CreateTeams(teamDTOs, TestUser1Id);
+        var dbQueryResult = _testDbContext.Team.ToList();
+        var team1Result = dbQueryResult.FirstOrDefault(x => x.TeamName == team1DTO.TeamName);
+        var team2Result = dbQueryResult.FirstOrDefault(x => x.TeamName == team2DTO.TeamName);
+
+
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Should().BeEquivalentTo(dbQueryResult);
+
+        result.Count.Should().Be(teamDTOs.Count);
+
+        team1Result.Should().NotBeNull();
+        Assert.Equal(team1DTO.TeamName, team1Result?.TeamName);
+        Assert.Equal(team1DTO.UserPokemon.Count, team1Result?.UserPokemon.Count);
+        Assert.Equal(team1PokemonDTO.Nickname, team1Result?.UserPokemon[0].Nickname);
+        Assert.True(team1Result?.Id >= 1);
+
+        team2Result.Should().NotBeNull();
+        Assert.Equal(team2DTO.TeamName, team2Result?.TeamName);
+        Assert.Equal(team2DTO.UserPokemon.Count, team2Result?.UserPokemon.Count);
+        Assert.Equal(team2PokemonDTO.Nickname, team2Result?.UserPokemon[0].Nickname);
+        Assert.True(team2Result?.Id >= 1);
+    }
+
+
+    [Fact]
+    public void CreateUpdateTeams_WithEmptyList_ReturnsEmptyList()
+    {
+        // Arrange
+        var teamRepository = new TeamRepository(_testDbContext);
+
+
+        // Act
+        List<CreateTeamsDTO> teamDTOs = [];
+        var result = teamRepository.CreateTeams(teamDTOs, TestUser2Id);
+
+        // Assert
+        result.Should().BeEquivalentTo(new List<Team>());
+    }
+
+
+    [Fact]
+    public void CreateTeams_WithUserPokemon_AddsUserPokemonToDb()
+    {
+        // Arrange
+        var teamRepository = new TeamRepository(_testDbContext);
+
+
+        // Act
+        CreateUserPokemonDTO team1PokemonDTO = new()
+        {
+            Nickname = "team1UserPokemon"
+        };
+
+        CreateTeamsDTO team1DTO = new()
+        {
+            Id = -1,
+            TeamName = "TestTeam1",
+            UserPokemon = [team1PokemonDTO]
+        };
+
+
+        List<CreateTeamsDTO> teamDTOs = [team1DTO];
+
+        
+        var result = teamRepository.CreateTeams(teamDTOs, TestUser1Id);
+        var dbQueryResult = _testDbContext.UserPokemon.ToList();
+
+        // Assert
+        result.Should().NotBeNull();
+        dbQueryResult.Should().NotBeNull();
+
+        dbQueryResult.Count.Should().Be(team1DTO.UserPokemon.Count);
+        Assert.Equal(team1PokemonDTO.Nickname, dbQueryResult[0].Nickname);
+    }
+
 }
