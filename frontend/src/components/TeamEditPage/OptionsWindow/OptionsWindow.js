@@ -4,6 +4,7 @@ import ItemOptions from "./ItemOptions";
 import AbilityOptions from "./AbilityOptions";
 import MoveOptions from "./MoveOptions";
 import { ABILITY_FIELD, ITEM_FIELD, MOVE1_FIELD, MOVE2_FIELD, MOVE3_FIELD, MOVE4_FIELD, POKEMON_FIELD } from "../PokemonEditWindow/constants/fieldNames";
+import { clean } from "../../../utility/cleanString";
 
 
 
@@ -81,7 +82,7 @@ function OptionsWindow(props) {
 }
 
 function filterListByInput(list, input) {
-    const cleanInput = input.toLowerCase().trim();
+    const cleanInput = clean(input);
 
     return list.filter(x => x.identifier.includes(cleanInput));
 }
@@ -90,7 +91,7 @@ function filterListByInput(list, input) {
 // Filters options by current input + removes already selected moves from options
 function filterMovesList(list, activeField, currentMoves) {
     let cleanInput;
-    const cleanCurrentMoves = currentMoves.map(x => x.toLowerCase().trim());
+    const cleanCurrentMoves = currentMoves.map(move => clean(move));
 
     if (activeField == MOVE1_FIELD) {
         cleanInput = cleanCurrentMoves[0];
