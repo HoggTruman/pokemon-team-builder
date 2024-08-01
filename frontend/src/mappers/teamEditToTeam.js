@@ -1,5 +1,6 @@
 import createNewPokemon from "../models/pokemonFactory";
 import createNewTeam from "../models/teamFactory";
+import { clean } from "../utility/cleanString";
 
 
 export function teamEditToTeam(teamEdit, data) {
@@ -19,11 +20,11 @@ export function teamEditToTeam(teamEdit, data) {
     }
 
     function getItemId(itemName) {
-        return data.items.find(x => x.identifier == itemName.toLowerCase().trim())?.id;
+        return data.items.find(x => x.identifier == clean(itemName))?.id;
     }
 
     function getAbilityId(abilityName, pokemonData) {
-        const abilityId = data.items.find(x => x.identifier == abilityName.toLowerCase().trim())?.id;
+        const abilityId = data.abilities.find(x => x.identifier == clean(abilityName))?.id;
         if (pokemonData?.abilities.includes(abilityId)) {
             return abilityId;
         }
@@ -32,7 +33,7 @@ export function teamEditToTeam(teamEdit, data) {
     }
 
     function getMoveId(moveName, pokemonData) {
-        const moveId = data.items.find(x => x.identifier == moveName.toLowerCase().trim())?.id;
+        const moveId = data.moves.find(x => x.identifier == clean(moveName))?.id;
         if (pokemonData?.moves.includes(moveId)) {
             return moveId;
         }
@@ -57,7 +58,7 @@ export function teamEditToTeam(teamEdit, data) {
 
 
     const pokemonList = teamEdit.pokemon.map(pokemonEdit => {
-        const pokemonData = data.pokemon.find(x => x.identifier == pokemonEdit.pokemonName.toLowerCase().trim());
+        const pokemonData = data.pokemon.find(x => x.identifier == clean(pokemonEdit.pokemonName));
         
         return createNewPokemon({
             id: pokemonEdit.id,
