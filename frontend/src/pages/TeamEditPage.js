@@ -19,17 +19,6 @@ function TeamEditPage(props) {
     let activePokemon = teamEdit.pokemon.find(x => x.teamSlot == activeTeamSlot);
 
 
-    function saveChanges() {
-        const modifiedTeam = teamEditToTeam(teamEdit, props.data);
-        // ANY FURTHER CHECKING FOR DUPLICATE MOVES, INVALID DATA ETC...
-
-        props.setTeams(teams => {
-            const newTeams = teams.map(team => team.id === modifiedTeam.id? modifiedTeam: team);
-            return newTeams;
-        })
-    }
-
-
     function teamHasUnsavedChanges() {
         const modifiedTeam = teamEditToTeam(teamEdit, props.data);
         return deepEqual(modifiedTeam, props.team, {strict: true}) === false;
@@ -51,7 +40,7 @@ function TeamEditPage(props) {
                 setTeamEdit={setTeamEdit}
                 activeTeamSlot={activeTeamSlot}
                 setActiveTeamSlot={setActiveTeamSlot}
-                saveChanges={saveChanges}
+                setTeams={props.setTeams}
                 teamHasUnsavedChanges={teamHasUnsavedChanges}
                 data={props.data}
             />

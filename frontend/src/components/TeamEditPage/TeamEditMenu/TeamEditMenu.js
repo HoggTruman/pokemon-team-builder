@@ -3,11 +3,16 @@ import SelectPokemonButton from "./SelectPokemonButton";
 import { TEAM_LIST_PAGE } from "../../../pages/constants/pageNames";
 import createNewPokemonEdit from "../../../models/pokemonEditFactory";
 import { deletePokemonFromTeam } from "../../../utility/deletePokemonFromTeam";
+import { updateTeamByIdAPI } from "../../../services/api/teamAPI";
+import { teamEditToTeam } from "../../../mappers/teamEditToTeam";
 
 import "./TeamEditMenu.css";
+import { userContext } from "../../../context/userContext";
+
 
 
 function TeamEditMenu(props) {
+    const { token } = userContext();
     
     function handleClickAddPokemonButton()
     {
@@ -41,13 +46,24 @@ function TeamEditMenu(props) {
 
 
         props.setActiveTeamSlot(slot => Math.max(1, slot - 1));
-        
-        // MAY BE BETTER TO MAKE EVERY TEAM HAVE 6 POKEMON IN DB BUT MARK EACH AS ACTIVE OR NOT, THIS WAY THEY HAVE A CONSISTENT ID TO USE AND EDITING TEAMS WONT REQUIRE DELETING
     }
 
 
-    function handleClickSaveButton() {
-        props.saveChanges();
+    async function handleClickSaveButton() {
+        const modifiedTeam = teamEditToTeam(props.teamEdit, props.data);
+        // ANY FURTHER CHECKING FOR DUPLICATE MOVES, INVALID DATA ETC...
+
+        if (modifiedTeam.id > 0) {
+            const result = await updateTeamByIdAPI(modifiedTeam.id, modifiedTeam, token);
+            if (result === undefined) {
+                return alert("Failed to save team. Please try again")
+            }
+        }
+
+        props.setTeams(teams => {
+            const newTeams = teams.map(team => team.id === modifiedTeam.id? modifiedTeam: team);
+            return newTeams;
+        })
     }
 
 
