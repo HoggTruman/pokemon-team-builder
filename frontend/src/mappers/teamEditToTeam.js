@@ -54,14 +54,14 @@ export function teamEditToTeam(teamEdit, data) {
 
 
 
-// HELPERS
+// Helpers (Exported only for testing)
 
 /** Returns level as an integer from 1 to 100 if it can be converted, otherwise returns 100.
  * 
  * @param {*} level
  * @returns {number}
  */
-function convertLevel(level) {
+export function convertLevel(level) {
     const numLevel = Number(level);
 
     if (
@@ -77,15 +77,20 @@ function convertLevel(level) {
 }
 
 
+
+
 /** Returns the id of the item with identifier itemName
  * 
  * @param {string} itemName 
  * @param {*} items array of item objects
  * @returns {number}
  */
-function getItemId(itemName, items) {
+export function getItemId(itemName, items) {
     return items.find(x => x.identifier == clean(itemName))?.id || null;
 }
+
+
+
 
 /** Returns the id of the ability with identifier abilityName if contained in pokemonData
  * 
@@ -94,7 +99,7 @@ function getItemId(itemName, items) {
  * @param {*} abilities array of ability objects
  * @returns {number}
  */
-function getAbilityId(abilityName, validIds, abilities) {
+export function getAbilityId(abilityName, validIds, abilities) {
     const abilityId = abilities.find(x => x.identifier == clean(abilityName))?.id;
     if (validIds.includes(abilityId)) {
         return abilityId;
@@ -104,6 +109,8 @@ function getAbilityId(abilityName, validIds, abilities) {
 }
 
 
+
+
 /** Returns the id of the move with identifier moveName if contained in pokemonData
  * 
  * @param {string} moveName 
@@ -111,7 +118,7 @@ function getAbilityId(abilityName, validIds, abilities) {
  * @param {*} moves array of move objects
  * @returns {number}
  */
-function getMoveId(moveName, validIds, moves) {
+export function getMoveId(moveName, validIds, moves) {
     const moveId = moves.find(x => x.identifier == clean(moveName))?.id;
     if (validIds.includes(moveId)) {
         return moveId;
@@ -121,12 +128,18 @@ function getMoveId(moveName, validIds, moves) {
 }
 
 
+
+
 /** Returns iv as an integer from 0 to 31 if it can be converted, otherwise returns 31.
  * 
  * @param {*} iv string or number
  * @returns {number}
  */
-function convertIV(iv) {
+export function convertIV(iv) {
+    if (iv === "" || iv === null || iv === undefined) {
+        return 31
+    }
+    
     const numIV = Number(iv);
 
     if (
