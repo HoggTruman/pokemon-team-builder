@@ -1,5 +1,3 @@
-// IS THIS NEEDED??
-
 function createNewPokemon({
     id = -Date.now(),
     teamSlot = 1,
@@ -18,6 +16,7 @@ function createNewPokemon({
     move4Id = null,
 
     natureId = 1,
+    
     hpEV = 0,
     attackEV = 0,
     defenseEV = 0,

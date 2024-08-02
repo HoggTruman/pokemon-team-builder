@@ -5,9 +5,11 @@ import createNewPokemonEdit from "../../../models/pokemonEditFactory";
 import { deletePokemonFromTeam } from "../../../utility/deletePokemonFromTeam";
 import { updateTeamByIdAPI } from "../../../services/api/teamAPI";
 import { teamEditToTeam } from "../../../mappers/teamEditToTeam";
+import { userContext } from "../../../context/userContext";
+import { checkValidTeam } from "../../../utility/checkValidTeam";
 
 import "./TeamEditMenu.css";
-import { userContext } from "../../../context/userContext";
+
 
 
 
@@ -51,9 +53,18 @@ function TeamEditMenu(props) {
 
     async function handleClickSaveButton() {
         const modifiedTeam = teamEditToTeam(props.teamEdit, props.data);
-        // ANY FURTHER CHECKING FOR DUPLICATE MOVES, INVALID DATA ETC...
+        const teamErrors = checkValidTeam(modifiedTeam);
+
+        if (teamErrors) {
+            // Make user correct errors before saving
+            const errorMessage = "NOT SAVED - Please correct the following issues and try again:\n\n";
+            const errors = teamErrors.map(error => `- ${error}`).join('\n');
+            return alert(errorMessage + errors);
+        }
+
 
         if (modifiedTeam.id > 0) {
+            // Make API call for server teams
             const result = await updateTeamByIdAPI(modifiedTeam.id, modifiedTeam, token);
             if (result === undefined) {
                 return alert("Failed to save team. Please try again")
