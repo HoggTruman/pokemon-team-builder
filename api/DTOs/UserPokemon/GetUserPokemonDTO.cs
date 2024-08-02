@@ -8,8 +8,6 @@ public class GetUserPokemonDTO
 {
     public int Id { get; set; }
 
-    public int TeamId { get; set; }
-
     [Range(1, 6, ErrorMessage = "{0} must be between {1} and {2}")]
     public int TeamSlot { get; set; }
 

@@ -11,7 +11,6 @@ public static class UserPokemonMappers
         return new GetUserPokemonDTO
         {
             Id = userPokemonModel.Id,
-            TeamId = userPokemonModel.TeamId,
             TeamSlot = userPokemonModel.TeamSlot,
             
             PokemonId = userPokemonModel.PokemonId,
