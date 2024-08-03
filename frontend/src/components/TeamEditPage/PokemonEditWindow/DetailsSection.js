@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
+import { ABILITY_FIELD, ITEM_FIELD } from "./constants/fieldNames";
+import { clean } from "../../../utility/cleanString";
 
 import "./DetailsSection.css";
-import { ABILITY_FIELD, ITEM_FIELD } from "./constants/fieldNames";
+
+
+
 
 function DetailsSection(props) {
     function handleClickItemInput() {
@@ -64,7 +68,7 @@ function DetailsSection(props) {
 
     // Render
     const activePokemonData = props.data.pokemon.find(
-        x => x.identifier == props.activePokemon.pokemonName.toLowerCase().trim()  // breaks for pokemon with form identifier
+        x => x.identifier == clean(props.activePokemon.pokemonName)  // breaks for pokemon with form identifier
     );
     
     let genderOptions = activePokemonData?.genders.map(genderId => {

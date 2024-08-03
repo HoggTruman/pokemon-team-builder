@@ -18,28 +18,13 @@ function TeamListPage(props) {
             return;
         }
 
+        const newServerTeams = await getAllTeamsAPI(token);
 
-        // Warn the user about current server teams being overwritten (if there are any present)
-        if (
-            props.teams.filter(team => team.id > 0).length > 0 &&
-            confirm("Warning: Server teams will be overwritten. Continue?") === false
-        ) {
-            return;
-        }
-
-        const serverTeams = await getAllTeamsAPI(token);
-
-        if (serverTeams === undefined) {
+        if (newServerTeams === undefined) {
             return alert("Failed to retrieve teams from server. Please try again");
         }
 
-        props.setTeams(teams => {
-            // replace only the server teams, not local teams
-            const localTeams = teams.filter(team => team.id < 0);
-            const newTeams = localTeams.concat(serverTeams);
-
-            return newTeams;
-        })
+        props.setServerTeams(teams => newServerTeams)
     }
 
 
@@ -50,38 +35,34 @@ function TeamListPage(props) {
             return;
         }
 
-        const localTeams = props.teams.filter(team => team.id < 0);
+        if (props.localTeams.length === 0) {
+            return;
+        }
 
-        const serverTeams = await createTeamsAPI(localTeams, token);
+        const newServerTeams = await createTeamsAPI(props.localTeams, token);
 
-        if (serverTeams === undefined) {
+        if (newServerTeams === undefined) {
             return alert("Save failed. Please try again");
         }
 
         alert("Save Successful");
-        props.setTeams(teams => serverTeams);
+        props.setServerTeams(teams => teams.concat(newServerTeams));
+        props.setLocalTeams(teams => [])
     }
 
 
 
 
     function handleClickNewTeamButton() {
-        const newTeam = createNewTeam({id: generateLocalTeamId(props.teams)});  // Use negative id for new teams/pokemon
+        const newTeam = createNewTeam({id: generateLocalTeamId(props.localTeams)});  // Use negative id for new teams/pokemon
 
-        props.setTeams(teams => {
-            teams.push(newTeam);
-            return [...teams];
-        })
+        props.setLocalTeams(teams => teams.concat(newTeam));
         
         props.setActiveTeamId(newTeam.id);
         props.setPage(TEAM_EDIT_PAGE);
     }
 
     // Render 
-    const serverTeams = props.teams.filter(team => team.id > 0);
-    const localTeams = props.teams.filter(team => team.id < 0);
-
-
     return (
         <>
             <h1>Teams</h1>
@@ -109,26 +90,44 @@ function TeamListPage(props) {
             </button>
 
             <h2>
-                {`Server Teams (${serverTeams.length})`}
+                {`Server Teams (${props.serverTeams.length})`}
             </h2>
             <TeamList
                 setPage={props.setPage}
-                teams={serverTeams}
-                setTeams={props.setTeams}
+                teams={props.serverTeams}
+                setTeams={props.setServerTeams}
                 setActiveTeamId={props.setActiveTeamId}
                 data={props.data}
             />
+            <div>
+                {
+                    props.serverTeams.length === 0? 
+                        isLoggedIn()?
+                            "Get your teams from the server, or save a local team!":
+                            "Log in to retrieve your teams from the server!": 
+                        ""
+                }
+            </div>
 
             <h2>
-                {`Local Teams (${localTeams.length})`}
+                {`Local Teams (${props.localTeams.length})`}
             </h2>
             <TeamList
                 setPage={props.setPage}
-                teams={localTeams}
-                setTeams={props.setTeams}
+                teams={props.localTeams}
+                setTeams={props.setLocalTeams}
                 setActiveTeamId={props.setActiveTeamId}
                 data={props.data}
             />
+            <div>
+                {
+                    props.localTeams.length === 0? 
+                        isLoggedIn()?
+                            "All your teams are saved to the server!":
+                            "Create a new team to get started!": 
+                        ""
+                }
+            </div>
         </>
     )
 }

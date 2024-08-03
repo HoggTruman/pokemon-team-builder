@@ -2,6 +2,7 @@ import React from "react";
 
 import { POKEMON_FIELD } from "./constants/fieldNames";
 import { pokemonNormalImages, pokemonShinyImages, typeImages } from "../../../assets/assets";
+import { clean } from "../../../utility/cleanString";
 
 import "./PokemonSection.css";
 
@@ -30,7 +31,7 @@ function PokemonSection(props) {
 
     // Get Images
     function getPokemonImage(name, shiny) {
-        const cleanName = name.toLowerCase().trim();
+        const cleanName = clean(name);
         const pokemonId = props.data.pokemon.find(x => x.identifier == cleanName)?.id;
     
         if (pokemonId == null) {
@@ -46,7 +47,7 @@ function PokemonSection(props) {
     }
 
     function getPokemonTypeImages(name) {
-        const cleanName = name.toLowerCase().trim();
+        const cleanName = clean(name);
         const pokemon = props.data.pokemon.find(x => x.identifier == cleanName);
 
         return pokemon?.types || ["unknown"];

@@ -19,7 +19,7 @@ function TeamList(props) {
 
     return (
         <div id="teamList">
-            {teamRender.length !== 0? teamRender: "You have no teams, create a new one to get started!"}
+            {teamRender}
         </div>
     );
 }

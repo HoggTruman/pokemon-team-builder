@@ -13,19 +13,30 @@ function PageSelector(props) {
         return (
             <TeamListPage 
                 setPage={props.setPage}
-                teams={props.teams}
-                setTeams={props.setTeams}
+                serverTeams={props.serverTeams}
+                setServerTeams={props.setServerTeams}
+                localTeams={props.localTeams}
+                setLocalTeams={props.setLocalTeams}
                 setActiveTeamId={props.setActiveTeamId}
                 data={props.data}
             />
         );
     }
     else if (props.page == TEAM_EDIT_PAGE) {
+        let activeTeam;
+        if (props.activeTeamId > 0) {
+            activeTeam = props.serverTeams.find(x => x.id == props.activeTeamId);
+        }
+        else if (props.activeTeamId < 0) {
+            activeTeam = props.localTeams.find(x => x.id == props.activeTeamId)
+        }
+
+
         return (
             <TeamEditPage
                 setPage={props.setPage}
-                team={props.teams.find(x => x.id == props.activeTeamId)}
-                setTeams={props.setTeams}
+                team={activeTeam}
+                setTeams={props.activeTeamId > 0? props.setServerTeams: props.setLocalTeams}
                 activeTeamId={props.activeTeamId}
                 data={props.data}
             />
@@ -35,6 +46,7 @@ function PageSelector(props) {
         return (
             <AccountPage
                 setPage={props.setPage}
+                setServerTeams={props.setServerTeams}
             />
         )
     }

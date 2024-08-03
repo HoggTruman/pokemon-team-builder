@@ -1,7 +1,9 @@
 import React from "react";
 import { pokemonIcons } from "../../../assets/assets";
+import { clean } from "../../../utility/cleanString";
 
 import "./SelectPokemonButton.css";
+
 
 
 function SelectPokemonButton(props) {
@@ -20,7 +22,7 @@ function SelectPokemonButton(props) {
 
 
     function getPokemonData(pokemonName) {
-        const cleanName = pokemonName.toLowerCase().trim();
+        const cleanName = clean(pokemonName);
         return props.data.pokemon.find(x => x.identifier == cleanName);
     }
 

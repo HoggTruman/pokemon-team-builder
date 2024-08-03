@@ -4,7 +4,7 @@ import { TEAM_EDIT_PAGE } from "../../pages/constants/pageNames";
 import { pokemonIcons } from "../../assets/assets";
 
 import "./TeamInList.css";
-import { deleteTeamByIdAPI } from "../../services/api/teamAPI";
+import { deleteTeamByIdAPI, updateTeamByIdAPI } from "../../services/api/teamAPI";
 import { userContext } from "../../context/userContext";
 
 
@@ -38,15 +38,27 @@ function TeamInList(props) {
     }
 
 
-    function handleClickRenameTeamButton() {
-        let newTeamName = prompt("New Team Name:", props.team.teamName);  // MAKE A CUSTOM PROMPT COMPONENT SINCE THIS WILL BE USEFUL FOR NEW TEAM AS WELL
+    async function handleClickRenameTeamButton() {
+        let newTeamName = prompt("New Team Name:", props.team.teamName);
 
-        if (newTeamName != null && newTeamName != "") {
-            props.setTeams(teams => {
-                props.team.teamName = newTeamName;
-                return [...teams];
-            })
+        if (newTeamName == null || newTeamName === "" || newTeamName === props.team.teamName) {
+            return;
         }
+
+        let newTeam = {...props.team};
+        newTeam.teamName = newTeamName;
+
+        if (newTeam.id > 0) {
+            const result = await updateTeamByIdAPI(newTeam.id, newTeam, token);
+            if (result === undefined) {
+                return alert("Failed to rename team. Please try again")
+            }
+        }
+
+        props.setTeams(teams => {
+            props.team.teamName = newTeamName;
+            return [...teams];
+        })
     }
 
 

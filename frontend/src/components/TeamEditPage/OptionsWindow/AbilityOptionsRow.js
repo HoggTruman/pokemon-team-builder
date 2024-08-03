@@ -1,17 +1,20 @@
 import React from "react";
 
 function AbilityOptionsRow(props) {
+    const { index, style } = props;
+    const ability = props.data.abilities[index];
 
     return (
         <button 
             className="row ability"
-            onClick={props.handleClick}
+            style={style}
+            onClick={() => props.data.handleClick(ability.identifier)}
         >
             <div className="col name">
-                {props.ability.identifier}
+                {ability.identifier}
             </div>
             <div className="col effect">
-                {props.ability.flavorText}
+                {ability.flavorText}
             </div>
         </button>
     )

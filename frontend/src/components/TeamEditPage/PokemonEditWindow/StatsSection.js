@@ -1,21 +1,21 @@
 import React from "react";
 import StatRow from "./StatRow";
+import { calcRemainingEVs } from "../../../utility/calcRemainingEVs";
 
 import "./StatsSection.css";
 
-function StatsSection(props) {
-    const MAX_EVS = 508;
 
+function StatsSection(props) {
     const activePokemonData = props.data.pokemon.find(x => x.identifier == props.activePokemon.pokemonName);
     const activeNatureData = props.data.natures.find(x => x.id === Number(props.activePokemon.natureId));
 
-    let remainingEVs = (MAX_EVS 
-        - props.activePokemon.hpEV 
-        - props.activePokemon.attackEV 
-        - props.activePokemon.defenseEV 
-        - props.activePokemon.specialAttackEV 
-        - props.activePokemon.specialDefenseEV 
-        - props.activePokemon.speedEV
+    let remainingEVs = calcRemainingEVs(
+        props.activePokemon.hpEV,
+        props.activePokemon.attackEV,
+        props.activePokemon.defenseEV,
+        props.activePokemon.specialAttackEV,
+        props.activePokemon.specialDefenseEV,
+        props.activePokemon.speedEV
     );
 
 
@@ -106,7 +106,7 @@ function StatsSection(props) {
             <div>
             <p
                 id="remainingEVs"
-                className={remainingEVs < 0? "warning":""}
+                className={remainingEVs < 0? "warning": ""}
             >
                 Remaining EVs: <span>{remainingEVs}</span>
             </p>

@@ -1,4 +1,5 @@
 import React from "react";
+import { FixedSizeList } from "react-window";
 import AbilityOptionsRow from "./AbilityOptionsRow";
 
 import "./OptionsTable.css";
@@ -15,16 +16,24 @@ function AbilityOptions(props) {
 
 
     // Render
-    let abilityOptionsRows = props.abilityList.map(ability => (
-        <AbilityOptionsRow
-            key={ability.id}
-            ability={ability}
-            handleClick={() => handleClickOptionRow(ability.identifier)}
-        />
-    ));
+    let abilityOptionsRows;
 
-    if (abilityOptionsRows.length === 0) {
+    if (props.abilityList.length === 0) {
         abilityOptionsRows = <div className="noMatches">No Abilities Found</div>
+    }
+    else {
+        abilityOptionsRows = (
+            <FixedSizeList
+                height={300}
+                width={818}
+                itemSize={50}
+                itemCount={props.abilityList.length}
+                itemData={{abilities: props.abilityList, handleClick: handleClickOptionRow}}
+                style={{overflowY: "scroll"}}
+            >
+                {AbilityOptionsRow}
+            </FixedSizeList>
+        );
     }
 
     return (

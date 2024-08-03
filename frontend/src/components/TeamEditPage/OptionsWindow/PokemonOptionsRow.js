@@ -3,24 +3,28 @@ import { pokemonIcons, typeImages } from "../../../assets/assets";
 
 
 function PokemonOptionsRow(props) {
-
+    const { index, style } = props;
+    const pokemon = props.data.pokemon[index];
+    const data = props.data.data;
+    
     return (
         <button 
             className="row pokemon"
-            onClick={props.handleClick}
+            style={style}
+            onClick={() => props.data.handleClick(pokemon.identifier)}
         >
             <div className="col icon">
                 <img
-                    src={pokemonIcons[props.pokemon.identifier]}
+                    src={pokemonIcons[pokemon.identifier]}
                     alt="icon"
                     loading="lazy"
                     className="pokemonIcon"
                 />
             </div>
-            <div className="col name">{props.pokemon.identifier}</div>
+            <div className="col name">{pokemon.identifier}</div>
             <div className="col types">
                 {
-                    props.pokemon.types.map(type => (
+                    pokemon.types.map(type => (
                         <img
                             key={type}
                             src={typeImages[type]}
@@ -32,20 +36,20 @@ function PokemonOptionsRow(props) {
             </div>
             <div className="col abilities">
                 {
-                    props.pokemon.abilities.map(abilityId => (
+                    pokemon.abilities.map(abilityId => (
                         <span key={abilityId}>
-                            {props.data.abilities.find(x => x.id == abilityId)?.identifier}
+                            {data.abilities.find(x => x.id == abilityId)?.identifier}
                         </span>
                     ))
                 }
             </div>
-            <div className="col stat">{props.pokemon.baseStats.hp}</div>
-            <div className="col stat">{props.pokemon.baseStats.attack}</div>
-            <div className="col stat">{props.pokemon.baseStats.defense}</div>
-            <div className="col stat">{props.pokemon.baseStats.specialAttack}</div>
-            <div className="col stat">{props.pokemon.baseStats.specialDefense}</div>
-            <div className="col stat">{props.pokemon.baseStats.speed}</div>
-            <div className="col bst">{calcBST(props.pokemon.baseStats)}</div>
+            <div className="col stat">{pokemon.baseStats.hp}</div>
+            <div className="col stat">{pokemon.baseStats.attack}</div>
+            <div className="col stat">{pokemon.baseStats.defense}</div>
+            <div className="col stat">{pokemon.baseStats.specialAttack}</div>
+            <div className="col stat">{pokemon.baseStats.specialDefense}</div>
+            <div className="col stat">{pokemon.baseStats.speed}</div>
+            <div className="col bst">{calcBST(pokemon.baseStats)}</div>
         </button>
     )
 }

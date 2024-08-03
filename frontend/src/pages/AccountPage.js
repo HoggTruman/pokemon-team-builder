@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { userContext } from "../context/userContext";
 
 import "./AccountPage.css"
 import { TEAM_LIST_PAGE } from "./constants/pageNames";
+import { getAllTeamsAPI } from "../services/api/teamAPI";
 
 
 
 function AccountPage(props) {
-    const { login, register, isLoggedIn} = userContext();
+    const { login, register, isLoggedIn } = userContext();
 
 
     
@@ -31,7 +32,7 @@ function AccountPage(props) {
             return alert("Password must be at least 6 characters");
         }
 
-        // Make Request
+        // Make login request
         const loginResult = await login(formData.userName, formData.password);
 
         // Evaluate response
@@ -41,10 +42,16 @@ function AccountPage(props) {
         else if (loginResult?.message) {
             return alert("Try again later");
         }
-        else {
-            props.setPage(TEAM_LIST_PAGE);
-            // FETCH TEAMS FROM SERVER?????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+        
+        // Fetch server teams and navigate to list page
+        const newServerTeams = await getAllTeamsAPI(loginResult?.token);
+
+        if (newServerTeams) {
+            props.setServerTeams(teams => newServerTeams);
         }
+        
+        props.setPage(TEAM_LIST_PAGE);
+        
     } 
 
 
