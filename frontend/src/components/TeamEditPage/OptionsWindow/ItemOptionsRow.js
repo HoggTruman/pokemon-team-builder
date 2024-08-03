@@ -2,25 +2,28 @@ import React from "react";
 import { itemIcons } from "../../../assets/assets";
 
 function ItemOptionsRow(props) {
+    const { index, style } = props;
+    const item = props.data.items[index];
 
     return (
         <button 
             className="row item"
-            onClick={props.handleClick}
+            style={style}
+            onClick={() => props.data.handleClick(item.identifier)}
         >
             <div className="col icon">
                 <img
-                    src={itemIcons[props.item.identifier]}
+                    src={itemIcons[item.identifier]}
                     alt="icon"
                     className="itemIcon"
                     loading="lazy"
                 />
             </div>
             <div className="col name">
-                {props.item.identifier}
+                {item.identifier}
             </div>
             <div className="col effect">
-                {props.item.effect}
+                {item.effect}
             </div>
         </button>
     )

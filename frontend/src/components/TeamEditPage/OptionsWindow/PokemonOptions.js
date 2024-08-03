@@ -1,4 +1,5 @@
 import React from "react";
+import { FixedSizeList } from 'react-window';
 import PokemonOptionsRow from "./PokemonOptionsRow";
 
 import "./OptionsTable.css";
@@ -12,18 +13,26 @@ function PokemonOptions(props) {
         })
     }
 
-    // Render
-    let pokemonOptionsRows = props.pokemonList.map(pokemon => (
-        <PokemonOptionsRow
-            key={pokemon.id}
-            pokemon={pokemon}
-            handleClick={() => handleClickOptionRow(pokemon.identifier)}
-            data={props.data}
-        />
-    ));
 
-    if (pokemonOptionsRows.length === 0) {
+    // Render
+    let pokemonOptionsRows;
+
+    if (props.pokemonList.length === 0) {
         pokemonOptionsRows = <div className="noMatches">No Pokemon Found</div>
+    }
+    else {
+        pokemonOptionsRows = (
+            <FixedSizeList
+                height={300}
+                width={818}
+                itemSize={50}
+                itemCount={props.pokemonList.length}
+                itemData={{pokemon: props.pokemonList, data: props.data, handleClick: handleClickOptionRow}}
+                style={{overflowY: "scroll"}}
+            >
+                {PokemonOptionsRow}
+            </FixedSizeList>
+        );
     }
 
     return (

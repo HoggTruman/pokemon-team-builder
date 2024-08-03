@@ -1,14 +1,13 @@
 div.optionsTable {
     border: 1px solid black;
-    overflow-y: scroll;
-    width: 800px;
-    height:300px;
+    width: 820px;
+    height: 322px;
     display: block;
 }
 
 div.optionsTable {
     .row {
-        width: 100%;
+        /* width: 100%; */
         height: 50px;
         text-align: center;
     }
@@ -19,6 +18,7 @@ div.optionsTable {
         top: 0;
         background-color: grey;
         font-size: 14px;
+        padding-right: 18px;
     }
 
     .row .col {

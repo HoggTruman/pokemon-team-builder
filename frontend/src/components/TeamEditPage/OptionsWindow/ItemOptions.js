@@ -1,5 +1,6 @@
 import React from "react";
 import ItemOptionsRow from "./ItemOptionsRow";
+import { FixedSizeList } from "react-window";
 
 import "./OptionsTable.css";
 import "./ItemOptions.css";
@@ -12,19 +13,31 @@ function ItemOptions(props) {
         })
     }
 
-    // Render
-    let itemOptionsRows = props.itemList.map(item => (
-        <ItemOptionsRow
-            key={item.id}
-            item={item}
-            handleClick={() => handleClickOptionRow(item.identifier)}
-        />
-    ));
 
-    if (itemOptionsRows.length === 0) {
+
+    // Render
+    let itemOptionsRows;
+
+    if (props.itemList.length === 0) {
         itemOptionsRows = <div className="noMatches">No Items Found</div>
     }
+    else {
+        itemOptionsRows = (
+            <FixedSizeList
+                height={300}
+                width={818}
+                itemSize={50}
+                itemCount={props.itemList.length}
+                itemData={{items: props.itemList, handleClick: handleClickOptionRow}}
+                style={{overflowY: "scroll"}}
+            >
+                {ItemOptionsRow}
+            </FixedSizeList>
+        );
+    }
 
+
+    // Render
     return (
         <div id="itemOptionsTable" className="optionsTable">
             <div className="row item header">

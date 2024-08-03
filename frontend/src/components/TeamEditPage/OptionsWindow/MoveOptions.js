@@ -1,10 +1,11 @@
 import React from "react";
+import { FixedSizeList } from "react-window";
 import MoveOptionsRow from "./MoveOptionsRow";
-
+import { MOVE1_FIELD, MOVE2_FIELD, MOVE3_FIELD, MOVE4_FIELD } from "../PokemonEditWindow/constants/fieldNames";
 
 import "./OptionsTable.css";
 import "./MoveOptions.css"
-import { MOVE1_FIELD, MOVE2_FIELD, MOVE3_FIELD, MOVE4_FIELD } from "../PokemonEditWindow/constants/fieldNames";
+
 
 
 function MoveOptions(props) {
@@ -31,16 +32,24 @@ function MoveOptions(props) {
 
 
     // Render
-    let moveOptionsRows = props.moveList.map(move => (
-        <MoveOptionsRow
-            key={move.id}
-            move={move}
-            handleClick={() => handleClickOptionRow(move.identifier)}
-        />
-    ))
+    let moveOptionsRows;
 
-    if (moveOptionsRows.length === 0) {
+    if (props.moveList.length === 0) {
         moveOptionsRows = <div className="noMatches">No Moves Found</div>
+    }
+    else {
+        moveOptionsRows = (
+            <FixedSizeList
+                height={300}
+                width={818}
+                itemSize={50}
+                itemCount={props.moveList.length}
+                itemData={{moves: props.moveList, handleClick: handleClickOptionRow}}
+                style={{overflowY: "scroll"}}
+            >
+                {MoveOptionsRow}
+            </FixedSizeList>
+        );
     }
 
     return (
