@@ -12,9 +12,18 @@ using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
 
-DotNetEnv.Env.Load();
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? builder.Environment.EnvironmentName;
+
+builder.Configuration
+       .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+       .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true);
+
+
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -55,8 +64,7 @@ builder.Services.AddSwaggerGen(option =>
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
-    // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    options.UseSqlServer(builder.Configuration["DB_CONNECTION_STRING"]); // get from .env
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DB_CONNECTION_STRING"));
     options.EnableSensitiveDataLogging();
 });
 
@@ -116,7 +124,7 @@ builder.Services.AddAuthentication(options => {
         ValidAudience = builder.Configuration["JWT:Audience"],
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
-            System.Text.Encoding.UTF8.GetBytes(builder.Configuration["SIGNING_KEY"]!) // get from .env
+            System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!) // get from .env
         )
     };
 });
@@ -145,8 +153,6 @@ builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 
 
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddSingleton<AppConfig>();
-
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<DbToCSV>();
