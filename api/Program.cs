@@ -52,11 +52,15 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
     // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     options.UseSqlServer(builder.Configuration["DB_CONNECTION_STRING"]); // get from .env
     options.EnableSensitiveDataLogging();
 });
+
+
 
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
@@ -82,6 +86,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
 
 
 
+
 // Add CORS
 const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -91,6 +96,8 @@ builder.Services.AddCors(options =>
         builder.WithOrigins("http://localhost:4000").AllowAnyMethod().AllowAnyHeader();
     });
 });
+
+
 
 
 builder.Services.AddAuthentication(options => {
@@ -115,11 +122,15 @@ builder.Services.AddAuthentication(options => {
 });
 
 
+
+
 builder.Services.AddLogging(loggingBuilder => {
     loggingBuilder.AddConsole()
         .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
     loggingBuilder.AddDebug();
 });
+
+
 
 
 // Add Repositories
@@ -134,7 +145,7 @@ builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 
 
 builder.Services.AddScoped<ITokenService, TokenService>();
-
+builder.Services.AddSingleton<AppConfig>();
 
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
@@ -189,3 +200,5 @@ else
 
     app.Run();
 }
+
+public partial class Program { }
