@@ -1,17 +1,17 @@
 using System.Net;
 using System.Text.Json;
-using api.DTOs.Ability;
+using api.DTOs.Gender;
 using FluentAssertions;
 
 
 namespace api.IntegrationTests.Controllers;
 
-public class AbilityControllerTests : IDisposable
+public class GenderControllerTests : IDisposable
 {
     private readonly CustomWebApplicationFactory<Program> _factory;
     private readonly HttpClient _client;
 
-    public AbilityControllerTests()
+    public GenderControllerTests()
     {
         _factory = new CustomWebApplicationFactory<Program>();
         _client = _factory.CreateClient();
@@ -35,82 +35,79 @@ public class AbilityControllerTests : IDisposable
 
 
     [Fact]
-    public async Task GetAbilities_ReturnsAbilities()
+    public async Task GetGenders_ReturnsGenders()
     {
         // Arrange 
-        var expectedAbility1 = new AbilityDTO
+        var expectedGender1 = new GenderDTO
         {
             Id = 1,
-            Identifier = "stench",
-            FlavorText = "By releasing a stench when attacking, the Pokémon may cause the target to flinch."
+            Identifier = "female",
         };
 
-        var expectedAbility2 = new AbilityDTO
+        var expectedGender2 = new GenderDTO
         {
-            Id = 37,
-            Identifier = "huge-power",
-            FlavorText = "Doubles the Pokémon's Attack stat."
+            Id = 3,
+            Identifier = "genderless",
         };
 
 
         // Act
-        var response = await _client.GetAsync("/api/ability");
-        var data = JsonSerializer.Deserialize<List<AbilityDTO>>(
+        var response = await _client.GetAsync("/api/gender");
+        var data = JsonSerializer.Deserialize<List<GenderDTO>>(
             await response.Content.ReadAsStringAsync(),
             jsonOptions
         );
-        var actualAbility1 = data?.FirstOrDefault(x => x.Id == expectedAbility1.Id);
-        var actualAbility2 = data?.FirstOrDefault(x => x.Id == expectedAbility2.Id);
+        var actualGender1 = data?.FirstOrDefault(x => x.Id == expectedGender1.Id);
+        var actualGender2 = data?.FirstOrDefault(x => x.Id == expectedGender2.Id);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(data);
         Assert.NotEmpty(data);
 
-        Assert.NotNull(actualAbility1);
-        actualAbility1.Should().BeEquivalentTo(expectedAbility1);
+        Assert.NotNull(actualGender1);
+        actualGender1.Should().BeEquivalentTo(expectedGender1);
 
-        Assert.NotNull(actualAbility2);
-        actualAbility2.Should().BeEquivalentTo(expectedAbility2);
+        Assert.NotNull(actualGender2);
+        actualGender2.Should().BeEquivalentTo(expectedGender2);
     }
 
 
 
 
     [Fact]
-    public async void GetAbilityById_WithValidId_ReturnsAbility()
+    public async void GetGenderById_WithValidId_ReturnsGender()
     {
         // Arrange 
-        var expectedAbility = new AbilityDTO
+        var expectedGender = new GenderDTO
         {
-            Id = 9,
-            Identifier = "static",
-            FlavorText = "The Pokémon is charged with static electricity and may paralyze attackers that make direct contact with it."
+            Id = 2,
+            Identifier = "male",
         };
 
 
         // Act
-        var response = await _client.GetAsync($"/api/ability/{expectedAbility.Id}");
-        var data = JsonSerializer.Deserialize<AbilityDTO>(
+        var response = await _client.GetAsync($"/api/gender/{expectedGender.Id}");
+        var data = JsonSerializer.Deserialize<GenderDTO>(
             await response.Content.ReadAsStringAsync(),
-            jsonOptions
+            jsonOptions    
         );
 
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(data);
-        data.Should().BeEquivalentTo(expectedAbility);
+        data.Should().BeEquivalentTo(expectedGender);
     }
 
 
 
 
     [Fact]
-    public async void GetAbilityById_WithInvalidId_ReturnsNotFound()
+    public async void GetGenderById_WithInvalidId_ReturnsNotFound()
     {
         // Act
-        var response = await _client.GetAsync($"/api/ability/{-1}");
+        var response = await _client.GetAsync($"/api/gender/{-1}");
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

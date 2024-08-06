@@ -1,17 +1,17 @@
 using System.Net;
 using System.Text.Json;
-using api.DTOs.Ability;
+using api.DTOs.Item;
 using FluentAssertions;
 
 
 namespace api.IntegrationTests.Controllers;
 
-public class AbilityControllerTests : IDisposable
+public class ItemControllerTests : IDisposable
 {
     private readonly CustomWebApplicationFactory<Program> _factory;
     private readonly HttpClient _client;
 
-    public AbilityControllerTests()
+    public ItemControllerTests()
     {
         _factory = new CustomWebApplicationFactory<Program>();
         _client = _factory.CreateClient();
@@ -35,63 +35,63 @@ public class AbilityControllerTests : IDisposable
 
 
     [Fact]
-    public async Task GetAbilities_ReturnsAbilities()
+    public async Task GetItems_ReturnsItems()
     {
         // Arrange 
-        var expectedAbility1 = new AbilityDTO
+        var expectedItem1 = new ItemDTO
         {
             Id = 1,
-            Identifier = "stench",
-            FlavorText = "By releasing a stench when attacking, the Pokémon may cause the target to flinch."
+            Identifier = "master-ball",
+            Effect = "Catches a wild Pokémon every time."
         };
 
-        var expectedAbility2 = new AbilityDTO
+        var expectedItem2 = new ItemDTO
         {
-            Id = 37,
-            Identifier = "huge-power",
-            FlavorText = "Doubles the Pokémon's Attack stat."
+            Id = 11,
+            Identifier = "luxury-ball",
+            Effect = "Tries to catch a wild Pokémon.  Caught Pokémon start with 200 happiness."
         };
 
 
         // Act
-        var response = await _client.GetAsync("/api/ability");
-        var data = JsonSerializer.Deserialize<List<AbilityDTO>>(
+        var response = await _client.GetAsync("/api/item");
+        var data = JsonSerializer.Deserialize<List<ItemDTO>>(
             await response.Content.ReadAsStringAsync(),
             jsonOptions
         );
-        var actualAbility1 = data?.FirstOrDefault(x => x.Id == expectedAbility1.Id);
-        var actualAbility2 = data?.FirstOrDefault(x => x.Id == expectedAbility2.Id);
+        var actualItem1 = data?.FirstOrDefault(x => x.Id == expectedItem1.Id);
+        var actualItem2 = data?.FirstOrDefault(x => x.Id == expectedItem2.Id);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(data);
         Assert.NotEmpty(data);
 
-        Assert.NotNull(actualAbility1);
-        actualAbility1.Should().BeEquivalentTo(expectedAbility1);
+        Assert.NotNull(actualItem1);
+        actualItem1.Should().BeEquivalentTo(expectedItem1);
 
-        Assert.NotNull(actualAbility2);
-        actualAbility2.Should().BeEquivalentTo(expectedAbility2);
+        Assert.NotNull(actualItem2);
+        actualItem2.Should().BeEquivalentTo(expectedItem2);
     }
 
 
 
 
     [Fact]
-    public async void GetAbilityById_WithValidId_ReturnsAbility()
+    public async void GetItemById_WithValidId_ReturnsItem()
     {
         // Arrange 
-        var expectedAbility = new AbilityDTO
+        var expectedItem = new ItemDTO
         {
-            Id = 9,
-            Identifier = "static",
-            FlavorText = "The Pokémon is charged with static electricity and may paralyze attackers that make direct contact with it."
+            Id = 25,
+            Identifier = "hyper-potion",
+            Effect = "Restores 200 HP."
         };
 
 
         // Act
-        var response = await _client.GetAsync($"/api/ability/{expectedAbility.Id}");
-        var data = JsonSerializer.Deserialize<AbilityDTO>(
+        var response = await _client.GetAsync($"/api/item/{expectedItem.Id}");
+        var data = JsonSerializer.Deserialize<ItemDTO>(
             await response.Content.ReadAsStringAsync(),
             jsonOptions
         );
@@ -100,17 +100,17 @@ public class AbilityControllerTests : IDisposable
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(data);
-        data.Should().BeEquivalentTo(expectedAbility);
+        data.Should().BeEquivalentTo(expectedItem);
     }
 
 
 
 
     [Fact]
-    public async void GetAbilityById_WithInvalidId_ReturnsNotFound()
+    public async void GetItemById_WithInvalidId_ReturnsNotFound()
     {
         // Act
-        var response = await _client.GetAsync($"/api/ability/{-1}");
+        var response = await _client.GetAsync($"/api/item/{-1}");
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
