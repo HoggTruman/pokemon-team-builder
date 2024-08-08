@@ -1,8 +1,8 @@
 #detailsSection {
     display: inline-block;
     border: 1px solid orange;
-    width: 400px;
-    height: 150px;
+    width: 350px;
+    height: 175px;
     vertical-align: top;
 }
 
@@ -23,8 +23,9 @@
     div.field > label.above {
         display: block;
     }
-    /* label {
-        margin-right: 0.5rem;
-    } */
+
+    #itemInput, #abilityInput {
+        width: 120px;
+    }
 
 }

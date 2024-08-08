@@ -103,16 +103,8 @@ function StatsSection(props) {
                 </tbody>
             </table>
 
-            <div>
-            <p
-                id="remainingEVs"
-                className={remainingEVs < 0? "warning": ""}
-            >
-                Remaining EVs: <span>{remainingEVs}</span>
-            </p>
-            </div>
-
-            <label htmlFor="natureSelect">Nature</label>
+            
+            <label id="natureLabel" htmlFor="natureSelect">Nature </label>
             <select 
                 id="natureSelect" 
                 name="teraType"
@@ -132,6 +124,14 @@ function StatsSection(props) {
                         ))
                 }
             </select>
+
+            <p
+                id="remainingEVs"
+                className={remainingEVs < 0? "warning": ""}
+            >
+                Remaining EVs: <span>{remainingEVs}</span>
+            </p>                
+            
 
         </div>
     );

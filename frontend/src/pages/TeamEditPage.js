@@ -6,7 +6,9 @@ import { POKEMON_FIELD } from "../components/TeamEditPage/PokemonEditWindow/cons
 import { teamToTeamEdit } from "../mappers/teamToTeamEdit";
 import { teamEditToTeam } from "../mappers/teamEditToTeam";
 import TeamNameBar from "../components/TeamEditPage/TeamNameBar/TeamNameBar";
-var deepEqual = require('deep-equal')
+var deepEqual = require('deep-equal');
+
+import "./TeamEditPage.css";
 
 
 
@@ -29,7 +31,7 @@ function TeamEditPage(props) {
 
     // Render
     return (
-        <>
+        <div id="teamEditPage">
             <TeamNameBar
                 teamEdit={teamEdit}
                 setTeamEdit={setTeamEdit}
@@ -57,7 +59,7 @@ function TeamEditPage(props) {
                 setTeamEdit={setTeamEdit}
                 data={props.data}
             />
-        </>
+        </div>
     )
 }
 

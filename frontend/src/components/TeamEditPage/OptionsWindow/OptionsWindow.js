@@ -75,7 +75,7 @@ function OptionsWindow(props) {
     }
 
     return (
-        <div id="OptionsWindow">
+        <div id="optionsWindow">
             {optionsTable}
         </div>
     );

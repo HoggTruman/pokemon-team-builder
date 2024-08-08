@@ -23,8 +23,8 @@ function PokemonOptions(props) {
     else {
         pokemonOptionsRows = (
             <FixedSizeList
-                height={300}
-                width={818}
+                height={390}
+                width={1100}
                 itemSize={50}
                 itemCount={props.pokemonList.length}
                 itemData={{pokemon: props.pokemonList, data: props.data, handleClick: handleClickOptionRow}}

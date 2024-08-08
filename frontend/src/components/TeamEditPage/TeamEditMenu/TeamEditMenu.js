@@ -89,7 +89,7 @@ function TeamEditMenu(props) {
     // Render
     let pokemonButtons = props.teamEdit.pokemon.map(pokemon => (
         <SelectPokemonButton
-            key={pokemon.id || `${pokemon.teamSlot}${Date.now()}`} // Probably a better way to get a unique key for new teams
+            key={pokemon.id || `${pokemon.teamSlot}${Date.now()}`}
             pokemon={pokemon} 
             activeTeamSlot={props.activeTeamSlot}
             setActiveTeamSlot={props.setActiveTeamSlot}
@@ -115,7 +115,7 @@ function TeamEditMenu(props) {
         <div id="teamEditMenu">
             <button
                 className="menuButton back"
-                onClick={handleClickBackButton}  // GIVE WARNING FOR UNSAVED CHANGES, ASK IF THEY WANT TO SAVE
+                onClick={handleClickBackButton}
             >
                 {"< Teams"}
             </button>
@@ -133,9 +133,9 @@ function TeamEditMenu(props) {
             >
                 <img
                     src=""
-                    alt="del"
+                    alt="-"
                 />
-                <p>delete current</p>
+                <p>Delete Pokemon</p>
             </button>
 
             <button

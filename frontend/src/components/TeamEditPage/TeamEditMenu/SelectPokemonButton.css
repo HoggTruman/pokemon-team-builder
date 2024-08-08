@@ -21,5 +21,10 @@
         height: 40px;
         white-space: nowrap;
     }
+
+    .pokemonName {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
