@@ -15,7 +15,7 @@ public class TokenService : ITokenService
     {
         _configuration = configuration;
         _key = new SymmetricSecurityKey(
-            System.Text.Encoding.UTF8.GetBytes(configuration["SIGNING_KEY"]!) // get from .env
+            System.Text.Encoding.UTF8.GetBytes(configuration["JWT:SigningKey"]!)
         );
     }
 

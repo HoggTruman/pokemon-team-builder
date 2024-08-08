@@ -16,13 +16,13 @@ public class GetUserPokemonDTO
     public string? Nickname { get; set; }
 
     [Range(1, 100, ErrorMessage = "{0} must be between {1} and {2}")]
-    public int Level { get; set; }
+    public int Level { get; set; } = 100;
 
-    public int GenderId { get; set; }
+    public int GenderId { get; set; } = 4;
 
     public bool Shiny { get; set; }
 
-    public int TeraPkmnTypeId { get; set; }
+    public int TeraPkmnTypeId { get; set; } = 1;
 
     public int? ItemId { get; set; }
 
@@ -33,7 +33,7 @@ public class GetUserPokemonDTO
     public int? Move3Id { get; set; }
     public int? Move4Id { get; set; }
 
-    public int NatureId { get; set; }
+    public int NatureId { get; set; } = 1;
 
 
     [JsonPropertyName("hpEV")]
