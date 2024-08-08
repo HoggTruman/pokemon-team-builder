@@ -3,6 +3,8 @@
     border: 1px solid black;
     width: max-content;
     padding: 0.2rem;
+    background-color: white;
+    margin: 2px 0;
 }
 
 .teamInList {
@@ -38,8 +40,13 @@
             height: 40px;
             margin: 0 auto;
         }
-    
+    }
 
-    }    
+    .renameTeamButton, .deleteTeamButton {
+        height: 76px;
+        margin: auto 0;
+        border: 1px solid black;
+        margin: 0.2rem;
+    }
 }
 

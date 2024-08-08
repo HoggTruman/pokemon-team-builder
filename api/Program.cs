@@ -16,7 +16,15 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// set environment to Test to seed test db
+if (args.Length == 2 && args[0] == "seed" && args[1] == "test")
+{
+    Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+}
+
 var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? builder.Environment.EnvironmentName;
+
+Console.WriteLine(environmentName);
 
 builder.Configuration
        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -165,7 +173,7 @@ var app = builder.Build();
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 
 
-if ((args.Length == 1) && args[0] == "seed")
+if (args.Length > 0 && args[0] == "seed")
 {
     // Add Seed Data to DB
     using (var scope = scopeFactory.CreateScope()) 
@@ -174,7 +182,7 @@ if ((args.Length == 1) && args[0] == "seed")
         dbInitializer.SeedAll();
     }
 }
-else if ((args.Length == 1) && args[0] == "dbtocsv")
+else if (args.Length == 1 && args[0] == "dbtocsv")
 {
     // Write static data to csv
     using (var scope = scopeFactory.CreateScope()) 

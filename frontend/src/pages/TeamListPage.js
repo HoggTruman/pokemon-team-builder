@@ -7,11 +7,13 @@ import { createTeamsAPI, getAllTeamsAPI } from "../services/api/teamAPI";
 import { generateLocalTeamId } from "../utility/generateLocalTeamId";
 
 
+import "./TeamListPage.css";
+
+
 function TeamListPage(props) {
     const { token, isLoggedIn } = userContext();
 
     async function handleClickGetTeamsButton() {
-        // This button is needed so that changes arent overwritten on refresh? (if you loaded teams with page load)
         if (isLoggedIn() === false) {
             alert("Log in to access the server");
             props.setPage(ACCOUNT_PAGE);
@@ -62,73 +64,82 @@ function TeamListPage(props) {
         props.setPage(TEAM_EDIT_PAGE);
     }
 
+
+
     // Render 
     return (
-        <>
-            <h1>Teams</h1>
-            <h2>Select a team or create a new one</h2>
+        <div id="teamListPage">
+            <h1>Select a Team or Create a New One</h1>
 
-            <button
-                id="newTeamButton"
-                onClick={handleClickNewTeamButton}
-            >
-                New Team
-            </button>
+            <div id="teamListPageButtons">
+                <button
+                    id="newTeamButton"
+                    onClick={handleClickNewTeamButton}
+                >
+                    + Create New Team
+                </button>
 
-            <button
-                id="getTeamsButton"
-                onClick={handleClickGetTeamsButton}
-            >
-                Get teams from server
-            </button>
+                <button
+                    id="getTeamsButton"
+                    onClick={handleClickGetTeamsButton}
+                >
+                    ↓ Get Teams From Server
+                </button>
 
-            <button
-                id="saveTeamsButton"
-                onClick={handleClickSaveLocalTeamsButton}
-            >
-                Save local teams to server
-            </button>
-
-            <h2>
-                {`Server Teams (${props.serverTeams.length})`}
-            </h2>
-            <TeamList
-                setPage={props.setPage}
-                teams={props.serverTeams}
-                setTeams={props.setServerTeams}
-                setActiveTeamId={props.setActiveTeamId}
-                data={props.data}
-            />
-            <div>
-                {
-                    props.serverTeams.length === 0? 
-                        isLoggedIn()?
-                            "Get your teams from the server, or save a local team!":
-                            "Log in to retrieve your teams from the server!": 
-                        ""
-                }
+                <button
+                    id="saveTeamsButton"
+                    onClick={handleClickSaveLocalTeamsButton}
+                >
+                    ↑ Save Local Teams To Server 
+                </button>
             </div>
 
-            <h2>
-                {`Local Teams (${props.localTeams.length})`}
-            </h2>
-            <TeamList
-                setPage={props.setPage}
-                teams={props.localTeams}
-                setTeams={props.setLocalTeams}
-                setActiveTeamId={props.setActiveTeamId}
-                data={props.data}
-            />
-            <div>
-                {
-                    props.localTeams.length === 0? 
-                        isLoggedIn()?
-                            "All your teams are saved to the server!":
-                            "Create a new team to get started!": 
-                        ""
-                }
+
+            <div id="serverTeamsSection">
+                <h2 className="teamsHeader">
+                    {`Server Teams (${props.serverTeams.length})`}
+                </h2>
+                <TeamList
+                    setPage={props.setPage}
+                    teams={props.serverTeams}
+                    setTeams={props.setServerTeams}
+                    setActiveTeamId={props.setActiveTeamId}
+                    data={props.data}
+                />
+                <div>
+                    {
+                        props.serverTeams.length === 0? 
+                            isLoggedIn()?
+                                "Get your teams from the server, or save a local team!":
+                                "Log in to retrieve your teams from the server!": 
+                            ""
+                    }
+                </div>
             </div>
-        </>
+
+            
+            <div id="localTeamsSection">
+                <h2 className="teamsHeader">
+                    {`Local Teams (${props.localTeams.length})`}
+                </h2>
+                <TeamList
+                    setPage={props.setPage}
+                    teams={props.localTeams}
+                    setTeams={props.setLocalTeams}
+                    setActiveTeamId={props.setActiveTeamId}
+                    data={props.data}
+                />
+                <div>
+                    {
+                        props.localTeams.length === 0? 
+                            isLoggedIn()?
+                                "All your teams are saved to the server!":
+                                "Create a new team to get started!": 
+                            ""
+                    }
+                </div>
+            </div>
+        </div>
     )
 }
 

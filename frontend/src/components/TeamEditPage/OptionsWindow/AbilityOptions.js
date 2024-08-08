@@ -24,8 +24,8 @@ function AbilityOptions(props) {
     else {
         abilityOptionsRows = (
             <FixedSizeList
-                height={300}
-                width={818}
+                height={390}
+                width={1100}
                 itemSize={50}
                 itemCount={props.abilityList.length}
                 itemData={{abilities: props.abilityList, handleClick: handleClickOptionRow}}

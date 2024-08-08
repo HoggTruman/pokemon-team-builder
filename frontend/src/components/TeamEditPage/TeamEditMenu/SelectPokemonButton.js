@@ -41,7 +41,7 @@ function SelectPokemonButton(props) {
                     className="icon"  
                 />
             </div>
-            <p>{pokemonData? pokemonData.identifier: "???"}</p>
+            <p className="pokemonName">{pokemonData? pokemonData.identifier: "???"}</p>
         </button>
         
     )

@@ -40,8 +40,8 @@ function MoveOptions(props) {
     else {
         moveOptionsRows = (
             <FixedSizeList
-                height={300}
-                width={818}
+                height={390}
+                width={1100}
                 itemSize={50}
                 itemCount={props.moveList.length}
                 itemData={{moves: props.moveList, handleClick: handleClickOptionRow}}
