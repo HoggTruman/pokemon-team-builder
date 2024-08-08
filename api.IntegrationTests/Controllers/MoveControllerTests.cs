@@ -6,6 +6,13 @@ using FluentAssertions;
 
 namespace api.IntegrationTests.Controllers;
 
+
+//  Tests require a seeded databse to work. To create one:
+//      1) Specify the test db connection string in the appsettings.Test.json file under "DB_CONNECTION_STRING"
+//      2) In the api directory run: dotnet ef database update --connection "(your test db connection string, make sure to remove escape backslash)"
+//      3) Run "dotnet run seed test"
+
+
 public class MoveControllerTests : IDisposable
 {
     private readonly CustomWebApplicationFactory<Program> _factory;
@@ -25,12 +32,7 @@ public class MoveControllerTests : IDisposable
 
     readonly JsonSerializerOptions jsonOptions = new() { PropertyNameCaseInsensitive = true };
 
-    /*
-    Tests require a seeded databse to work. To create one:
-        1) Specify the test db connection string in the appsettings.Test.json file under "DB_CONNECTION_STRING"
-        2) In the api directory run: dotnet ef database update --connection "(your test db connection string, make sure to remove escape backslash)"
-        3) Seed database. (COULD LOAD ENVIRONMENT VARIABLES FOR DEVELOPMENT AND TEST AND THEN ADD A PARAMETER TO SEED TO SEED THE )
-    */
+
 
 
 

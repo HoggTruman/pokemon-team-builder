@@ -17,6 +17,13 @@ using Microsoft.Extensions.DependencyInjection;
 namespace api.IntegrationTests.Controllers;
 
 
+//  Tests require a seeded databse to work. To create one:
+//      1) Specify the test db connection string in the appsettings.Test.json file under "DB_CONNECTION_STRING"
+//      2) In the api directory run: dotnet ef database update --connection "(your test db connection string, make sure to remove escape backslash)"
+//      3) Run "dotnet run seed test"
+
+
+
 // Added to collection to prevent concurrency issues with AccountControllerTests
 [Collection("Sequential")]
 public class TeamControllerTests : IDisposable
@@ -41,12 +48,14 @@ public class TeamControllerTests : IDisposable
         _dbContext.Team.ExecuteDelete();
     }
 
+
     public void Dispose()
     {
         _factory.Dispose();
         _client.Dispose();
         _dbContext.Dispose();
     }
+
 
     private async Task<bool> SetupAsync(AppUser appUser)
     {
@@ -75,6 +84,9 @@ public class TeamControllerTests : IDisposable
 
     readonly JsonSerializerOptions jsonOptions = new() { PropertyNameCaseInsensitive = true };
     readonly string testUserName = "TestUser";
+
+
+
 
 
 
