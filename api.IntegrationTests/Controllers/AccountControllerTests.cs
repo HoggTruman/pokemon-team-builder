@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace api.IntegrationTests.Controllers;
 
+
+// Added to collection to prevent concurrency issues with TeamControllerTests
+[Collection("Sequential")]
 public class AccountControllerTests : IDisposable
 {
     private readonly CustomWebApplicationFactory<Program> _factory;
@@ -25,18 +28,30 @@ public class AccountControllerTests : IDisposable
         _client = _factory.CreateClient();
         _dbContext = _factory.Services.GetRequiredService<ApplicationDbContext>();
         _userManager = _factory.Services.GetRequiredService<UserManager<AppUser>>();
-
-        // Clear All Users
-        _dbContext.Users.ExecuteDelete();
     }
 
     public void Dispose()
     {
         _factory.Dispose();
         _client.Dispose();
+        _dbContext.Dispose();
     }
 
+
+    private async Task<bool> SetupAsync()
+    {
+        // delete existing test user
+        var user = await _userManager.FindByNameAsync(testUserName);
+        if (user == null)
+            return true;
+ 
+        var deleteResult = await _userManager.DeleteAsync(user);
+        return deleteResult.Succeeded;
+    }
+
+
     readonly JsonSerializerOptions jsonOptions = new() { PropertyNameCaseInsensitive = true };
+    readonly string testUserName = "TestUser";
 
 
 
@@ -45,9 +60,11 @@ public class AccountControllerTests : IDisposable
     public async void Login_WithValidInput_ReturnsAuthorizedUser()
     {
         // Arrange
+        Assert.True(await SetupAsync(), "SetupAsync Failed");
+
         AppUser testAppUser = new()
         {
-            UserName = "TestUser"
+            UserName = testUserName
         };
         string password = "password1";
 
@@ -90,9 +107,11 @@ public class AccountControllerTests : IDisposable
     public async void Register_WithValidInput_ReturnsAuthorizedUser()
     {
         // Arrange
+        Assert.True(await SetupAsync(), "SetupAsync Failed");
+
         RegisterDTO registerDTO = new()
         {
-            UserName = "TestUser",
+            UserName = testUserName,
             Password = "password1",
             ConfirmPassword = "password1"
         };
