@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import PageSelector from "./components/PageSelector";
 import TopBar from "./components/TopBar/TopBar";
@@ -73,7 +71,6 @@ function App() {
                 setActiveTeamId={setActiveTeamId}
                 data={data}
             />
-            <ToastContainer />
         </>
     )
 }
