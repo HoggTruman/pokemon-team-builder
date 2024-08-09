@@ -1,14 +1,25 @@
 #AccountPage {
     border: 1px solid black;
+    width: 1102px;
+    height: 888px;
+    margin: 0 auto;
+    background-color: aliceblue;    
 }
 
 #AccountPage {
+    #sectionsContainer {
+        display: flex;
+        justify-content: space-around;
+    }
+
     #loginSection {
         display: inline-block;
-        margin: 10px 50px;
+        margin-top: 75px;
+        vertical-align: top;
 
         h2 {
             text-align: center;
+            font-size: 30px;
             margin: 10px 0 50px 0;
         }
 
@@ -17,16 +28,23 @@
         }
 
         #loginSubmit {
-            margin: 0 auto;
+            margin: 38px auto;
+        }
+
+        #loginForm {
+            margin-top: 70px;
         }
     }
 
     #registerSection {
         display: inline-block;
-        margin: 10px 50px;
+        margin-top: 75px;
+        vertical-align: top;
+        
 
         h2 {
             text-align: center;
+            font-size: 30px;
             margin: 10px 0 50px 0;
         }
 

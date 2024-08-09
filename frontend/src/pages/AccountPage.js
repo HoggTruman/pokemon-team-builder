@@ -101,77 +101,79 @@ function AccountPage(props) {
     // Render
     return (
         <div id="AccountPage">
-            <div id="loginSection">
-                <h2>Log In</h2>
-                <form 
-                    id="loginForm"
-                    onSubmit={e => handleSubmitLogin(e)}
-                >
-                    <label htmlFor="loginUserName">UserName: </label>
-                    <input 
-                        id="loginUserName"
-                        name="userName"
-                        type="text"
-                    />
+            <div id="sectionsContainer">
+                <div id="loginSection">
+                    <h2>Log In</h2>
+                    <form 
+                        id="loginForm"
+                        onSubmit={e => handleSubmitLogin(e)}
+                    >
+                        <label htmlFor="loginUserName" id="userNameLabel">Username: </label>
+                        <input 
+                            id="loginUserName"
+                            name="userName"
+                            type="text"
+                        />
 
-                    <br/>
+                        <br/>
 
-                    <label htmlFor="loginPassword">Password: </label>
-                    <input 
-                        id="loginPassword"
-                        name="password"
-                        type="password"
-                    />
+                        <label htmlFor="loginPassword">Password: </label>
+                        <input 
+                            id="loginPassword"
+                            name="password"
+                            type="password"
+                        />
 
-                    <br/>
+                        <br/>
 
-                    <input
-                        id="loginSubmit"
-                        type="submit"
-                        value="Log In"
-                    />
-                </form>
-            </div>
+                        <input
+                            id="loginSubmit"
+                            type="submit"
+                            value="Log In"
+                        />
+                    </form>
+                </div>
 
-            <div id="registerSection">
-            <h2>Register</h2>
-                <form 
-                    id="registerForm"
-                    onSubmit={e => handleSubmitRegister(e)}
-                >
-                    <label htmlFor="registerUserName">UserName: </label>
-                    <input 
-                        id="registerUserName"
-                        name="userName"
-                        type="text"
-                    />
+                <div id="registerSection">
+                <h2>Register</h2>
+                    <form 
+                        id="registerForm"
+                        onSubmit={e => handleSubmitRegister(e)}
+                    >
+                        <label htmlFor="registerUserName">Username: </label>
+                        <input 
+                            id="registerUserName"
+                            name="userName"
+                            type="text"
+                        />
 
-                    <br/> 
+                        <br/> 
 
-                    <label htmlFor="registerPassword">Password: </label>
-                    <input 
-                        id="registerPassword"
-                        name="password"
-                        type="password"
-                    />
+                        <label htmlFor="registerPassword">Password: </label>
+                        <input 
+                            id="registerPassword"
+                            name="password"
+                            type="password"
+                        />
 
-                    <br/>
+                        <br/>
 
-                    <label htmlFor="registerConfirmPassword">Confirm Password: </label>
-                    <input 
-                        id="registerConfirmPassword"
-                        name="confirmPassword"
-                        type="password"
-                    />
+                        <label htmlFor="registerConfirmPassword">Confirm Password: </label>
+                        <input 
+                            id="registerConfirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                        />
 
-                    <br/>
+                        <br/>
 
-                    <input
-                        id="registerSubmit"
-                        type="submit"
-                        value="Register"
-                    />
-                </form>
+                        <input
+                            id="registerSubmit"
+                            type="submit"
+                            value="Register"
+                        />
+                    </form>
+                </div>
             </div>
         </div>
     )
