@@ -2,6 +2,8 @@ import React from "react";
 import { userContext } from "../../context/userContext";
 import { ACCOUNT_PAGE, TEAM_EDIT_PAGE, TEAM_LIST_PAGE } from "../../pages/constants/pageNames";
 
+import "./AccountButtons.css";
+
 function AccountButtons(props) {
     const { isLoggedIn, userName, logout } = userContext();
 
@@ -27,11 +29,13 @@ function AccountButtons(props) {
     // Buttons shown on account page
     if (props.page === ACCOUNT_PAGE) {
         return (
-            <button
-                onClick={() => props.setPage(TEAM_LIST_PAGE)}
-            >
-                Back To Teams
-            </button>
+            <div id="accountButtons">
+                <button
+                    onClick={() => props.setPage(TEAM_LIST_PAGE)}
+                >
+                    Back To Teams
+                </button>
+            </div>
         )
     }
 
@@ -48,7 +52,7 @@ function AccountButtons(props) {
 
     const loggedInButtons = (
         <>
-            <p>{userName}</p>
+            <p id="topBarUserName">{userName}</p>
             <button
                 onClick={handleClickLogout}
                 disabled={props.page === TEAM_EDIT_PAGE}
