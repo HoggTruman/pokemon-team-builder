@@ -36,4 +36,6 @@ export async function fetchStaticData() {
             types: types
         };
     }
+
+    return null;
 }

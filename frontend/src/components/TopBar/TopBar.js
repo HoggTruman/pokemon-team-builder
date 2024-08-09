@@ -8,7 +8,7 @@ function TopBar(props)  {
 
     return (
         <div id="topbar">
-            <h1>Team Builder</h1>
+            <h1>Pokémon Team Builder</h1>
             <AccountButtons
                 page={props.page}
                 setPage={props.setPage}

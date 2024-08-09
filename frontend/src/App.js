@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import PageSelector from "./components/PageSelector";
 import TopBar from "./components/TopBar/TopBar";
@@ -32,6 +30,9 @@ function App() {
     const [activeTeamId, setActiveTeamId] = useState(0);
 
     // Fetch static data
+    if (staticData == null) {
+        return <p> Page could not load. try again</p>
+    }
     const data = staticData;
 
     // Fetch User Teams if logged in
@@ -53,8 +54,9 @@ function App() {
     useEffect(() => {
         setLocalStorageTeams(localTeams);
     }, [localTeams]);
-  
-    
+
+
+    // Render
     return (
         <>
             <TopBar 
@@ -73,7 +75,6 @@ function App() {
                 setActiveTeamId={setActiveTeamId}
                 data={data}
             />
-            <ToastContainer />
         </>
     )
 }
