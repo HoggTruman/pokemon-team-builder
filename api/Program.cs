@@ -24,8 +24,6 @@ if (args.Length == 2 && args[0] == "seed" && args[1] == "test")
 
 var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? builder.Environment.EnvironmentName;
 
-Console.WriteLine(environmentName);
-
 builder.Configuration
        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
        .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true);
@@ -33,7 +31,8 @@ builder.Configuration
 
 
 
-// Add services to the container.
+#region Add services to the container.
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers()
                 .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -70,7 +69,7 @@ builder.Services.AddSwaggerGen(option =>
 
 
 
-
+// Add DBContext
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DB_CONNECTION_STRING"));
     options.EnableSensitiveDataLogging();
@@ -78,7 +77,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 
 
 
-
+// Add Identity
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     // Password settings.
     options.Password.RequireDigit = true;
@@ -95,7 +94,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
 
     // User settings.
     options.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     options.User.RequireUniqueEmail = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -115,7 +114,7 @@ builder.Services.AddCors(options =>
 
 
 
-
+// Add Authentication
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -139,7 +138,7 @@ builder.Services.AddAuthentication(options => {
 
 
 
-
+// Add Logging
 builder.Services.AddLogging(loggingBuilder => {
     loggingBuilder.AddConsole()
         .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
@@ -159,11 +158,15 @@ builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<IAbilityRepository, AbilityRepository>();
 builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 
-
-builder.Services.AddScoped<ITokenService, TokenService>();
-
+// Add Db Seeder + DbToCSV
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<DbToCSV>();
+
+// Add Token Service
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+#endregion
+
 
 
 var app = builder.Build();
@@ -193,9 +196,6 @@ else if (args.Length == 1 && args[0] == "dbtocsv")
 }
 else
 {
-    // Run app
-
-
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
