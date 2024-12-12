@@ -62,4 +62,8 @@ A desktop web app for building Pokemon teams
 - git + github
 
 
+## Screenshots
+![Alt text](./team-edit-page.png?raw=true "Team Edit Page")
+
+![Alt text](./team-list-page.png?raw=true "Team List Page")
 
