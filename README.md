@@ -7,7 +7,7 @@ A desktop web app for building Pokemon teams
 
 - A backend REST API to retrieve static data for the site as well as access and persist user data
 
-- An authentication system, so that the user can save and access their teams via an account
+- An authentication / authorization system utilising JSON Web Tokens, allowing users to save and access their teams via an account
 
 
 ## Installation and Setup
