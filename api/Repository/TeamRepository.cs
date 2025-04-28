@@ -5,6 +5,8 @@ using api.Mappers;
 using api.Models.User;
 using Microsoft.EntityFrameworkCore;
 
+namespace api.Repository;
+
 public class TeamRepository : ITeamRepository
 {
     private readonly ApplicationDbContext _context;
