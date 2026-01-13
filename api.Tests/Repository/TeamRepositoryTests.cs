@@ -2,6 +2,7 @@ using api.Data;
 using api.DTOs.Team;
 using api.DTOs.UserPokemon;
 using api.Models.User;
+using api.Repository;
 using FluentAssertions;
 
 
