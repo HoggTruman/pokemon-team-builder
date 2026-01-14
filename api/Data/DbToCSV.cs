@@ -1,48 +1,63 @@
 using System.Globalization;
 using api.Mappers.CSVClassMaps;
+using api.Models.Static;
 using CsvHelper;
+using CsvHelper.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Data;
 
 public class DbToCSV
 {
+    private const string WriteDir = @"Data\WriteData";
     private readonly IServiceScopeFactory _scopeFactory;
+    
 
     public DbToCSV(IServiceScopeFactory scopeFactory)
     {
         _scopeFactory = scopeFactory;
-    }
-
-    private const string WriteDir = @"Data\WriteData\";
+    }    
 
 
+    /// <summary>
+    /// Writes the database tables to csv files.
+    /// </summary>
     public void WriteAllToCSV()
     {
         using(var scope = _scopeFactory.CreateScope())
-        using(var context = scope.ServiceProvider.GetService<ApplicationDbContext>()!)
+        using(var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>()!)
         {
-            WritePokemon(context);
-            WritePkmnType(context);
-            WriteBaseStats(context);
-            WriteAbility(context);
-            WriteMove(context);
-            WriteDamageClass(context);
-            WriteMoveEffect(context);
-            WriteGender(context);
-            WriteItem(context);
-            WriteNature(context);
+            WriteTableToCSV<Pokemon, PokemonCSVMap>(@"pokemon.csv", dbContext.Pokemon);
+            WriteTableToCSV<PkmnType, PkmnTypeCSVMap>(@"pkmn_type.csv", dbContext.PkmnType);
+            WriteTableToCSV<BaseStats, BaseStatsCSVMap>(@"base_stats.csv", dbContext.BaseStats);
+            WriteTableToCSV<Ability, AbilityCSVMap>(@"ability.csv", dbContext.Ability);
+            WriteTableToCSV<Move, MoveCSVMap>(@"move.csv", dbContext.Move);
+            WriteTableToCSV<DamageClass, DamageClassCSVMap>(@"damage_class.csv", dbContext.DamageClass);
+            WriteTableToCSV<MoveEffect, MoveEffectCSVMap>(@"move_effect.csv", dbContext.MoveEffect);
+            WriteTableToCSV<Gender, GenderCSVMap>(@"gender.csv", dbContext.Gender);
+            WriteTableToCSV<Item, ItemCSVMap>(@"item.csv", dbContext.Item);
+            WriteTableToCSV<Nature, NatureCSVMap>(@"nature.csv", dbContext.Nature);
 
-            WritePokemonPkmnType(context);
-            WritePokemonMove(context);
-            WritePokemonAbility(context);
-            WritePokemonGender(context);
+            // Join Tables
+            WriteTableToCSV<PokemonPkmnType, PokemonPkmnTypeCSVMap>(@"pokemon_pkmn_type.csv", dbContext.PokemonPkmnType);
+            WriteTableToCSV<PokemonMove, PokemonMoveCSVMap>(@"pokemon_move.csv", dbContext.PokemonMove);
+            WriteTableToCSV<PokemonAbility, PokemonAbilityCSVMap>(@"pokemon_ability.csv", dbContext.PokemonAbility);
+            WriteTableToCSV<PokemonGender, PokemonGenderCSVMap>(@"pokemon_move.csv", dbContext.PokemonGender);
         }
     }
 
 
-    private void WritePokemon(ApplicationDbContext context)
+    /// <summary>
+    /// Writes the data contained within the provided DbSet to a file with the name provided.
+    /// </summary>
+    /// <typeparam name="T">The type of object within the DbSet</typeparam>
+    /// <typeparam name="M">The CSV class map type associated with T</typeparam>
+    /// <param name="filename"></param>
+    private static void WriteTableToCSV<T, M>(string filename, DbSet<T> dbset) 
+        where M : ClassMap<T>
+        where T : class
     {
-        const string path = WriteDir + @"pokemon.csv";
+        string path = Path.Join(WriteDir, filename);
 
         if (File.Exists(path))
         {
@@ -50,277 +65,13 @@ public class DbToCSV
             return;
         }
 
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        using (var streamWriter = new StreamWriter(path))
+        using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
         {
-            var records = context.Pokemon.ToList();
-            csv.Context.RegisterClassMap<PokemonCSVMap>();
-            csv.WriteRecords(records);
+            var records = dbset.ToList();
+            csvWriter.Context.RegisterClassMap<M>();
+            csvWriter.WriteRecords(records);
             Console.WriteLine($"File written to {path}");
         }
     }
-
-    private void WritePkmnType(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"pkmn_type.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.PkmnType.ToList();
-            csv.Context.RegisterClassMap<PkmnTypeCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WriteBaseStats(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"base_stats.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.BaseStats.ToList();
-            csv.Context.RegisterClassMap<BaseStatsCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WriteAbility(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"ability.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.Ability.ToList();
-            csv.Context.RegisterClassMap<AbilityCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WriteMove(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"move.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.Move.ToList();
-            csv.Context.RegisterClassMap<MoveCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WriteDamageClass(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"damage_class.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.DamageClass.ToList();
-            csv.Context.RegisterClassMap<DamageClassCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WriteMoveEffect(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"move_effect.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.MoveEffect.ToList();
-            csv.Context.RegisterClassMap<MoveEffectCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WriteGender(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"gender.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.Gender.ToList();
-            csv.Context.RegisterClassMap<GenderCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WriteItem(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"item.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.Item.ToList();
-            csv.Context.RegisterClassMap<ItemCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-        private void WriteNature(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"nature.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.Nature.ToList();
-            csv.Context.RegisterClassMap<NatureCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-
-
-
-    private void WritePokemonPkmnType(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"pokemon_pkmn_type.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.PokemonPkmnType.ToList();
-            csv.Context.RegisterClassMap<PokemonPkmnTypeCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WritePokemonMove(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"pokemon_move.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.PokemonMove.ToList();
-            csv.Context.RegisterClassMap<PokemonMoveCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WritePokemonAbility(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"pokemon_ability.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.PokemonAbility.ToList();
-            csv.Context.RegisterClassMap<PokemonAbilityCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
-    private void WritePokemonGender(ApplicationDbContext context)
-    {
-        const string path = WriteDir + @"pokemon_gender.csv";
-
-        if (File.Exists(path))
-        {
-            Console.WriteLine($"File already exists at {path}");
-            return;
-        }
-
-        using (var writer = new StreamWriter(path))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            var records = context.PokemonGender.ToList();
-            csv.Context.RegisterClassMap<PokemonGenderCSVMap>();
-            csv.WriteRecords(records);
-            Console.WriteLine($"File written to {path}");
-        }
-    }
-
 }
