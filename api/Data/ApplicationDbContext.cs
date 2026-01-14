@@ -6,14 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data 
 {
-     public class ApplicationDbContext: IdentityDbContext<AppUser>
-     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
-        {
-       
-        }
-
-    
+    public class ApplicationDbContext: IdentityDbContext<AppUser>
+    {
         public DbSet<Ability> Ability { get; set; }
         public DbSet<Pokemon> Pokemon { get; set; }
         public DbSet<PkmnType> PkmnType { get; set; }
@@ -33,6 +27,11 @@ namespace api.Data
         public DbSet<PokemonMove> PokemonMove { get; set; }
         public DbSet<PokemonGender> PokemonGender { get; set; }
 
+
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+       
+        }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -76,39 +75,37 @@ namespace api.Data
 
 
             // Add Identity Roles
-            List<IdentityRole> roles = new List<IdentityRole>()
-            {
-                new IdentityRole()
+            modelBuilder.Entity<IdentityRole>().HasData(new List<IdentityRole>()
                 {
-                    Name = "Admin",
-                    NormalizedName = "ADMIN"
-                },
-                new IdentityRole()
-                {
-                    Name = "User",
-                    NormalizedName = "USER"
+                    new()
+                    {
+                        Name = "Admin",
+                        NormalizedName = "ADMIN"
+                    },
+                    new()
+                    {
+                        Name = "User",
+                        NormalizedName = "USER"
+                    }
                 }
-            };
-
-            modelBuilder.Entity<IdentityRole>().HasData(roles);
+            );
 
 
             // Add Test Users
-            List<AppUser> appUsers = new()
-            {
-                new AppUser()
+            modelBuilder.Entity<AppUser>().HasData(new List<AppUser>()
                 {
-                    Id = "test1",
-                    UserName = "TestUser1"
-                },
-                new AppUser()
-                {
-                    Id = "test2",
-                    UserName = "TestUser2"
+                    new()
+                    {
+                        Id = "test1",
+                        UserName = "TestUser1"
+                    },
+                    new()
+                    {
+                        Id = "test2",
+                        UserName = "TestUser2"
+                    }
                 }
-            };
-
-            modelBuilder.Entity<AppUser>().HasData(appUsers);
+            );
         }
     }
 }
