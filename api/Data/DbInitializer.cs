@@ -4,52 +4,50 @@ using api.Models.Static;
 using api.Mappers.CSVClassMaps;
 using api.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using CsvHelper.Configuration;
 
 
 namespace api.Data;
 
 public class DbInitializer : IDbInitializer
 {
+    private const string SeedDir = @"Data\SeedData";
     private readonly IServiceScopeFactory _scopeFactory;
 
     public DbInitializer(IServiceScopeFactory scopeFactory)
     {
         _scopeFactory = scopeFactory;
-    }
-
-    private const string SeedDir = @"Data\SeedData\";
+    }   
 
 
 
-
+    /// <summary>
+    /// Populates the database with records from the seed data csv files.
+    /// </summary>
     public void SeedAll()
     {
         using(var scope = _scopeFactory.CreateScope())
-        using(var context = scope.ServiceProvider.GetService<ApplicationDbContext>()!)
+        using(var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>()!)
         {
-            ClearTables(context);
+            ClearTables(dbContext);
 
-            
-            AddPokemon(context);
-            AddPkmnType(context);
-            AddBaseStats(context);
-            AddAbility(context);
-            AddGender(context);
-            AddMove(context);
-            AddMoveEffect(context);
-            AddDamageClass(context);
-            AddItem(context);
-            AddNature(context);
+            AddRecords<Pokemon, PokemonCSVMap>(@"pokemon.csv", dbContext.Pokemon);
+            AddRecords<PkmnType, PkmnTypeCSVMap>(@"pkmn_type.csv", dbContext.PkmnType);
+            AddRecords<BaseStats, BaseStatsCSVMap>(@"base_stats.csv", dbContext.BaseStats);
+            AddRecords<Ability, AbilityCSVMap>(@"ability.csv", dbContext.Ability);
+            AddRecords<Gender, GenderCSVMap>(@"gender.csv", dbContext.Gender);
+            AddRecords<Move, MoveCSVMap>(@"move.csv", dbContext.Move);
+            AddRecords<MoveEffect, MoveEffectCSVMap>(@"move_effect.csv", dbContext.MoveEffect); // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
+            AddRecords<DamageClass, DamageClassCSVMap>(@"damage_class.csv", dbContext.DamageClass);
+            AddRecords<Item, ItemCSVMap>(@"item.csv", dbContext.Item);
+            AddRecords<Nature, NatureCSVMap>(@"nature.csv", dbContext.Nature);
 
-            AddPokemonPkmnType(context);
-            AddPokemonMove(context);
-            AddPokemonAbility(context);
-            AddPokemonGender(context);
-            
+            AddRecords<PokemonPkmnType, PokemonPkmnTypeCSVMap>(@"pokemon_pkmn_type.csv", dbContext.PokemonPkmnType);
+            AddRecords<PokemonMove, PokemonMoveCSVMap>(@"pokemon_move.csv", dbContext.PokemonMove);
+            AddRecords<PokemonAbility, PokemonAbilityCSVMap>(@"pokemon_ability.csv", dbContext.PokemonAbility);
+            AddRecords<PokemonGender, PokemonGenderCSVMap>(@"pokemon_gender.csv", dbContext.PokemonGender);
 
-
-
-            context.SaveChanges();
+            dbContext.SaveChanges();
         }
     }
 
@@ -74,174 +72,23 @@ public class DbInitializer : IDbInitializer
     }
 
 
-    private void AddPokemon(ApplicationDbContext context)
+    /// <summary>
+    /// Reads the data from the file with provided name and adds its data to the provided DbSet.
+    /// </summary>
+    /// <typeparam name="T">The type of object within the DbSet.</typeparam>
+    /// <typeparam name="M">The CSV class map type associated with T.</typeparam>
+    /// <param name="filename">The filename containing the records.</param>
+    /// <param name="dbSet">The DbSet to add entries to.</param>
+    private void AddRecords<T, M>(string filename, DbSet<T> dbSet) 
+        where M : ClassMap<T>
+        where T : class
     {
-        using (var reader = new StreamReader(SeedDir + @"pokemon.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        using (var streamReader = new StreamReader(Path.Join(SeedDir, filename)))
+        using (var csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
         {
-            csv.Context.RegisterClassMap<PokemonCSVMap>();
-            var records = csv.GetRecords<Pokemon>().ToArray();
-            context.Pokemon.AddRange(records);
-        }
-    }
-
-
-    private void AddPkmnType(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"pkmn_type.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<PkmnTypeCSVMap>();
-            var records = csv.GetRecords<PkmnType>().ToArray();
-            context.PkmnType.AddRange(records);
-        }
-    }
-
-
-    private void AddBaseStats(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"base_stats.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<BaseStatsCSVMap>();
-            var records = csv.GetRecords<BaseStats>().ToArray();
-            context.BaseStats.AddRange(records);
-        }
-    }
-
-
-    private void AddAbility(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"ability.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<AbilityCSVMap>();
-            var records = csv.GetRecords<Ability>().ToArray();            
-            context.Ability.AddRange(records);
-        }
-    }
-
-
-    private void AddMove(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"move.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<MoveCSVMap>();
-            var records = csv.GetRecords<Move>().ToArray();            
-            context.Move.AddRange(records);
-        }
-    }
-
-
-    private void AddDamageClass(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"damage_class.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<DamageClassCSVMap>();
-            var records = csv.GetRecords<DamageClass>().ToArray();            
-            context.DamageClass.AddRange(records);
-        }
-    }
-
-
-    private void AddMoveEffect(ApplicationDbContext context)
-    {
-        // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
-        using (var reader = new StreamReader(SeedDir + @"move_effect.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<MoveEffectCSVMap>();
-            var records = csv.GetRecords<MoveEffect>().ToArray();            
-            context.MoveEffect.AddRange(records);
-        }     
-    }
-
-
-    private void AddGender(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"gender.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<GenderCSVMap>();
-            var records = csv.GetRecords<Gender>().ToArray();            
-            context.Gender.AddRange(records); 
-        }                     
-    }
-
-
-    private void AddItem(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"item.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<ItemCSVMap>();
-            var records = csv.GetRecords<Item>().ToArray();            
-            context.Item.AddRange(records);
-        }     
-    }
-
-
-    private void AddNature(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"nature.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<NatureCSVMap>();
-            var records = csv.GetRecords<Nature>().ToArray();            
-            context.Nature.AddRange(records);
-        }
-    }
-
-
-
-
-
-    private void AddPokemonPkmnType(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"pokemon_pkmn_type.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<PokemonPkmnTypeCSVMap>();
-            var records = csv.GetRecords<PokemonPkmnType>().ToArray();            
-            context.PokemonPkmnType.AddRange(records);
-        }
-    }
-
-
-    private void AddPokemonMove(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"pokemon_move.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<PokemonMoveCSVMap>();
-            var records = csv.GetRecords<PokemonMove>().ToArray();            
-            context.PokemonMove.AddRange(records);
-        }     
-    }
-
-
-    private void AddPokemonAbility(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"pokemon_ability.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<PokemonAbilityCSVMap>();
-            var records = csv.GetRecords<PokemonAbility>().ToArray();            
-            context.PokemonAbility.AddRange(records);
-        }
-    }
-
-
-    private void AddPokemonGender(ApplicationDbContext context)
-    {
-        using (var reader = new StreamReader(SeedDir + @"pokemon_gender.csv"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            csv.Context.RegisterClassMap<PokemonGenderCSVMap>();
-            var records = csv.GetRecords<PokemonGender>().ToArray();            
-            context.PokemonGender.AddRange(records);
+            csvReader.Context.RegisterClassMap<M>();
+            var records = csvReader.GetRecords<T>().ToArray();
+            dbSet.AddRange(records);
         }
     }
 }
