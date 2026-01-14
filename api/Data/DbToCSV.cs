@@ -10,12 +10,12 @@ namespace api.Data;
 public class DbToCSV
 {
     private const string WriteDir = @"Data\WriteData";
-    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly ApplicationDbContext _dbContext;
     
 
-    public DbToCSV(IServiceScopeFactory scopeFactory)
+    public DbToCSV(ApplicationDbContext dbContext)
     {
-        _scopeFactory = scopeFactory;
+        _dbContext = dbContext;
     }    
 
 
@@ -24,26 +24,22 @@ public class DbToCSV
     /// </summary>
     public void WriteAllToCSV()
     {
-        using(var scope = _scopeFactory.CreateScope())
-        using(var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>()!)
-        {
-            WriteTableToCSV<Pokemon, PokemonCSVMap>(@"pokemon.csv", dbContext.Pokemon);
-            WriteTableToCSV<PkmnType, PkmnTypeCSVMap>(@"pkmn_type.csv", dbContext.PkmnType);
-            WriteTableToCSV<BaseStats, BaseStatsCSVMap>(@"base_stats.csv", dbContext.BaseStats);
-            WriteTableToCSV<Ability, AbilityCSVMap>(@"ability.csv", dbContext.Ability);
-            WriteTableToCSV<Move, MoveCSVMap>(@"move.csv", dbContext.Move);
-            WriteTableToCSV<DamageClass, DamageClassCSVMap>(@"damage_class.csv", dbContext.DamageClass);
-            WriteTableToCSV<MoveEffect, MoveEffectCSVMap>(@"move_effect.csv", dbContext.MoveEffect);
-            WriteTableToCSV<Gender, GenderCSVMap>(@"gender.csv", dbContext.Gender);
-            WriteTableToCSV<Item, ItemCSVMap>(@"item.csv", dbContext.Item);
-            WriteTableToCSV<Nature, NatureCSVMap>(@"nature.csv", dbContext.Nature);
+        WriteTableToCSV<Pokemon, PokemonCSVMap>(@"pokemon.csv", _dbContext.Pokemon);
+        WriteTableToCSV<PkmnType, PkmnTypeCSVMap>(@"pkmn_type.csv", _dbContext.PkmnType);
+        WriteTableToCSV<BaseStats, BaseStatsCSVMap>(@"base_stats.csv", _dbContext.BaseStats);
+        WriteTableToCSV<Ability, AbilityCSVMap>(@"ability.csv", _dbContext.Ability);
+        WriteTableToCSV<Move, MoveCSVMap>(@"move.csv", _dbContext.Move);
+        WriteTableToCSV<DamageClass, DamageClassCSVMap>(@"damage_class.csv", _dbContext.DamageClass);
+        WriteTableToCSV<MoveEffect, MoveEffectCSVMap>(@"move_effect.csv", _dbContext.MoveEffect);
+        WriteTableToCSV<Gender, GenderCSVMap>(@"gender.csv", _dbContext.Gender);
+        WriteTableToCSV<Item, ItemCSVMap>(@"item.csv", _dbContext.Item);
+        WriteTableToCSV<Nature, NatureCSVMap>(@"nature.csv", _dbContext.Nature);
 
-            // Join Tables
-            WriteTableToCSV<PokemonPkmnType, PokemonPkmnTypeCSVMap>(@"pokemon_pkmn_type.csv", dbContext.PokemonPkmnType);
-            WriteTableToCSV<PokemonMove, PokemonMoveCSVMap>(@"pokemon_move.csv", dbContext.PokemonMove);
-            WriteTableToCSV<PokemonAbility, PokemonAbilityCSVMap>(@"pokemon_ability.csv", dbContext.PokemonAbility);
-            WriteTableToCSV<PokemonGender, PokemonGenderCSVMap>(@"pokemon_move.csv", dbContext.PokemonGender);
-        }
+        // Join Tables
+        WriteTableToCSV<PokemonPkmnType, PokemonPkmnTypeCSVMap>(@"pokemon_pkmn_type.csv", _dbContext.PokemonPkmnType);
+        WriteTableToCSV<PokemonMove, PokemonMoveCSVMap>(@"pokemon_move.csv", _dbContext.PokemonMove);
+        WriteTableToCSV<PokemonAbility, PokemonAbilityCSVMap>(@"pokemon_ability.csv", _dbContext.PokemonAbility);
+        WriteTableToCSV<PokemonGender, PokemonGenderCSVMap>(@"pokemon_move.csv", _dbContext.PokemonGender);
     }
 
 

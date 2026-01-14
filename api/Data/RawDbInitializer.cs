@@ -10,68 +10,60 @@ namespace api.Data;
 
 public class RawDbInitializer : IDbInitializer
 {
-    private readonly IServiceScopeFactory _scopeFactory;
+    private const string SeedDir = @"Data\RawData\";
+    private readonly ApplicationDbContext _dbContext;
 
-    public RawDbInitializer(IServiceScopeFactory scopeFactory)
+
+    public RawDbInitializer(ApplicationDbContext dbContext)
     {
-        _scopeFactory = scopeFactory;
+        _dbContext = dbContext;
     }
 
-
-    private const string SeedDir = @"Data\RawData\";
+    
 
 
     public void SeedAll()
     {
-        using(var scope = _scopeFactory.CreateScope())
-        using(var context = scope.ServiceProvider.GetService<ApplicationDbContext>()!)
-        {
-            ClearTables(context);
-            
+        ClearTables();            
 
-            AddPokemon(context);
-            AddPkmnType(context);
-            AddBaseStats(context);
-            AddAbility(context);
-            AddGender(context);
-            AddMove(context);
-            // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
-            AddMoveEffect(context);
-            AddDamageClass(context);
-            AddItem(context);
-            AddNature(context);
+        AddPokemon(_dbContext);
+        AddPkmnType(_dbContext);
+        AddBaseStats(_dbContext);
+        AddAbility(_dbContext);
+        AddGender(_dbContext);
+        AddMove(_dbContext);
+        AddMoveEffect(_dbContext); // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
+        AddDamageClass(_dbContext);
+        AddItem(_dbContext);
+        AddNature(_dbContext);
 
-            AddPokemonPkmnType(context);
-            AddPokemonMove(context);
-            AddPokemonAbility(context);
-            AddPokemonGender(context);
-            
+        //Join Tables
+        AddPokemonPkmnType(_dbContext);
+        AddPokemonMove(_dbContext);
+        AddPokemonAbility(_dbContext);
+        AddPokemonGender(_dbContext);
 
-
-
-            context.SaveChanges();
-
-        }
+        _dbContext.SaveChanges();
     }
     
 
-    private void ClearTables(ApplicationDbContext context)
+    private void ClearTables()
     {
-        context.Pokemon.ExecuteDelete();
-        context.PkmnType.ExecuteDelete();
-        context.BaseStats.ExecuteDelete();
-        context.Ability.ExecuteDelete();
-        context.Move.ExecuteDelete();
-        context.DamageClass.ExecuteDelete();
-        context.MoveEffect.ExecuteDelete();
-        context.Gender.ExecuteDelete();
-        context.Item.ExecuteDelete();
-        context.Nature.ExecuteDelete();
+        _dbContext.Pokemon.ExecuteDelete();
+        _dbContext.PkmnType.ExecuteDelete();
+        _dbContext.BaseStats.ExecuteDelete();
+        _dbContext.Ability.ExecuteDelete();
+        _dbContext.Move.ExecuteDelete();
+        _dbContext.DamageClass.ExecuteDelete();
+        _dbContext.MoveEffect.ExecuteDelete();
+        _dbContext.Gender.ExecuteDelete();
+        _dbContext.Item.ExecuteDelete();
+        _dbContext.Nature.ExecuteDelete();
 
-        context.PokemonPkmnType.ExecuteDelete();
-        context.PokemonMove.ExecuteDelete();
-        context.PokemonAbility.ExecuteDelete();
-        context.PokemonGender.ExecuteDelete();
+        _dbContext.PokemonPkmnType.ExecuteDelete();
+        _dbContext.PokemonMove.ExecuteDelete();
+        _dbContext.PokemonAbility.ExecuteDelete();
+        _dbContext.PokemonGender.ExecuteDelete();
     }
 
 

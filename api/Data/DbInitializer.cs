@@ -12,11 +12,11 @@ namespace api.Data;
 public class DbInitializer : IDbInitializer
 {
     private const string SeedDir = @"Data\SeedData";
-    private readonly IServiceScopeFactory _scopeFactory;
+    private readonly ApplicationDbContext _dbContext;
 
-    public DbInitializer(IServiceScopeFactory scopeFactory)
+    public DbInitializer(ApplicationDbContext dbContext)
     {
-        _scopeFactory = scopeFactory;
+        _dbContext = dbContext;
     }   
 
 
@@ -26,49 +26,45 @@ public class DbInitializer : IDbInitializer
     /// </summary>
     public void SeedAll()
     {
-        using(var scope = _scopeFactory.CreateScope())
-        using(var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>()!)
-        {
-            ClearTables(dbContext);
+        ClearTables();
 
-            AddRecords<Pokemon, PokemonCSVMap>(@"pokemon.csv", dbContext.Pokemon);
-            AddRecords<PkmnType, PkmnTypeCSVMap>(@"pkmn_type.csv", dbContext.PkmnType);
-            AddRecords<BaseStats, BaseStatsCSVMap>(@"base_stats.csv", dbContext.BaseStats);
-            AddRecords<Ability, AbilityCSVMap>(@"ability.csv", dbContext.Ability);
-            AddRecords<Gender, GenderCSVMap>(@"gender.csv", dbContext.Gender);
-            AddRecords<Move, MoveCSVMap>(@"move.csv", dbContext.Move);
-            AddRecords<MoveEffect, MoveEffectCSVMap>(@"move_effect.csv", dbContext.MoveEffect); // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
-            AddRecords<DamageClass, DamageClassCSVMap>(@"damage_class.csv", dbContext.DamageClass);
-            AddRecords<Item, ItemCSVMap>(@"item.csv", dbContext.Item);
-            AddRecords<Nature, NatureCSVMap>(@"nature.csv", dbContext.Nature);
+        AddRecords<Pokemon, PokemonCSVMap>(@"pokemon.csv", _dbContext.Pokemon);
+        AddRecords<PkmnType, PkmnTypeCSVMap>(@"pkmn_type.csv", _dbContext.PkmnType);
+        AddRecords<BaseStats, BaseStatsCSVMap>(@"base_stats.csv", _dbContext.BaseStats);
+        AddRecords<Ability, AbilityCSVMap>(@"ability.csv", _dbContext.Ability);
+        AddRecords<Gender, GenderCSVMap>(@"gender.csv", _dbContext.Gender);
+        AddRecords<Move, MoveCSVMap>(@"move.csv", _dbContext.Move);
+        AddRecords<MoveEffect, MoveEffectCSVMap>(@"move_effect.csv", _dbContext.MoveEffect); // MOVE EFFECTS ARE MISSING FOR SOME NEWER MOVES IN SEED DATA
+        AddRecords<DamageClass, DamageClassCSVMap>(@"damage_class.csv", _dbContext.DamageClass);
+        AddRecords<Item, ItemCSVMap>(@"item.csv", _dbContext.Item);
+        AddRecords<Nature, NatureCSVMap>(@"nature.csv", _dbContext.Nature);
 
-            AddRecords<PokemonPkmnType, PokemonPkmnTypeCSVMap>(@"pokemon_pkmn_type.csv", dbContext.PokemonPkmnType);
-            AddRecords<PokemonMove, PokemonMoveCSVMap>(@"pokemon_move.csv", dbContext.PokemonMove);
-            AddRecords<PokemonAbility, PokemonAbilityCSVMap>(@"pokemon_ability.csv", dbContext.PokemonAbility);
-            AddRecords<PokemonGender, PokemonGenderCSVMap>(@"pokemon_gender.csv", dbContext.PokemonGender);
+        AddRecords<PokemonPkmnType, PokemonPkmnTypeCSVMap>(@"pokemon_pkmn_type.csv", _dbContext.PokemonPkmnType);
+        AddRecords<PokemonMove, PokemonMoveCSVMap>(@"pokemon_move.csv", _dbContext.PokemonMove);
+        AddRecords<PokemonAbility, PokemonAbilityCSVMap>(@"pokemon_ability.csv", _dbContext.PokemonAbility);
+        AddRecords<PokemonGender, PokemonGenderCSVMap>(@"pokemon_gender.csv", _dbContext.PokemonGender);
 
-            dbContext.SaveChanges();
-        }
+        _dbContext.SaveChanges();
     }
 
 
-    private void ClearTables(ApplicationDbContext context)
+    private void ClearTables()
     {
-        context.Pokemon.ExecuteDelete();
-        context.PkmnType.ExecuteDelete();
-        context.BaseStats.ExecuteDelete();
-        context.Ability.ExecuteDelete();
-        context.Move.ExecuteDelete();
-        context.DamageClass.ExecuteDelete();
-        context.MoveEffect.ExecuteDelete();
-        context.Gender.ExecuteDelete();
-        context.Item.ExecuteDelete();
-        context.Nature.ExecuteDelete();
+        _dbContext.Pokemon.ExecuteDelete();
+        _dbContext.PkmnType.ExecuteDelete();
+        _dbContext.BaseStats.ExecuteDelete();
+        _dbContext.Ability.ExecuteDelete();
+        _dbContext.Move.ExecuteDelete();
+        _dbContext.DamageClass.ExecuteDelete();
+        _dbContext.MoveEffect.ExecuteDelete();
+        _dbContext.Gender.ExecuteDelete();
+        _dbContext.Item.ExecuteDelete();
+        _dbContext.Nature.ExecuteDelete();
 
-        context.PokemonPkmnType.ExecuteDelete();
-        context.PokemonMove.ExecuteDelete();
-        context.PokemonAbility.ExecuteDelete();
-        context.PokemonGender.ExecuteDelete();
+        _dbContext.PokemonPkmnType.ExecuteDelete();
+        _dbContext.PokemonMove.ExecuteDelete();
+        _dbContext.PokemonAbility.ExecuteDelete();
+        _dbContext.PokemonGender.ExecuteDelete();
     }
 
 
@@ -79,7 +75,7 @@ public class DbInitializer : IDbInitializer
     /// <typeparam name="M">The CSV class map type associated with T.</typeparam>
     /// <param name="filename">The filename containing the records.</param>
     /// <param name="dbSet">The DbSet to add entries to.</param>
-    private void AddRecords<T, M>(string filename, DbSet<T> dbSet) 
+    private static void AddRecords<T, M>(string filename, DbSet<T> dbSet) 
         where M : ClassMap<T>
         where T : class
     {
